@@ -98,4 +98,4 @@ Record the exercise, date, assistance used, and verification behind a state chan
 
 Personal diagnostic results stay local. Public progress is expressed through completed exercises and their evidence.
 
-The future learning app should show this same skill map, with evidence and next-review dates for individual topics. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.
+Fieldnotes now shows this course map, practice evidence, and next-review dates. Five lessons are ready; the remaining sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.

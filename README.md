@@ -6,7 +6,34 @@ The emphasis is on tracing how a product works, explaining decisions, testing fa
 
 ## Current status
 
-Learning workspace initialized and the initial diagnostic completed on October 24, 2026. The [roadmap](ROADMAP.md) now includes the first five weekday sessions. Personal assessment answers and ratings remain local; no public portfolio exercises have been completed yet. The [skill map](SKILL-MAP.md) makes the intended breadth and evidence requirements explicit.
+The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes five English visual lessons and interactive labs:
+
+1. Trace a real request and distinguish its response from the page display.
+2. Locate authentication and distinguish it from permission checks.
+3. Inspect browser-held and server-held session state, expiry, and logout.
+4. Reproduce and repair cross-user leakage in a cache model.
+5. Reject an agent's incorrect change with behavioural regression checks.
+
+[Open Fieldnotes](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
+
+The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with five ready and 32 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
+
+Personal assessment answers remain local. The application, lesson content, and QA were prepared with an agent; they are not learner-authored demonstrations of understanding. No public learner portfolio exercise has been completed yet.
+
+## Run the product locally
+
+Requires Node.js 22+ and Python 3.10+. The app has no runtime package dependencies.
+
+```sh
+npm test
+npm run build
+python tests/build_smoke.py
+npm run dev
+```
+
+Open <http://127.0.0.1:8766>. Serve over HTTP so lesson one's real fixture request can run. A shared [reference sheet](reference/0001-request-identity-state.html) provides printable terminology and investigation steps.
+
+Progress, explanations, hints, and review dates save in this browser. Use **Backups → Export progress** before clearing browser data, switching devices, or moving between localhost and the hosted app. Restore explicitly merges the newest saved entry per lesson. There is no automatic cloud or GitHub progress synchronization. Use one active learning tab at a time. Personal notes and JSON backups should stay outside the public repository.
 
 ## What this repository will demonstrate
 
