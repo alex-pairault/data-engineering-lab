@@ -1,0 +1,28 @@
+# Private coaching notes and assessment answers
+.local/
+
+# Credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+profiles.yml
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store
+
+# Generated Python, dbt, and runtime files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dbt_packages/
+target/
+logs/
+*.log
+*.db
+*.sqlite*
+*.duckdb*
