@@ -12,23 +12,29 @@ These are different kinds of evidence, not interchangeable completion badges. Ai
 
 | Domain | Core concepts | Example check |
 | --- | --- | --- |
-| Browser and HTTP | Request/response, methods, status codes, headers, JSON, browser rendering and network tools | Trace a page load and identify which component produced an error response. |
-| APIs | Input validation, contracts, authentication, pagination, timeouts, retry safety | Explain what a client should do after a request times out without knowing whether an operation succeeded. |
+| Browser and HTTP | HTML/CSS/JavaScript roles, request/response, methods, status codes, headers, JSON, DOM, browser state, network tools, same-origin and CORS, accessible form feedback | Trace a page load and identify which component produced an error response; distinguish a browser restriction from server authentication. |
+| APIs | Input validation, contracts and compatibility, authentication, pagination, timeouts, retry safety | Explain what a client should do after a request times out without knowing whether an operation succeeded. |
+| Authentication | Identity verification, password hashing versus encryption, sign-in, MFA and recovery; introductory roles of OAuth 2.0, OpenID Connect, and JWT | Trace a sign-in and explain which evidence establishes identity, how a password is checked, and which step still needs permission checks. |
 | Sessions and cookies | Session identity and storage, cookie scope and flags, expiry, logout, difference from browser sessionStorage | Trace login and a subsequent authenticated request; investigate a login that fails only on one server. |
 | Access and web security | Authentication versus authorisation, ownership checks, injection, XSS and CSRF concepts, secret handling | Explain how to prevent one authenticated user from reading another user's order. |
 | Caching | Browser/CDN/application caches, keys, hits and misses, TTL, invalidation, personalised content | Explain why an updated price remains stale and what would make a shared cache expose another user's data. |
-| Programming | Python functions and data structures, exceptions, modules, dependencies, reading unfamiliar code | Debug a small program and explain the cause rather than only replacing the failing line. |
-| Databases | SQL joins and windows, grain, keys, constraints, transactions, indexes, query plans, migrations | Prevent a duplicate write or explain why an aggregation returns an incorrect total. |
+| Programming and code structure | Python functions and data structures, exceptions, modules, separation of concerns, interfaces, reading unfamiliar code, everyday complexity | Debug a small program, explain the cause, and identify which rule belongs in business logic rather than request handling. |
+| Databases and concurrency | SQL joins and windows, grain, keys, constraints, transactions, isolation and races, indexes, query plans, migrations | Prevent a duplicate write or lost update; explain why an aggregation returns an incorrect total. |
+| Git and dependencies | Diffs, branches, pull requests, conflict resolution, version pinning, lockfiles, isolated environments | Explain a small diff, resolve a focused conflict, and reproduce the chosen dependency versions. |
 | Runtime and networking | Process, port, environment, DNS, TLS, web server, reverse proxy, PHP application runtime | Trace browser to Nginx to application to database; suggest an evidence-based first check for a gateway failure. |
 | Deployment and scaling | Images versus containers, volumes and networks, configuration, multiple servers, shared state, load balancing | Run a small local setup and explain which state must survive a restart or be shared between replicas. |
 | Reliability and delivery | Unit/integration tests, Git and CI, logs/metrics/traces, Sentry's role, rollback, backups and restore | Find a controlled failure from available evidence and explain how to detect recurrence. |
 | Data systems | OLTP/analytics distinction, ingestion, modelling, dbt checks, orchestration, retries, backfills, idempotency | Rerun a partially completed job and show that the resulting data remains correct. |
+| Background work and events | Synchronous versus asynchronous work, queues and workers, webhooks, acknowledgements, duplicate delivery, retries, idempotency; distinction from parallel execution | Trace an event delivered twice and explain how to avoid applying its business effect twice. |
+| Performance and evolution | N+1 queries, pagination, CPU versus I/O work, measurement, compatibility, schema migration and rollback | Investigate a slow request from evidence and explain how a proposed change can be rolled out safely. |
 | Product reasoning | User problem, constraints, smallest useful scope, acceptance criteria, success metrics and tradeoffs | Define what success means for a change and decide what evidence would show it helped the user. |
 | Agent workflow | Relevant context and constraints, task decomposition, acceptance criteria, diff review, independent verification | Catch a plausible but incorrect generated change and demonstrate why a check accepts or rejects it. |
 
 ## Depth choices
 
-Sessions, caching, APIs, Python, SQL, tests, and basic local deployment are priorities for hands-on exercises. Product reasoning and agent review run through those exercises as well as receiving focused practice.
+Authentication, sessions, authorization, caching, APIs, Python, SQL, tests, and basic local deployment are priorities for hands-on exercises. Product reasoning and agent review run through those exercises as well as receiving focused practice.
+
+OAuth 2.0, OpenID Connect, and JWT initially need correct recognition and role distinctions. The first pass does not require implementing protocols or a complete identity provider. Likewise, background-work concepts do not require installing every example broker.
 
 DNS/TLS, load balancing, web-server architecture, and Kubernetes's role initially need a clear explanation and a failure scenario, not specialist administration. Practise configuration where a focused exercise makes it useful.
 

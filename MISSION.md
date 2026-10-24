@@ -8,6 +8,7 @@ Build confidence in understanding a product from a browser request through its a
 
 - Trace a web request and explain the roles of a browser, API, web server, application, and database.
 - Explain sessions and caching, demonstrate their basic behaviour, and investigate a related failure.
+- Distinguish authentication, session management, and authorization and trace a protected operation across them.
 - Write and debug Python and SQL, using documentation where appropriate.
 - Demonstrate reliable data processing and diagnose an application or pipeline failure.
 - Run a small project reproducibly; explain its deployment, access controls, and observability.
@@ -16,6 +17,7 @@ Build confidence in understanding a product from a browser request through its a
 ## Constraints
 
 - At least 30 minutes per weekday, with an initial horizon of December 15, 2026.
+- Lessons, graphics, exercises, and feedback are in English. Use diagrams and interactive examples when they make a concept clearer, with short supporting explanations.
 - Preserve a shared engineering foundation while using data and analytics work as one practical application. Adjust difficulty after a broad diagnostic.
 - Aim for working explanations across the core topics and practical competence in selected areas; 18.5 hours is a first pass, not expertise in every domain.
 - Publish original examples and honest explanations on a personal GitHub account.

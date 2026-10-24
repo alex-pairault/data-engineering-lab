@@ -7,22 +7,55 @@ From October 26 through December 15, 2026, there are 37 Monday-to-Friday session
 | Focus | Sessions | Planned demonstration |
 | --- | ---: | --- |
 | Broad diagnostic | 1 | Sample web, programming, data, deployment, and agent-review reasoning; identify follow-up probes |
-| Web fundamentals | 9 | Trace HTTP/API requests; demonstrate sessions, cookies, permissions, caching, and invalidation |
-| Programming and databases | 7 | Refresh Python; test and debug a small change; use SQL, constraints, transactions, and indexes |
+| Web fundamentals | 9 | Trace HTTP/API requests and browser behaviour; explicitly cover authentication, sessions, authorization, and caching |
+| Programming and databases | 7 | Refresh Python; structure, test, and debug a small change; use SQL, constraints, transactions, concurrency, and indexes |
 | Infrastructure | 5 | Explain processes, ports, DNS, TLS, reverse proxies, and load balancing; run a small Docker setup |
-| Reliability, security, and delivery | 5 | Use tests and CI; diagnose a failure with logs and error reporting; reason about access, deployment, and recovery |
-| Data systems | 4 | Demonstrate data quality, a small dbt transformation, dependencies, retries, and safe reruns |
+| Reliability, security, and delivery | 5 | Use Git, dependency management, tests, and CI; diagnose failures; reason about security, performance, deployment, and recovery |
+| Data systems | 4 | Demonstrate data quality, a small dbt transformation, background work, dependencies, retries, and safe reruns |
 | Product decisions and agent workflow | 3 | Frame a user problem, specify acceptance criteria, supply relevant context, and review an agent change |
 | Mixed interview practice and revisits | 3 | Explain unfamiliar scenarios and revisit earlier weak areas across domains |
 | **Total** | **37** | **18.5 hours** |
 
 ## Breadth and depth
 
+Use the English and visual presentation requirements in [LESSON-FORMAT.md](LESSON-FORMAT.md) for every authored lesson. The diagnostic remains pending while the learning format is agreed; do not start it automatically in response to planning preferences.
+
 Use [SKILL-MAP.md](SKILL-MAP.md) to keep the important topics visible. An explanation should connect the purpose, mechanism, and one failure mode. Selected topics also require a small implementation or debugging task. These are first-pass targets, not a promise of expertise after 18.5 hours.
 
 Start with web fundamentals after the diagnostic so sessions and caching are addressed early. Mix in short recall questions from other domains. Each week, use part of the existing review time to check coverage; do not let a job-specific tool consume the shared-foundation budget.
 
 Keep Python active through small exercises throughout the course. A focused interview can expose missing evidence and reprioritise practice, but job advertisements alone do not define the curriculum.
+
+## Web sequence and explicit authentication step
+
+These nine focused sessions fit inside the existing web allocation. Their order may change with diagnostic evidence, but authentication, sessions, authorization, and caching remain visible.
+
+| Session | Focus | Planned visual and practical check |
+| --- | --- | --- |
+| Web 01 | Browser, HTTP, server, and application roles | Request/response sequence; inspect a response in browser network tools. |
+| Web 02 | APIs and contracts | Annotated request/response; investigate validation, status codes, and a contract change. |
+| Web 03 | Authentication | Sign-in sequence; trace identity verification and password-hash checking using established library behaviour. Explain MFA's purpose. |
+| Web 04 | Sessions and cookies | Browser/server state diagram; inspect a synthetic session, expiry, and logout. Briefly locate token-based approaches in the picture. |
+| Web 05 | Authorization | User/resource permission matrix; check that two signed-in users cannot access each other's private resource. |
+| Web 06 | Caching and freshness | Cache-hit/miss flow and TTL timeline; compare a first read and a repeated read. |
+| Web 07 | Invalidation and private data | Before/after timeline; change a value, investigate a stale result, and reason about shared-cache boundaries. |
+| Web 08 | Browser behaviour and cross-origin requests | Browser/application origin diagram; explain HTML/CSS/JavaScript roles and investigate a request in the browser. |
+| Web 09 | Web security and a mixed failure case | Trust-boundary diagram; inspect one focused XSS, CSRF, or injection example chosen from the diagnostic. |
+
+Authentication coverage starts with identity, sign-in, password hashing versus encryption, MFA, and recovery considerations. Session handling and authorization receive their own sessions. OAuth 2.0, OpenID Connect, and JWT receive introductory recognition and correct role distinctions when relevant; complete provider integration and protocol implementation are later depth options, not extra promises within one 30-minute lesson.
+
+## Supporting software fundamentals
+
+Integrate these into existing exercises rather than adding separate installations or a larger schedule:
+
+- **Git and dependencies:** read diffs, use branches and pull requests, handle a small conflict, understand pinned versions, lockfiles, and isolated environments. Use the delivery allocation and normal portfolio work.
+- **Code structure and everyday complexity:** separate request handling, business rules, and storage; use clear functions and interfaces; compare ordinary list/dictionary/set operations and avoid unnecessary abstractions. Use programming exercises.
+- **Concurrency and correctness:** explain a race condition, use a database transaction or constraint where appropriate, and distinguish asynchronous execution from parallel work. Use programming/database exercises.
+- **Background jobs and webhooks:** trace a queued job or incoming event, reason about acknowledgement, duplicate delivery, retries, and idempotency. Contrast this with a scheduled workflow in the data allocation; RabbitMQ is a reference example, not a required new stack component.
+- **Browser and API boundaries:** distinguish browser state from server state, inspect network activity, explain same-origin/CORS concepts, and recognise accessible form feedback. Use the web and product exercises.
+- **Performance and safe evolution:** find evidence before optimising; recognise N+1 queries, pagination, and blocking work; consider API compatibility, migrations, and rollback. Use database, API, and delivery exercises.
+
+These are a coverage checklist with selected practical examples. The 37-session budget is unchanged; record gaps for later practice rather than compressing multiple deep lessons into a single session.
 
 ## Project thread
 

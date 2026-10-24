@@ -12,11 +12,11 @@ Learning workspace initialized on October 24, 2026. The initial diagnostic is pe
 
 | Area | Planned evidence |
 | --- | --- |
-| Web fundamentals | Request traces, API behaviour, sessions, cookies, authentication, permissions, and caching |
-| Programming and databases | Debugged Python, useful tests, SQL queries, modelling, transactions, and query investigation |
+| Web fundamentals | Request traces, browser behaviour, API contracts, authentication, sessions, authorization, and caching |
+| Programming and databases | Debugged Python, clear code boundaries, useful tests, SQL queries, modelling, transactions, concurrency, and query investigation |
 | Infrastructure | Explanations of processes, ports, DNS, TLS, Nginx, containers, and load balancing; reproducible local execution |
-| Reliability and security | Meaningful checks, CI, error diagnosis, access checks, deployment and recovery reasoning |
-| Data processing | Quality checks, dbt examples, dependencies, retries, and safe reruns |
+| Reliability and security | Git and dependency management, meaningful checks, CI, error diagnosis, access checks, deployment and recovery reasoning |
+| Data and asynchronous processing | Quality checks, dbt examples, background jobs, webhooks, retries, and safe reruns |
 | Product and agent-assisted development | A user problem, acceptance criteria, relevant context, reviewed changes, and independent verification |
 
 These are planned outcomes, not claims of completed work.
@@ -34,6 +34,8 @@ Each exercise will include:
 Use the [exercise template](templates/exercise.md) for these write-ups. Completed exercises will be linked here as they are added.
 
 ## Learning routine
+
+Lessons and feedback are in English. Use a diagram, timeline, or small interactive experiment when it helps explain the mechanism, accompanied by concise text. See the [lesson format](LESSON-FORMAT.md) for the authoring requirements.
 
 The working target is 30 minutes per weekday through mid-December 2026:
 
@@ -53,6 +55,7 @@ Agents may help prepare exercises, explain concepts, suggest implementations, an
 - [Mission](MISSION.md): the purpose and observable outcomes.
 - [Roadmap](ROADMAP.md): the provisional allocation of study sessions.
 - [Skill map](SKILL-MAP.md): the core topics and the questions used to check understanding.
+- [Lesson format](LESSON-FORMAT.md): English, graphics, practice, and accessible presentation requirements.
 - [Resources](RESOURCES.md): annotated primary sources.
 - [Exercise template](templates/exercise.md): the format for portfolio evidence.
 
