@@ -1,23 +1,23 @@
-# Data Engineering Lab
+# Engineering Foundations Lab
 
-A hands-on learning portfolio for building reliable data pipelines and reviewing agent-assisted engineering work.
+A hands-on learning portfolio for understanding reliable software and data systems and reviewing agent-assisted engineering work.
 
-The emphasis is on explaining decisions, testing failure cases, and producing reproducible examples in Python, SQL, dbt, orchestration, and Docker.
+The emphasis is on tracing how a product works, explaining decisions, testing failure cases, and producing reproducible examples. Web fundamentals, programming, databases, infrastructure, reliability, data processing, and product judgement share one learning plan.
 
 ## Current status
 
-Learning workspace initialized on October 24, 2026. The initial diagnostic is pending; no exercises have been completed or skills assessed yet. The [roadmap](ROADMAP.md) is provisional.
+Learning workspace initialized on October 24, 2026. The initial diagnostic is pending; no exercises have been completed or skills assessed yet. The [roadmap](ROADMAP.md) is provisional. The [skill map](SKILL-MAP.md) makes the intended breadth and evidence requirements explicit.
 
 ## What this repository will demonstrate
 
 | Area | Planned evidence |
 | --- | --- |
-| SQL and modelling | Queries with expected results, explicit table grain, and explanations of joins and metrics |
-| dbt | Documented models and checks that expose incorrect or missing data |
-| Python and APIs | Small ingestion examples with validation, error handling, and meaningful tests |
-| Orchestration | Dependencies, retries, safe reruns, and a small Airflow workflow |
-| Deployment and observability | Reproducible local execution, Docker configuration, and useful failure diagnostics |
-| Agent-assisted development | Clear acceptance criteria, reviewed changes, and evidence of independent verification |
+| Web fundamentals | Request traces, API behaviour, sessions, cookies, authentication, permissions, and caching |
+| Programming and databases | Debugged Python, useful tests, SQL queries, modelling, transactions, and query investigation |
+| Infrastructure | Explanations of processes, ports, DNS, TLS, Nginx, containers, and load balancing; reproducible local execution |
+| Reliability and security | Meaningful checks, CI, error diagnosis, access checks, deployment and recovery reasoning |
+| Data processing | Quality checks, dbt examples, dependencies, retries, and safe reruns |
+| Product and agent-assisted development | A user problem, acceptance criteria, relevant context, reviewed changes, and independent verification |
 
 These are planned outcomes, not claims of completed work.
 
@@ -52,6 +52,7 @@ Agents may help prepare exercises, explain concepts, suggest implementations, an
 
 - [Mission](MISSION.md): the purpose and observable outcomes.
 - [Roadmap](ROADMAP.md): the provisional allocation of study sessions.
+- [Skill map](SKILL-MAP.md): the core topics and the questions used to check understanding.
 - [Resources](RESOURCES.md): annotated primary sources.
 - [Exercise template](templates/exercise.md): the format for portfolio evidence.
 

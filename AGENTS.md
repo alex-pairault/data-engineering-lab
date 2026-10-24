@@ -1,8 +1,9 @@
 # Teaching workspace
 
-Read MISSION.md and ROADMAP.md before choosing work. This is a learning portfolio: the primary objective is the learner's ability to explain, apply, debug, and verify the material.
+Read MISSION.md, ROADMAP.md, and SKILL-MAP.md before choosing work. This is a learning portfolio: the primary objective is the learner's ability to explain, apply, debug, and verify the material across software, data, and product work.
 
 - Keep each lesson focused and suitable for a 30-minute session.
+- Preserve breadth: web fundamentals, sessions, caching, programming, databases, infrastructure, reliability, and product/agent reasoning must remain visible. Do not narrow the course to data tools because the current job search is in data.
 - Use the teach skill for teaching sessions. When creating HTML lessons, use shared assets and primary-source references as specified by that skill.
 - During diagnostics, ask for the learner's attempt before supplying the solution. Distinguish missing terminology, incomplete understanding, and difficulty applying a known concept.
 - Do not write the learner's explanation or claim mastery on their behalf. Record demonstrated understanding only when supported by an actual answer or exercise.

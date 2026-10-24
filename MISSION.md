@@ -1,24 +1,26 @@
-# Mission: Reliable data engineering
+# Mission: Reliable software and data systems
 
 ## Why
 
-Build confidence in designing, explaining, debugging, and operating data pipelines. Develop the engineering judgement needed to review agent-assisted changes and assemble a portfolio of reproducible work.
+Build confidence in understanding a product from a browser request through its application, storage, data flows, and deployment. Develop the engineering judgement needed to explain system behaviour, make product tradeoffs, and verify agent-assisted changes across software and data work.
 
 ## Success looks like
 
-- Explain a pipeline's sources, transformations, table grain, consumers, and failure modes.
+- Trace a web request and explain the roles of a browser, API, web server, application, and database.
+- Explain sessions and caching, demonstrate their basic behaviour, and investigate a related failure.
 - Write and debug Python and SQL, using documentation where appropriate.
-- Demonstrate data quality checks and safe recovery from a partial failure.
-- Run a small project reproducibly and diagnose a deliberately introduced error.
-- Review an agent-generated change and justify acceptance using observable evidence.
+- Demonstrate reliable data processing and diagnose an application or pipeline failure.
+- Run a small project reproducibly; explain its deployment, access controls, and observability.
+- Translate a product need into acceptance criteria and verify an agent-generated change against them.
 
 ## Constraints
 
 - At least 30 minutes per weekday, with an initial horizon of December 15, 2026.
-- Prioritise data and analytics engineering; adjust difficulty after a practical diagnostic.
+- Preserve a shared engineering foundation while using data and analytics work as one practical application. Adjust difficulty after a broad diagnostic.
+- Aim for working explanations across the core topics and practical competence in selected areas; 18.5 hours is a first pass, not expertise in every domain.
 - Publish original examples and honest explanations on a personal GitHub account.
 - Use synthetic or explicitly reusable public data for portfolio work.
 
 ## Out of scope
 
-No exclusions have been explicitly set. The roadmap defers infrastructure specialisation while the core skills are assessed.
+No exclusions have been explicitly set. Deep administration of individual infrastructure tools remains deferred while the shared foundations are assessed.
