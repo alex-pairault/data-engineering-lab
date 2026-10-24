@@ -1,5 +1,6 @@
 """Check the public build boundary and internal HTML links using the standard library."""
 from html.parser import HTMLParser
+import json
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -37,4 +38,6 @@ for path in files:
 
 assert len(list((ROOT / "lessons").glob("*.html"))) == 5
 assert (ROOT / "reference/0001-request-identity-state.html").is_file()
+fixture = json.loads((ROOT / "assets/fixtures/product.json").read_text())
+assert fixture["product_id"] == "P-41" and fixture["price"] == 25
 print(f"Public build passed: {len(files)} files; internal HTML links resolve; private paths excluded.")
