@@ -6,7 +6,7 @@ The emphasis is on tracing how a product works, explaining decisions, testing fa
 
 ## Current status
 
-Learning workspace initialized on October 24, 2026. The initial diagnostic is pending; no exercises have been completed or skills assessed yet. The [roadmap](ROADMAP.md) is provisional. The [skill map](SKILL-MAP.md) makes the intended breadth and evidence requirements explicit.
+Learning workspace initialized and the initial diagnostic completed on October 24, 2026. The [roadmap](ROADMAP.md) now includes the first five weekday sessions. Personal assessment answers and ratings remain local; no public portfolio exercises have been completed yet. The [skill map](SKILL-MAP.md) makes the intended breadth and evidence requirements explicit.
 
 ## What this repository will demonstrate
 

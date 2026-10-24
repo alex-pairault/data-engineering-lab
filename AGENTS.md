@@ -17,4 +17,4 @@ Read MISSION.md, ROADMAP.md, SKILL-MAP.md, and LESSON-FORMAT.md before choosing 
 - Inspect staged changes and ignored paths before a push. Never commit secrets, machine-specific credentials, or runtime database files.
 - The learning app is a later phase. Complete the diagnostic before fixing its curriculum or building it.
 
-The initial diagnostic is pending. Prior work experience is self-reported context, not a verified skill assessment. Private continuity notes are in `.local/NOTES.md` when present.
+The initial diagnostic is complete. Read private continuity notes in `.local/NOTES.md`, `.local/PLAN.md`, and `.local/learning-records/` when present. Use the private evidence to select difficulty; do not restart the diagnostic or publish its answers. Distinguish self-reported prior experience, observed reasoning, tutor-supplied feedback, executed work, and later retention.

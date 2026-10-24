@@ -1,30 +1,43 @@
 # Provisional roadmap
 
-This plan will be adjusted after a broad 30-minute diagnostic. All topics are currently unassessed. The aim is shared engineering judgement across software, data, and product work, with selected practical depth.
+The initial diagnostic was completed on October 24, 2026. This sequence now starts with request/state mechanisms, user isolation, and practical verification, while retaining shared foundations across software, data, and product work. Personal assessment answers and ratings stay local; later lessons will probe areas not covered by the initial triage.
 
-From October 26 through December 15, 2026, there are 37 Monday-to-Friday sessions, or 18.5 hours at 30 minutes each, before holidays or missed days.
+From October 26 through December 15, 2026, there are 37 Monday-to-Friday learning sessions, or 18.5 hours at 30 minutes each, before holidays or missed days. The diagnostic was completed before this window; its former slot is reassigned to practical agent review and verification.
 
 | Focus | Sessions | Planned demonstration |
 | --- | ---: | --- |
-| Broad diagnostic | 1 | Sample web, programming, data, deployment, and agent-review reasoning; identify follow-up probes |
 | Web fundamentals | 9 | Trace HTTP/API requests and browser behaviour; explicitly cover authentication, sessions, authorization, and caching |
 | Programming and databases | 7 | Refresh Python; structure, test, and debug a small change; use SQL, constraints, transactions, concurrency, and indexes |
 | Infrastructure | 5 | Explain processes, ports, DNS, TLS, reverse proxies, and load balancing; run a small Docker setup |
 | Reliability, security, and delivery | 5 | Use Git, dependency management, tests, and CI; diagnose failures; reason about security, performance, deployment, and recovery |
 | Data systems | 4 | Demonstrate data quality, a small dbt transformation, background work, dependencies, retries, and safe reruns |
-| Product decisions and agent workflow | 3 | Frame a user problem, specify acceptance criteria, supply relevant context, and review an agent change |
+| Product decisions and agent workflow | 4 | Frame a user problem, specify acceptance criteria, supply relevant context, and review and verify an agent change |
 | Mixed interview practice and revisits | 3 | Explain unfamiliar scenarios and revisit earlier weak areas across domains |
 | **Total** | **37** | **18.5 hours** |
 
 ## Breadth and depth
 
-Use the English and visual presentation requirements in [LESSON-FORMAT.md](LESSON-FORMAT.md) for every authored lesson. The diagnostic remains pending while the learning format is agreed; do not start it automatically in response to planning preferences.
+Use the English and visual presentation requirements in [LESSON-FORMAT.md](LESSON-FORMAT.md) for every authored lesson. The initial diagnostic is complete; continue with focused lessons and short embedded probes rather than restarting it.
 
 Use [SKILL-MAP.md](SKILL-MAP.md) to keep the important topics visible. An explanation should connect the purpose, mechanism, and one failure mode. Selected topics also require a small implementation or debugging task. These are first-pass targets, not a promise of expertise after 18.5 hours.
 
-Start with web fundamentals after the diagnostic so sessions and caching are addressed early. Mix in short recall questions from other domains. Each week, use part of the existing review time to check coverage; do not let a job-specific tool consume the shared-foundation budget.
+Start with web fundamentals so authentication, sessions, and data isolation are addressed early. Pair explanations with small verification tasks, including cache-hit paths, negative cases, and more than one synthetic user. Mix in short recall questions from other domains. Each week, use part of the existing review time to check coverage; do not let a job-specific tool consume the shared-foundation budget.
 
 Keep Python active through small exercises throughout the course. A focused interview can expose missing evidence and reprioritise practice, but job advertisements alone do not define the curriculum.
+
+## First five weekday sessions
+
+These are planned lessons, not completed portfolio exercises. Their allocation is included in the table above.
+
+| Date | Allocation | Focus and planned evidence |
+| --- | --- | --- |
+| October 26 | Web 01 | Trace a browser request and inspect the response supplying a displayed value. |
+| October 27 | Web 03 | Trace identity verification in a small login flow; explain where authentication occurs. |
+| October 28 | Web 04 | Inspect browser-held and server-held session state; demonstrate expiry or logout. |
+| October 29 | Web 05 | Check user isolation through database and cache paths in a changed example using two synthetic users. |
+| October 30 | Product/agent verification 01 | Write and run behavioural checks for a small agent change, then record the evidence supporting acceptance. |
+
+Continue with Web 02, caching/freshness/invalidation, and the remaining web topics. Interleave Python and SQL practice, including outer-join filters, nulls, and edge-case fixtures. Later deployment and retry exercises must collect executed evidence, in addition to verbal explanations.
 
 ## Web sequence and explicit authentication step
 
@@ -67,15 +80,9 @@ Introduce Docker, a small dbt example, and an Airflow example only when they sup
 
 ## Initial diagnostic
 
-The first session is a triage, not a complete competency assessment:
+Completed October 24, 2026. It sampled session state, resource permissions, caching, Python reading, SQL aggregation, retry safety, deployment reasoning, and agent review/product freshness concerns. This was a reasoning triage, not a complete competency or seniority assessment.
 
-- 7 minutes: a browser request, login/session state, and caching.
-- 7 minutes: a short Python debugging or SQL reasoning task, followed by a brief probe of the other language.
-- 5 minutes: a failure involving a deployment, database, or background job.
-- 6 minutes: turn a user need into acceptance criteria and review a small agent-produced change.
-- 5 minutes: feedback and selection of follow-up exercises.
-
-Keep answers and coaching notes local. An unasked question remains unassessed; do not infer competence across an entire domain from one answer.
+Keep answers and coaching notes local. An unasked question remains unassessed; do not infer competence across an entire domain from one answer. Short probes within future lessons will establish the starting depth for topics such as Docker, Git/CI, transactions, and orchestration. The existing lesson budgets include those probes.
 
 ## Evidence and progress
 

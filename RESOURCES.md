@@ -2,6 +2,8 @@
 
 ## Knowledge
 
+Select one focused section per lesson to keep reading small and directly connected to its exercise.
+
 - [MDN: Overview of HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview)
   Use to trace a request and response and place browsers, servers, and intermediaries in the same picture.
 - [MDN: Using HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies)
@@ -14,8 +16,12 @@
   Use to investigate browser cross-origin behaviour and distinguish it from API access control.
 - [PHP manual: Session handling](https://www.php.net/manual/en/book.session.php)
   Use to connect the session model to PHP's session identifiers, session_start, and session data across requests.
+- [OWASP: Session management cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+  Use for server-side session validity, identifier handling, and expiry/logout checks in the session lesson.
 - [MDN: HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching)
   Use for browser and shared caches, freshness, validation, Cache-Control, and handling personalised responses.
+- [Chrome DevTools: Network features reference](https://developer.chrome.com/docs/devtools/network/reference/)
+  Use to inspect actual request/response evidence and compare behaviour with browser HTTP caching disabled.
 - [Nginx: Beginner's guide](https://nginx.org/en/docs/beginners_guide.html)
   Use to understand static serving, proxying, and the relationship between a web server and an application runtime.
 - [GitHub: Understanding GitHub Actions](https://docs.github.com/en/actions/get-started/understand-github-actions)
@@ -28,6 +34,8 @@
   Use for interpreting tracebacks and understanding exception handling before implementing ingestion failure paths.
 - [PostgreSQL tutorial](https://www.postgresql.org/docs/current/tutorial.html)
   Use for focused refreshers on joins, transactions, and window functions; select the relevant sections rather than restarting from the beginning.
+- [PostgreSQL: Table expressions](https://www.postgresql.org/docs/current/queries-table-expressions.html)
+  Use to trace outer joins, WHERE filtering, and grouping on small fixtures that include missing or filtered-out matches.
 - [PostgreSQL: Transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
   Use to explain a concrete concurrent-update scenario; match the example to the chosen database version and isolation level.
 - [RabbitMQ: Work queues tutorial](https://www.rabbitmq.com/tutorials/tutorial-two-python)

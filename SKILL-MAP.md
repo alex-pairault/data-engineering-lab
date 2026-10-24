@@ -1,6 +1,6 @@
 # Shared engineering skill map
 
-All topics are currently **unassessed**. The initial programme provides a first pass through these topics; record remaining gaps honestly and adjust the depth to the evidence collected.
+The initial diagnostic is complete. This public map lists learning targets; personal assessment ratings and answers stay local. Public demonstration links will be added as original exercises are completed. Adjust depth to observed evidence and keep unprobed areas explicitly unassessed.
 
 ## What counts as understanding
 
@@ -33,6 +33,8 @@ These are different kinds of evidence, not interchangeable completion badges. Ai
 ## Depth choices
 
 Authentication, sessions, authorization, caching, APIs, Python, SQL, tests, and basic local deployment are priorities for hands-on exercises. Product reasoning and agent review run through those exercises as well as receiving focused practice.
+
+For each access-controlled feature, trace every return path, including caches. Verification should include distinct users, a negative case, and relevant warm/cold, retry, empty-data, or expiry states. Select the cases that test the intended behaviour, rather than treating this as a fixed test-count requirement.
 
 OAuth 2.0, OpenID Connect, and JWT initially need correct recognition and role distinctions. The first pass does not require implementing protocols or a complete identity provider. Likewise, background-work concepts do not require installing every example broker.
 
