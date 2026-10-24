@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Requests, identity, and state — Fieldnotes reference</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Quick reference</p>
+        <h1>Requests, identity, and state.</h1>
+        <p>
+          Use after a recall attempt. A vocabulary and investigation guide for
+          the first five lessons.
+        </p>
+        <p><a href="../index.html">← Learning workspace</a></p>
+      </header>
+      <section class="lesson-section">
+        <h2>Three different decisions</h2>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="Authentication verifies identity. A session carries that identity into later requests. Authorization checks permission for an action on a resource."
+        >
+          <div class="node">Authentication<span>Who is signing in?</span></div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Session validation<span
+              >Which identity does this request represent?</span
+            >
+          </div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Authorization<span>May that identity do this?</span>
+          </div>
+        </div>
+        <p>
+          A valid sign-in or session does not grant access to every resource.
+          Check permission on every protected return path, including cache hits.
+        </p>
+        <p class="small muted">
+          This sequence illustrates a server-backed session design; other
+          identity architectures exist.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Keep these terms distinct</h2>
+        <dl class="glossary">
+          <dt>HTTP request / response</dt>
+          <dd>
+            A client sends a method, target, headers, and sometimes a body. A
+            server returns a status, headers, and sometimes a body.
+          </dd>
+          <dt>DOM</dt>
+          <dd>
+            The browser's document representation. JavaScript can update what
+            appears on the page after a response arrives.
+          </dd>
+          <dt>Password hash</dt>
+          <dd>
+            A verifier produced by a dedicated password hashing scheme. Use
+            established verification libraries; hashing is different from
+            reversible encryption.
+          </dd>
+          <dt>Cookie</dt>
+          <dd>
+            A browser-held value sent with requests matching its scope and
+            browser rules. A cookie can carry a session identifier; the cookie
+            itself is not proof of permission.
+          </dd>
+          <dt>Server-backed session</dt>
+          <dd>
+            In the illustrated design, an unpredictable identifier refers to
+            server-held identity and validity state. The server checks that
+            state on later requests.
+          </dd>
+          <dt>sessionStorage</dt>
+          <dd>
+            A browser storage API. Its name does not make its contents an
+            authenticated server session.
+          </dd>
+          <dt>Cache key</dt>
+          <dd>
+            The identity of a cached result. Include the context that changes
+            the result and respect current permissions.
+          </dd>
+          <dt>Hit / miss</dt>
+          <dd>
+            A hit reuses an eligible cached result. A miss computes or fetches
+            the result and may cache it.
+          </dd>
+          <dt>TTL</dt>
+          <dd>
+            Time to live: an expiry duration. It bounds reuse in a particular
+            cache; it does not guarantee immediate freshness or user isolation.
+          </dd>
+          <dt>Invalidation</dt>
+          <dd>
+            Making an existing cached result unavailable or unusable, for
+            example after a relevant change.
+          </dd>
+        </dl>
+      </section>
+      <section class="lesson-section">
+        <h2>When an observation looks wrong</h2>
+        <ol class="reading-list">
+          <li>
+            <strong>Separate response from display.</strong> Inspect the actual
+            request and body in Network. HTTP 200 alone does not establish
+            product correctness.
+          </li>
+          <li>
+            <strong>Trace trusted identity.</strong> Find how the server
+            validates it. Editing a browser user ID must not switch the
+            authenticated identity.
+          </li>
+          <li>
+            <strong>Trace every return path.</strong> A database ownership
+            filter cannot protect a cache hit that bypasses it.
+          </li>
+          <li>
+            <strong>Test the failure mode.</strong> Use distinct identities, an
+            empty then warm cache, and both request orders where relevant. Two
+            tabs may share one login.
+          </li>
+          <li>
+            <strong>State the evidence and its limits.</strong> A passing
+            example supports that behaviour; it is not proof of every possible
+            case.
+          </li>
+        </ol>
+        <p>
+          For a server-backed session, expiry and logout must be enforced by the
+          server. Removing only a browser value does not necessarily invalidate
+          a captured session identifier.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Primary sources and practice</h2>
+        <div class="resource-links">
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview"
+            >MDN: HTTP overview</a
+          >
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage"
+            >MDN: sessionStorage</a
+          >
+          <a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+            >OWASP: Password storage</a
+          >
+          <a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+            >OWASP: Session management</a
+          >
+          <a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+            >OWASP: Authorization</a
+          >
+          <a href="../lessons/0001-request-response.html"
+            >01 Request and response</a
+          >
+          <a href="../lessons/0002-authentication.html">02 Authentication</a>
+          <a href="../lessons/0003-sessions.html">03 Sessions</a>
+          <a href="../lessons/0004-cache-isolation.html">04 User isolation</a>
+          <a href="../lessons/0005-agent-verification.html"
+            >05 Agent verification</a
+          >
+        </div>
+        <p>
+          Ask your teaching agent about anything unclear. Bring an observation
+          and your current explanation.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
