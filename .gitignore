@@ -1,5 +1,7 @@
 # Private coaching notes and assessment answers
 .local/
+dist/
+test-results/
 
 # Credentials and machine-specific settings
 .env
