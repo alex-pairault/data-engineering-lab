@@ -1,4 +1,5 @@
 export const COURSE = "fieldnotes-engineering-v1";
+export const COURSE_START = "2026-11-03";
 export const DOMAINS = {
   web: { name: "Web fundamentals", short: "Web", color: "#315fec" },
   code: {
@@ -283,11 +284,11 @@ const lessonOutlines = {
     ],
   },
 };
-function weekdayDates() {
+function weekdayDates(start, count) {
   const dates = [];
   for (
-    let day = new Date("2026-10-26T12:00:00Z");
-    day <= new Date("2026-12-15T12:00:00Z");
+    let day = new Date(`${start}T12:00:00Z`);
+    dates.length < count;
     day.setUTCDate(day.getUTCDate() + 1)
   ) {
     if (day.getUTCDay() !== 0 && day.getUTCDay() !== 6)
@@ -295,7 +296,7 @@ function weekdayDates() {
   }
   return dates;
 }
-const dates = weekdayDates();
+const dates = weekdayDates(COURSE_START, items.length);
 export const lessons = items.map(
   ([id, domain, title, objective, file], index) => ({
     id,
@@ -318,8 +319,8 @@ export const matchesLesson = (lesson, query) =>
     .includes(query.trim().toLowerCase());
 export const lessonUrl = (lesson, base = "./") =>
   `${base}lessons/${lesson.file}`;
-export const formatDate = (value) =>
-  new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(
+export const formatDate = (value, month = "short") =>
+  new Intl.DateTimeFormat("en", { month, day: "numeric" }).format(
     new Date(`${value.slice(0, 10)}T12:00:00`),
   );
 export const escapeHtml = (value) =>

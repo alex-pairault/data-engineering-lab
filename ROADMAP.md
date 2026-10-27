@@ -2,7 +2,7 @@
 
 The initial diagnostic was completed on October 24, 2026. This sequence now starts with request/state mechanisms, user isolation, and practical verification, while retaining shared foundations across software, data, and product work. Personal assessment answers and ratings stay local; later lessons will probe areas not covered by the initial triage.
 
-From October 26 through December 15, 2026, there are 37 Monday-to-Friday learning sessions, or 18.5 hours at 30 minutes each, before holidays or missed days. The diagnostic was completed before this window; its former slot is reassigned to practical agent review and verification.
+The learner starts on **November 3, 2026** and chose to keep all **37 Monday-to-Friday sessions**, finishing on **December 23, 2026**. This replaces the original mid-December target and remains 18.5 hours at 30 minutes per session, before holidays or missed days. Dates skip weekends; public holidays are not automatically excluded. The diagnostic was completed before this window; its former slot is reassigned to practical agent review and verification.
 
 | Focus | Sessions | Planned demonstration |
 | --- | ---: | --- |
@@ -31,11 +31,11 @@ These are planned lessons, not completed portfolio exercises. Their allocation i
 
 | Date | Allocation | Focus and planned evidence |
 | --- | --- | --- |
-| October 26 | Web 01 | Trace a browser request and inspect the response supplying a displayed value. |
-| October 27 | Web 03 | Trace identity verification in a small login flow; explain where authentication occurs. |
-| October 28 | Web 04 | Inspect browser-held and server-held session state; demonstrate expiry or logout. |
-| October 29 | Web 05 | Check user isolation through database and cache paths in a changed example using two synthetic users. |
-| October 30 | Product/agent verification 01 | Write and run behavioural checks for a small agent change, then record the evidence supporting acceptance. |
+| November 3 | Web 01 | Trace a browser request and inspect the response supplying a displayed value. |
+| November 4 | Web 03 | Trace identity verification in a small login flow; explain where authentication occurs. |
+| November 5 | Web 04 | Inspect browser-held and server-held session state; demonstrate expiry or logout. |
+| November 6 | Web 05 | Check user isolation through database and cache paths in a changed example using two synthetic users. |
+| November 9 | Product/agent verification 01 | Write and run behavioural checks for a small agent change, then record the evidence supporting acceptance. |
 
 Continue with Web 02, caching/freshness/invalidation, and the remaining web topics. Interleave Python and SQL practice, including outer-join filters, nulls, and edge-case fixtures. Later deployment and retry exercises must collect executed evidence, in addition to verbal explanations.
 
@@ -73,7 +73,7 @@ These are a coverage checklist with selected practical examples. The 37-session 
 
 ## Dedicated hardware and script-efficiency lesson
 
-**Session 07 — November 3: Hardware for scripts: CPU, RAM, and I/O.** This refocuses the existing Python refresh/debugging slot, keeping the course at 37 sessions. Its objective is to justify one script change using resource measurements. It remains planned until the runnable lesson is authored.
+**Session 07 — November 11: Hardware for scripts: CPU, RAM, and I/O.** This refocuses the existing Python refresh/debugging slot, keeping the course at 37 sessions. Its objective is to justify one script change using resource measurements. It remains planned until the runnable lesson is authored.
 
 - **Recall, 5 minutes:** predict what happens when the input doubles and distinguish RAM from persistent storage.
 - **Visual explanation, 5 minutes:** trace storage/network → live objects in RAM → CPU cores and caches. Locate CPU work, I/O waits, the working set, and memory pressure. Introduce paging/swap and out-of-memory failures without deliberately exhausting the learner's machine.

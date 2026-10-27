@@ -64,7 +64,7 @@ Use the [exercise template](templates/exercise.md) for these write-ups. Complete
 
 Lessons and feedback are in English. Use a diagram, timeline, or small interactive experiment when it helps explain the mechanism, accompanied by concise text. See the [lesson format](LESSON-FORMAT.md) for the authoring requirements.
 
-The working target is 30 minutes per weekday through mid-December 2026:
+The working target is 30 minutes per weekday, starting November 3 and finishing December 23, 2026, for all 37 sessions:
 
 - 5 minutes recalling earlier material.
 - 5 minutes studying one focused concept.

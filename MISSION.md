@@ -16,7 +16,7 @@ Build confidence in understanding a product from a browser request through its a
 
 ## Constraints
 
-- At least 30 minutes per weekday, with an initial horizon of December 15, 2026.
+- At least 30 minutes per weekday, starting November 3, 2026. Keep all 37 sessions, with the final session on December 23, 2026; this replaces the original mid-December target at the learner's request.
 - Lessons, graphics, exercises, and feedback are in English. Use diagrams and interactive examples when they make a concept clearer, with short supporting explanations.
 - Preserve a shared engineering foundation while using data and analytics work as one practical application. Adjust difficulty after a broad diagnostic.
 - Aim for working explanations across the core topics and practical competence in selected areas; 18.5 hours is a first pass, not expertise in every domain.

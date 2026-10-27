@@ -53,7 +53,14 @@ const completedEntry = () => ({
 test("the honest course allocation has 37 weekdays, five ready lessons, and balanced domains", () => {
   assert.equal(lessons.length, 37);
   assert.equal(readyLessons.length, 5);
-  assert.equal(lessons.at(-1).date, "2026-12-15");
+  assert.equal(lessons[0].date, "2026-11-03");
+  assert.equal(lessons.at(-1).date, "2026-12-23");
+  assert.deepEqual(
+    readyLessons.map((lesson) => lesson.date),
+    ["2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06", "2026-11-09"],
+  );
+  assert.equal(lessonById("python-debug").date, "2026-11-11");
+  assert.equal(new Set(lessons.map((lesson) => lesson.date)).size, 37);
   assert.deepEqual(
     Object.fromEntries(
       Object.keys(DOMAINS).map((id) => [
@@ -74,6 +81,9 @@ test("the honest course allocation has 37 weekdays, five ready lessons, and bala
   assert.equal(new Set(lessons.map((l) => l.id)).size, 37);
   for (const lesson of lessons) {
     assert.ok(lesson.date);
+    assert.ok(
+      ![0, 6].includes(new Date(`${lesson.date}T12:00:00Z`).getUTCDay()),
+    );
     assert.ok(lesson.ready === Boolean(lesson.file));
   }
 });
