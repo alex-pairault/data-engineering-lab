@@ -21,6 +21,7 @@ These are different kinds of evidence, not interchangeable completion badges. Ai
 | Programming and code structure | Python functions and data structures, exceptions, modules, separation of concerns, interfaces, reading unfamiliar code, everyday complexity | Debug a small program, explain the cause, and identify which rule belongs in business logic rather than request handling. |
 | Databases and concurrency | SQL joins and windows, grain, keys, constraints, transactions, isolation and races, indexes, query plans, migrations | Prevent a duplicate write or lost update; explain why an aggregation returns an incorrect total. |
 | Git and dependencies | Diffs, branches, pull requests, conflict resolution, version pinning, lockfiles, isolated environments | Explain a small diff, resolve a focused conflict, and reproduce the chosen dependency versions. |
+| Hardware and resource efficiency | CPU cores and caches, RAM and working sets, storage and network I/O, latency versus throughput, CPU time versus elapsed time, traced allocations versus process memory, paging/swap and out-of-memory failures; streaming, bounded batches, and worker limits | Compare eager and streamed Python processing on bounded synthetic data, verify the same output, measure at two input sizes, and justify one change from CPU/time/memory evidence. |
 | Runtime and networking | Process, port, environment, DNS, TLS, web server, reverse proxy, PHP application runtime | Trace browser to Nginx to application to database; suggest an evidence-based first check for a gateway failure. |
 | Deployment and scaling | Images versus containers, volumes and networks, configuration, multiple servers, shared state, load balancing | Run a small local setup and explain which state must survive a restart or be shared between replicas. |
 | Reliability and delivery | Unit/integration tests, Git and CI, logs/metrics/traces, Sentry's role, rollback, backups and restore | Find a controlled failure from available evidence and explain how to detect recurrence. |
@@ -33,6 +34,8 @@ These are different kinds of evidence, not interchangeable completion badges. Ai
 ## Depth choices
 
 Authentication, sessions, authorization, caching, APIs, Python, SQL, tests, and basic local deployment are priorities for hands-on exercises. Product reasoning and agent review run through those exercises as well as receiving focused practice.
+
+Hardware awareness is an explicit early Python lesson, followed by application in data batching and container resource budgets. Start with one measured memory-scaling comparison; revisit CPU-bound versus I/O-bound work and concurrency tradeoffs across later exercises. Reading hardware specifications alone does not demonstrate efficient scripts.
 
 For each access-controlled feature, trace every return path, including caches. Verification should include distinct users, a negative case, and relevant warm/cold, retry, empty-data, or expiry states. Select the cases that test the intended behaviour, rather than treating this as a fixed test-count requirement.
 

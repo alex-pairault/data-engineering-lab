@@ -7,7 +7,7 @@ From October 26 through December 15, 2026, there are 37 Monday-to-Friday learnin
 | Focus | Sessions | Planned demonstration |
 | --- | ---: | --- |
 | Web fundamentals | 9 | Trace HTTP/API requests and browser behaviour; explicitly cover authentication, sessions, authorization, and caching |
-| Programming and databases | 7 | Refresh Python; structure, test, and debug a small change; use SQL, constraints, transactions, concurrency, and indexes |
+| Programming and databases | 7 | Refresh Python while profiling CPU, RAM, and I/O; structure, test, and debug a small change; use SQL, constraints, transactions, concurrency, and indexes |
 | Infrastructure | 5 | Explain processes, ports, DNS, TLS, reverse proxies, and load balancing; run a small Docker setup |
 | Reliability, security, and delivery | 5 | Use Git, dependency management, tests, and CI; diagnose failures; reason about security, performance, deployment, and recovery |
 | Data systems | 4 | Demonstrate data quality, a small dbt transformation, background work, dependencies, retries, and safe reruns |
@@ -63,12 +63,24 @@ Integrate these into existing exercises rather than adding separate installation
 
 - **Git and dependencies:** read diffs, use branches and pull requests, handle a small conflict, understand pinned versions, lockfiles, and isolated environments. Use the delivery allocation and normal portfolio work.
 - **Code structure and everyday complexity:** separate request handling, business rules, and storage; use clear functions and interfaces; compare ordinary list/dictionary/set operations and avoid unnecessary abstractions. Use programming exercises.
+- **Hardware and resource use:** explicitly connect CPU cores and caches, RAM, storage, and network I/O to a running script. Use the dedicated Python profiling session below, then revisit bounded batches, worker limits, and resource budgets in data, Docker, and performance exercises.
 - **Concurrency and correctness:** explain a race condition, use a database transaction or constraint where appropriate, and distinguish asynchronous execution from parallel work. Use programming/database exercises.
 - **Background jobs and webhooks:** trace a queued job or incoming event, reason about acknowledgement, duplicate delivery, retries, and idempotency. Contrast this with a scheduled workflow in the data allocation; RabbitMQ is a reference example, not a required new stack component.
 - **Browser and API boundaries:** distinguish browser state from server state, inspect network activity, explain same-origin/CORS concepts, and recognise accessible form feedback. Use the web and product exercises.
 - **Performance and safe evolution:** find evidence before optimising; recognise N+1 queries, pagination, and blocking work; consider API compatibility, migrations, and rollback. Use database, API, and delivery exercises.
 
 These are a coverage checklist with selected practical examples. The 37-session budget is unchanged; record gaps for later practice rather than compressing multiple deep lessons into a single session.
+
+## Dedicated hardware and script-efficiency lesson
+
+**Session 07 — November 3: Hardware for scripts: CPU, RAM, and I/O.** This refocuses the existing Python refresh/debugging slot, keeping the course at 37 sessions. Its objective is to justify one script change using resource measurements. It remains planned until the runnable lesson is authored.
+
+- **Recall, 5 minutes:** predict what happens when the input doubles and distinguish RAM from persistent storage.
+- **Visual explanation, 5 minutes:** trace storage/network → live objects in RAM → CPU cores and caches. Locate CPU work, I/O waits, the working set, and memory pressure. Introduce paging/swap and out-of-memory failures without deliberately exhausting the learner's machine.
+- **Experiment, 15 minutes:** run a prepared Python script over bounded synthetic data. Compare loading a file into a list with streaming it, verify identical counts/checksums, and repeat at twice the input size. Record elapsed time (`perf_counter`), current-process CPU time (`process_time`), and peak traced Python allocations (`tracemalloc`). Inspect process RAM separately in a system monitor; traced allocations are not total process memory. Treat timing differences as observations, accounting for profiler overhead and file caching.
+- **Explain, 5 minutes:** keep a before/after table, justify streaming or a bounded batch size, and state a tradeoff and a follow-up check. Explain why extra threads, processes, or CPU cores do not guarantee a speedup, and how extra workers can increase memory use. Detailed parallelism practice remains in later runtime/background-work exercises.
+
+Revisit the same reasoning when processing data batches, setting container memory/CPU budgets, and investigating a slow request. The first pass needs a useful mental model and one measured change; advanced processor architecture is a later depth option. Sources are listed in [RESOURCES.md](RESOURCES.md).
 
 ## Project thread
 

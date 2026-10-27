@@ -28,6 +28,12 @@ function card(lesson, state) {
 function heading(eyebrow, title, description, badge = "") {
   return `<div class="page-heading"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><p>${description}</p></div>${badge}</div>`;
 }
+function plannedLessonDetails(lesson) {
+  if (!lesson.outline)
+    return "<p>Your tutor will choose a focused exercise and primary reference when preparing this session. It cannot be marked as practised from an outline.</p>";
+  const plan = lesson.outline;
+  return `<div class="node-track" role="img" aria-label="A simplified data path between storage or network, working objects in RAM, and CPU cores with caches.">${plan.flow.map(([label, detail], index) => `${index ? '<span class="node-connector" aria-hidden="true">↔</span>' : ""}<div class="node">${e(label)}<span>${e(detail)}</span></div>`).join("")}</div><p class="figure-caption">A simplified mechanism map. The lesson will connect each resource to a measured Python workload.</p><h3>What you will practise</h3><ul>${plan.topics.map((topic) => `<li>${e(topic)}</li>`).join("")}</ul><h3>The 30-minute experiment</h3><p>${e(plan.exercise)}</p><p>${e(plan.evidence)}</p><p class="small muted">5 minutes recall · 5 minutes visual explanation · 15 minutes experiment · 5 minutes explanation. This outline cannot be marked as practised.</p><h3>Primary references</h3><div class="resource-links">${plan.references.map(([title, url]) => `<a href="${e(url)}" target="_blank" rel="noopener">${e(title)} ↗</a>`).join("")}</div>`;
+}
 function today() {
   const state = store.get(),
     entries = Object.values(state.lessons),
@@ -88,7 +94,7 @@ function course() {
           const l = lessonById(button.dataset.outline);
           showDialog(
             l.title,
-            `<p>${e(l.objective)}</p><div class="notice">Planned for ${formatDate(l.date)}. This lesson has not been authored yet.</div><p>Your tutor will choose a focused exercise and primary reference when preparing this session. It cannot be marked as practised from an outline.</p>`,
+            `<p>${e(l.objective)}</p><div class="notice">Planned for ${formatDate(l.date)}. This lesson has not been authored yet.</div>${plannedLessonDetails(l)}`,
           );
         }),
     );

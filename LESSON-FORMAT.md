@@ -23,6 +23,7 @@ Prefer a useful graphic when it clarifies relationships, sequence, state, timing
 | --- | --- |
 | HTTP, authentication, sessions | A sequence diagram with browser, application, and relevant stores; labelled requests and state changes. |
 | Caching | A hit/miss flow and an expiry/invalidation timeline; vary one value or expiry time when an interaction helps. |
+| Hardware and script efficiency | A storage/network ↔ RAM ↔ CPU diagram, paired with a before/after table of elapsed time, CPU time, and memory measurements at two bounded input sizes. Label traced allocations separately from process RAM. |
 | Runtime, deployment, load balancing | A small architecture diagram showing processes, network boundaries, storage, and which state is shared. |
 | Transactions and race conditions | Two operations on a shared timeline, with a before/after state table. |
 | Queues, webhooks, retries | An event flow with producer, worker, acknowledgement, and a duplicate or failure path. |

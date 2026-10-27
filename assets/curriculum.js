@@ -65,8 +65,8 @@ const items = [
   [
     "python-debug",
     "code",
-    "Read, predict, debug",
-    "Use a small Python program to practise control flow and failure diagnosis.",
+    "Hardware for scripts: CPU, RAM, and I/O",
+    "Profile a Python script and compare eager loading with streaming to explain CPU work, memory use, and I/O waits.",
   ],
   [
     "sql-joins",
@@ -249,6 +249,40 @@ const items = [
     "Revisit the reference project and assemble reproducible portfolio evidence.",
   ],
 ];
+// Keep the existing lesson ID so saved progress and backups remain compatible.
+const lessonOutlines = {
+  "python-debug": {
+    flow: [
+      ["Storage / network", "Read or receive data"],
+      ["RAM", "Hold live Python objects"],
+      ["CPU cores + caches", "Execute instructions; reuse nearby data"],
+    ],
+    topics: [
+      "CPU cores and caches: distinguish time spent computing from elapsed time waiting for I/O.",
+      "RAM and working sets: connect live objects, copies, paging/swap, and out-of-memory failures.",
+      "Disk and network I/O: distinguish latency from throughput and identify what limits this workload.",
+      "Resource-aware scripts: use streaming or bounded batches; explain why more workers can increase memory use without guaranteeing a speedup.",
+    ],
+    exercise:
+      "Predict, then compare a prepared Python script that loads a synthetic file into a list with one that streams records. Verify the same count and checksum, double the bounded input size, and record elapsed time, process CPU time, and peak traced allocations. Compare allocations with process RAM in a system monitor; they measure different things.",
+    evidence:
+      "Keep a before/after measurement table and explain one justified change, its tradeoff, and the next check you would use. The experiment is a Python refresh and memory-scaling investigation; it does not promise that streaming is always faster.",
+    references: [
+      [
+        "Python: elapsed and process CPU time",
+        "https://docs.python.org/3/library/time.html",
+      ],
+      [
+        "Python: tracing memory allocations",
+        "https://docs.python.org/3/library/tracemalloc.html",
+      ],
+      [
+        "Microsoft: hardware performance considerations",
+        "https://learn.microsoft.com/en-us/windows-server/administration/performance-tuning/hardware/",
+      ],
+    ],
+  },
+};
 function weekdayDates() {
   const dates = [];
   for (
@@ -273,6 +307,7 @@ export const lessons = items.map(
     number: index + 1,
     date: dates[index],
     minutes: 30,
+    outline: lessonOutlines[id] || null,
   }),
 );
 export const readyLessons = lessons.filter((lesson) => lesson.ready);

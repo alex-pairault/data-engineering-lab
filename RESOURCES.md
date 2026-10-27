@@ -32,6 +32,12 @@ Select one focused section per lesson to keep reading small and directly connect
   Use to understand how captured errors and related application evidence support diagnosis; select a focused walkthrough when the observability exercise is designed.
 - [Python tutorial: Errors and Exceptions](https://docs.python.org/3/tutorial/errors.html)
   Use for interpreting tracebacks and understanding exception handling before implementing ingestion failure paths.
+- [Python: Time access and conversions](https://docs.python.org/3/library/time.html)
+  Use `perf_counter` for elapsed duration and `process_time` for CPU time of the current process. Compare both when investigating computing versus waiting. Added and checked October 27, 2026.
+- [Python: tracemalloc](https://docs.python.org/3/library/tracemalloc.html)
+  Use for current/peak traced Python allocations in the hardware lesson. Start tracing before the measured allocations and distinguish these figures from total process RAM. Added and checked October 27, 2026.
+- [Microsoft: Server hardware performance considerations](https://learn.microsoft.com/en-us/windows-server/administration/performance-tuning/hardware/)
+  Use the processor, cache, memory, and I/O sections for the hardware mental model. The configuration advice is Windows-specific; the lesson uses the resource relationships, not its machine-purchasing or operating-system tuning recommendations. Added and checked October 27, 2026.
 - [PostgreSQL tutorial](https://www.postgresql.org/docs/current/tutorial.html)
   Use for focused refreshers on joins, transactions, and window functions; select the relevant sections rather than restarting from the beginning.
 - [PostgreSQL: Table expressions](https://www.postgresql.org/docs/current/queries-table-expressions.html)
@@ -47,7 +53,7 @@ Select one focused section per lesson to keep reading small and directly connect
 - [Docker: Get started](https://docs.docker.com/get-started/)
   Use when adding reproducible local execution and learning the distinction between an image and a running container.
 
-These official documentation links were checked on October 24, 2026. Match documentation to the project's chosen versions when implementation starts.
+The initial official documentation links were checked on October 24, 2026; later additions record their own check dates above. Match documentation to the project's chosen versions when implementation starts.
 
 ## Wisdom (communities)
 
