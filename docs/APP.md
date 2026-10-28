@@ -1,6 +1,6 @@
 # Fieldnotes: the first learning product
 
-Fieldnotes helps a learner choose one 30-minute session, investigate a mechanism, keep their own explanation, and return for spaced recall. It now contains ten English lessons with graphics and working experiments, plus a broader 37-session map. Planned sessions have outlines and cannot be completed.
+Fieldnotes helps a learner choose one 30-minute session, investigate a mechanism, keep their own explanation, and return for spaced recall. It now contains fifteen English lessons with graphics and working experiments, plus a broader 37-session map. Planned sessions have outlines and cannot be completed.
 
 ## Behaviour and evidence
 
@@ -27,13 +27,15 @@ flowchart LR
 
 The product is static HTML, CSS, and ES modules. It has no application backend, analytics, sign-in system, or automatic cloud sync. Hosted Site access is managed by Sites; it is separate from the simulated identity examples. Fonts are bundled under their included OFL licenses, so lessons do not request a font CDN.
 
-`assets/curriculum.js` defines the route and ready/planned state. `assets/lesson-data.js` and `assets/lesson-data-next.js` define recall prompts, checks, hints, and changed review questions. `assets/lesson.js` provides the reusable lesson engine. `assets/lab-models.js` and `assets/next-models.js` contain inspectable mechanisms; `assets/labs.js` and `assets/labs-next.js` connect them to visual controls through `assets/lab-ui.js`. `assets/store.js` validates data and manages persistence and review dates.
+`assets/curriculum.js` defines the route and ready/planned state. The `assets/lesson-data*.js` modules define recall prompts, checks, hints, and changed review questions. `assets/lesson.js` provides the reusable lesson engine. `assets/lab-models.js`, `assets/next-models.js`, and `assets/foundation-models.js` contain inspectable mechanisms; the lab modules connect them to visual controls through `assets/lab-ui.js`. `assets/store.js` validates data and manages persistence and review dates.
 
 Lesson one's fetch uses a real static response; it does not call a product API or database. Authentication, sessions, and caches use explicitly labelled browser-side models. They must not be reused as production security implementations.
 
 The hardware lesson downloads a bounded standard-library Python script. It uses fresh processes, separate timing and allocation-tracing runs, equal-output checks, and two input sizes. The app accepts a learner-supplied JSON report and saves only short observation summaries, never the raw report. Validation is not an authenticity check or a grade. Peak RSS is optional and distinct from traced Python allocations.
 
 The SQL lesson's browser table is an explicitly labelled relational model. The downloadable Python script executes the same fixture queries in a disposable SQLite database. API, TTL, and invalidation labs are local deterministic models, not live service integrations.
+
+Sessions 11–15 add process/port, code-boundary, merge/lockfile, container-lifecycle, and grain models. Their downloadable exercises execute a real local child/HTTP service, shared Python rules, a new disposable Git repository, and SQLite queries/constraint failures. The Docker files build a real single-process counter; the command guide keeps loopback publishing and resource budgets explicit. Browser model completion never authenticates real command execution.
 
 ## Persistence and privacy
 
@@ -56,7 +58,7 @@ npm run build
 python tests/build_smoke.py
 ```
 
-The Python tests execute both downloadable exercises, check equal results at two input sizes without machine-specific timing thresholds, and reproduce the SQL download layout. The Node suite also checks API shape/validation, pagination, join edge cases, fixed TTL, commit/rollback interleavings, and resource-report validation. It checks persistence failure handling, corrupt data protection, backup validation/merging, completion gates, review scheduling, curriculum breadth, session expiry/logout, and cache isolation/expiry/empty results.
+The Python tests execute the downloadable resource, service, domain, Git, and SQL exercises, check equal results at two input sizes without machine-specific timing thresholds, and reproduce the SQL download layout. The Node suite also checks API shape/validation, pagination, join edge cases, fixed TTL, commit/rollback interleavings, and resource-report validation. It checks persistence failure handling, corrupt data protection, backup validation/merging, completion gates, review scheduling, curriculum breadth, session expiry/logout, and cache isolation/expiry/empty results.
 
 For isolated end-to-end QA, start the built app and use Python Playwright with a Chromium browser:
 
@@ -71,6 +73,16 @@ python -m venv .local/qa-venv
 An installed Chrome can be used via `FIELDNOTES_CHROME=/path/to/google-chrome`. `FIELDNOTES_TEST_URL` overrides localhost. Screenshots and synthetic test backups stay under ignored `.local/qa/`; tests never use the learner's browser profile. The original browser QA script covers the first five labs and completion flows, reload persistence, filtering, invalid imports, backup transfer, escaped notes, due reviews, storage failure recovery, mobile layout, print styling, and page errors.
 
 Sessions 6–10 were also checked through the browser UI on an isolated local origin: every lab path, completion gates, checks, saved explanations, and reload persistence. This included invalid resource reports, a locally generated four-case report, all four SQL presets, TTL expiry/reload, and three invalidation scenarios. All five pages were checked at a 390-pixel viewport; the populated resource table scrolls within its container. These are agent QA results, not learner practice. This batch did not repeat browser print rendering.
+
+Sessions 11–15 were checked through CUA on a separate local origin: all model paths, concept checks, completion gates, saved explanations and reload persistence. Native controls and keyboard activation were exercised; all five pages fit a 390-pixel viewport, with internally scrolling SQL tables. Real Docker QA also passed. Print CSS was reviewed, but the current browser connection did not expose a print preview, so this batch has no new rendered-print verification. These are agent QA results, not learner progress.
+
+Optional real Docker verification requires a running engine and may pull the pinned official Python base image:
+
+```sh
+python tests/docker_exercise.py
+```
+
+This builds from only the two exercise files, uses unique disposable names and OS-selected loopback ports, checks stop/start, replacement and volume retention, and removes only its own resources. It is separate from the no-Docker CI suite.
 
 ## Extend a lesson
 

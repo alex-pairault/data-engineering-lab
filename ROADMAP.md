@@ -51,6 +51,18 @@ These authored lessons are available in Fieldnotes. Availability is not a claim 
 | November 13 | 09 | A live but stale entry, fixed TTL expiry, and a later miss/reload. |
 | November 16 | 10 | Controlled invalidation/commit interleavings, rollback, and remaining failure limits. |
 
+## Sessions 11–15
+
+These authored sessions are available; real command output and learner explanations must still be collected during practice.
+
+| Date | Session | Focus and guided evidence |
+| --- | --- | --- |
+| November 17 | 11 | Process/listener/endpoint diagnosis; local Python child process and HTTP probe. |
+| November 18 | 12 | Shared domain rule across HTTP and job callers; invalid inputs never reach storage. |
+| November 19 | 13 | Disposable real Git conflict; behavioural resolution and manifest/lockfile distinctions. |
+| November 20 | 14 | Docker image, process, published port, CPU/RAM limits, and writable-layer versus volume lifecycle. |
+| November 23 | 15 | Join fanout, legitimate repeated amounts, preaggregation, and actual SQLite constraint failures. |
+
 ## Web sequence and explicit authentication step
 
 These nine focused sessions fit inside the existing web allocation. Their order may change with diagnostic evidence, but authentication, sessions, authorization, and caching remain visible.
@@ -122,4 +134,4 @@ Record the exercise, date, assistance used, and verification behind a state chan
 
 Personal diagnostic results stay local. Public progress is expressed through completed exercises and their evidence.
 
-Fieldnotes now shows this course map, practice evidence, and next-review dates. Ten lessons are ready; the remaining 27 sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.
+Fieldnotes now shows this course map, practice evidence, and next-review dates. Fifteen lessons are ready; the remaining 22 sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.

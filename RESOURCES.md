@@ -78,3 +78,15 @@ Checked October 27, 2026. Select the named sections; do not treat the full refer
 - [Redis EXPIRE](https://redis.io/docs/latest/commands/expire/): entry lifetime and expiration behaviour.
 - [Microsoft cache-aside](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside): miss/reload behaviour, stale data, and ordering of source updates and invalidation.
 - [Django after-commit actions](https://docs.djangoproject.com/en/5.2/topics/db/transactions/#performing-actions-after-commit): successful-commit callbacks, rollback behaviour, and callback failure limits. The lesson's transaction code is pseudocode, not a Django integration.
+
+
+## Sources used for lessons 11–15
+
+Checked October 28, 2026. Read the focused sections linked from each lesson.
+
+- [Python process environment](https://docs.python.org/3/library/os.html#os.environ), [socket addresses](https://docs.python.org/3/library/socket.html), and [local HTTP servers](https://docs.python.org/3/library/http.server.html): process configuration, listening endpoints and the teaching server's limits.
+- [Microsoft logical layers](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures) and [domain validation](https://learn.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/domain-model-layer-validations): responsibilities and invariants across callers, adapted to a small Python function example rather than a framework requirement.
+- [Git merge/conflict resolution](https://git-scm.com/docs/git-merge#_how_to_resolve_conflicts): inspect, resolve, stage and verify the intended result.
+- [npm lockfiles](https://docs.npmjs.com/cli/v11/configuring-npm/package-lock-json/) and [npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci/): resolved graphs, manifest consistency, replacement of node_modules and frozen installation behaviour.
+- [Docker images](https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-an-image/), [publishing ports](https://docs.docker.com/engine/network/port-publishing/), and [volumes](https://docs.docker.com/engine/storage/volumes/): image/container distinction, loopback host mappings and persistent state lifecycle. [Docker resource limits](https://docs.docker.com/engine/containers/resource_constraints/) connects the exercise budgets to the hardware lesson.
+- [Microsoft grain/granularity](https://learn.microsoft.com/en-us/power-bi/guidance/star-schema), [PostgreSQL join multiplicity](https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-JOIN), and [constraints](https://www.postgresql.org/docs/current/ddl-constraints.html): row meaning, matching pairs and distinct protections. [SQLite foreign keys](https://www.sqlite.org/foreignkeys.html) explains per-connection enforcement in the runnable exercise.

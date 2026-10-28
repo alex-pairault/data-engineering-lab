@@ -6,7 +6,7 @@ The emphasis is on tracing how a product works, explaining decisions, testing fa
 
 ## Current status
 
-The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes ten English visual lessons and interactive labs:
+The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes fifteen English visual lessons and interactive labs:
 
 1. Trace a real request and distinguish its response from the page display.
 2. Locate authentication and distinguish it from permission checks.
@@ -18,10 +18,15 @@ The initial diagnostic is complete. **Fieldnotes**, the learning product, now in
 8. Preserve SQL outer-join groups and handle NULL aggregates.
 9. Distinguish TTL lifetime from source freshness.
 10. Reproduce an invalidation race and verify after-commit ordering.
+11. Match a process to a listening endpoint and distinguish connection/HTTP failures.
+12. Share business rules between HTTP and background-job entry points.
+13. Resolve a real Git conflict by behaviour and explain dependency lockfiles.
+14. Run a small Docker image and compare writable-layer and volume lifecycles.
+15. Prevent SQL fanout totals and test keys, references, and constraints.
 
 [Open Fieldnotes](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
 
-The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with ten ready and 27 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
+The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with fifteen ready and 22 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
 
 Personal assessment answers remain local. The application, lesson content, and QA were prepared with an agent; they are not learner-authored demonstrations of understanding. No public learner portfolio exercise has been completed yet.
 

@@ -50,9 +50,9 @@ const completedEntry = () => ({
     "The response and displayed state were different; I inspected the boundary.",
 });
 
-test("the honest course allocation has 37 weekdays, ten ready lessons, and balanced domains", () => {
+test("the honest course allocation has 37 weekdays, fifteen ready lessons, and balanced domains", () => {
   assert.equal(lessons.length, 37);
-  assert.equal(readyLessons.length, 10);
+  assert.equal(readyLessons.length, 15);
   assert.equal(lessons[0].date, "2026-11-03");
   assert.equal(lessons.at(-1).date, "2026-12-23");
   assert.deepEqual(
@@ -60,6 +60,7 @@ test("the honest course allocation has 37 weekdays, ten ready lessons, and balan
     ["2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06", "2026-11-09"],
   );
   assert.equal(lessonById("python-debug").date, "2026-11-11");
+  assert.deepEqual(readyLessons.slice(10, 15).map(l => l.date), ["2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20", "2026-11-23"]);
   assert.equal(new Set(lessons.map((lesson) => lesson.date)).size, 37);
   assert.deepEqual(
     Object.fromEntries(
