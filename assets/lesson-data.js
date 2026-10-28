@@ -1,6 +1,8 @@
+import { courseLessonData } from "./lesson-data-course.js";
 import { foundationLessonData } from "./lesson-data-foundations.js";
 import { nextLessonData } from "./lesson-data-next.js";
 export const lessonData = {
+  ...courseLessonData,
   ...foundationLessonData,
   ...nextLessonData,
   "request-trace": {

@@ -637,6 +637,11 @@ textarea {
   margin: 18px 0 8px;
   font-size: 15px;
 }
+.lab select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
 .course-list {
   background: white;
   border: 1px solid var(--line);
