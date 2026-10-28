@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Build a small dbt model with quality checks and documentation."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Make a data assumption executable — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="dbt-quality">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 24</p>
+        <h1>Make a data assumption executable</h1>
+        <p>Build a small dbt model with quality checks and documentation.</p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Seeds: synthetic source records → dbt model: document row grain → Data tests: zero or more violations"
+          >
+            <div class="node">Seeds<span>synthetic source records</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">dbt model<span>document row grain</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Data tests<span>zero or more violations</span>
+            </div>
+          </div>
+          <p>
+            A dbt SQL model transforms data and can describe its
+            <strong>grain</strong>. The prepared model returns one row per
+            customer who has a paid source order. Customers with no paid order
+            are outside this model’s explicit scope; the earlier outer-join
+            lesson showed how a different requirement changes that design.
+          </p>
+          <p>
+            <strong>Data tests</strong> query for violations in existing data.
+            Default success means zero failing rows, unless configuration
+            changes severity or thresholds. Built-in tests include not_null,
+            unique, relationships and accepted_values. They are different from
+            dbt unit tests and from database constraints that govern future
+            writes.
+          </p>
+          <p>
+            Test source or staging assumptions before filters and aggregation
+            can hide bad records. A duplicate source ID may disappear from an
+            aggregate while still corrupting its total. Relationships and
+            accepted_values do not substitute for not_null. The singular
+            negative-amount test also needs a separate null assertion.
+          </p>
+          <p>
+            The downloadable local project uses tiny CSV seeds and a file-backed
+            DuckDB profile across separate commands. It pins a selected
+            dbt/adapter/runtime snapshot. Prepare the environment before the
+            lesson; no Snowflake account or credentials are required. Inspect
+            actual test failures and restore the fixture after each deliberately
+            planted defect.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <p>
+          <a
+            class="button-secondary"
+            href="../assets/course-exercises/dbt-lab.zip"
+            download
+            >Download dbt-lab.zip</a
+          >
+        </p>
+        <ol>
+          <li>
+            Run all modeled data-test cases and identify which assumption each
+            violates.
+          </li>
+          <li>
+            Download dbt-lab.zip into a new folder and follow SETUP.txt before
+            the timed exercise. Run seed, run and test on the clean fixture.
+          </li>
+          <li>
+            Introduce one duplicate, null, negative amount or unknown customer
+            at a time. Reseed, rebuild and inspect the actual failed test.
+          </li>
+          <li>
+            Restore the original CSV, verify again, and explain what a
+            successful model run alone did not prove.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://docs.getdbt.com/docs/build/sql-models"
+            target="_blank"
+            rel="noopener"
+            >dbt: SQL models ↗</a
+          ><a
+            href="https://docs.getdbt.com/docs/build/data-tests"
+            target="_blank"
+            rel="noopener"
+            >dbt: data tests ↗</a
+          ><a
+            href="https://docs.getdbt.com/reference/resource-properties/data-tests"
+            target="_blank"
+            rel="noopener"
+            >dbt: test properties ↗</a
+          ><a
+            href="https://github.com/duckdb/dbt-duckdb"
+            target="_blank"
+            rel="noopener"
+            >DuckDB adapter ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0005-data-delivery.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>
