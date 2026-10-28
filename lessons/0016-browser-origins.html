@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Investigate browser state, JavaScript, origins, and CORS."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Understand the browser boundary — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="browser-origins">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 16</p>
+        <h1>Understand the browser boundary</h1>
+        <p>Investigate browser state, JavaScript, origins, and CORS.</p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Page: scheme + host + port → Browser policy: same origin / CORS → API: independent authentication"
+          >
+            <div class="node">Page<span>scheme + host + port</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Browser policy<span>same origin / CORS</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">API<span>independent authentication</span></div>
+          </div>
+          <p>
+            An <strong>origin</strong> is a scheme, host, and effective port.
+            Paths do not change it. https://app.example.test/a and /b share an
+            origin; a different host or port creates another. HTML supplies
+            document structure, CSS styles it, and JavaScript can request data
+            and update the DOM. These roles are separate from the API server.
+          </p>
+          <p>
+            The browser's <strong>same-origin policy</strong> restricts how
+            scripts access other origins. <strong>CORS</strong> lets a server
+            declare permitted cross-origin response access. A simple
+            cross-origin GET can reach a server even when the browser refuses to
+            expose its response to page JavaScript. For a request requiring
+            <strong>preflight</strong>, the browser first sends OPTIONS; a
+            denied preflight prevents the actual request.
+          </p>
+          <p>
+            Credentialed CORS needs an explicit permitted origin and the
+            appropriate credential settings; wildcard Allow-Origin does not work
+            with credentials. CORS is not authentication, authorization, or a
+            complete CSRF defense. A command-line HTTP client is not governed by
+            the browser's response-access policy. Debug the browser console and
+            network request separately from the server's observations.
+          </p>
+          <p>
+            The downloadable probe runs two real loopback origins. It
+            deliberately supplies permission on one route and omits it on the
+            other. No login, cookies, outside service or production API is
+            involved. Both simple GETs should appear in its terminal, while only
+            one response is readable by the page.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <p>
+          <a
+            class="button-secondary"
+            href="../assets/course-exercises/cors_probe.py"
+            download
+            >Download cors_probe.py</a
+          >
+        </p>
+        <ol>
+          <li>
+            Predict every model scenario before running it; distinguish actual
+            request delivery from response readability.
+          </li>
+          <li>
+            Download cors_probe.py, run <code>python cors_probe.py</code>, and
+            open its printed page URL.
+          </li>
+          <li>
+            Click both real-probe buttons. Compare the page result with
+            API-received messages in your terminal and the browser console.
+          </li>
+          <li>
+            Explain how a denied preflight differs. Stop only the probe with
+            Ctrl+C.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Same-origin_policy"
+            target="_blank"
+            rel="noopener"
+            >MDN: same-origin policy ↗</a
+          ><a
+            href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+            target="_blank"
+            rel="noopener"
+            >MDN: CORS ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0004-web-reliability.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>
