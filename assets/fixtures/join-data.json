@@ -1,0 +1,21 @@
+{
+  "customers": [
+    { "id": 1, "name": "Ada" },
+    { "id": 2, "name": "Ben" },
+    { "id": 3, "name": "Cy" },
+    { "id": 4, "name": "Dee" }
+  ],
+  "orders": [
+    { "id": 101, "customer_id": 1, "status": "paid", "amount": 12 },
+    { "id": 102, "customer_id": 1, "status": "paid", "amount": 8 },
+    { "id": 103, "customer_id": 1, "status": "refunded", "amount": 99 },
+    { "id": 104, "customer_id": 2, "status": "pending", "amount": 9 },
+    { "id": 105, "customer_id": 4, "status": "paid", "amount": 0 }
+  ],
+  "queries": {
+    "where": "SELECT c.id AS customer_id, c.name, COALESCE(SUM(o.amount), 0) AS paid_total\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.status = 'paid'\nGROUP BY c.id, c.name\nORDER BY c.id;",
+    "raw": "SELECT c.id AS customer_id, c.name, SUM(o.amount) AS paid_total\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'\nGROUP BY c.id, c.name\nORDER BY c.id;",
+    "on": "SELECT c.id AS customer_id, c.name, COALESCE(SUM(o.amount), 0) AS paid_total\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'\nGROUP BY c.id, c.name\nORDER BY c.id;",
+    "case": "SELECT c.id AS customer_id, c.name,\n       SUM(CASE WHEN o.status = 'paid' THEN o.amount ELSE 0 END) AS paid_total\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY c.id;"
+  }
+}

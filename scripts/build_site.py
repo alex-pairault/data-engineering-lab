@@ -11,7 +11,8 @@ def build():
     DIST.mkdir()
     shutil.copy2(ROOT / "index.html", DIST / "index.html")
     for name in ("assets", "lessons", "reference"):
-        shutil.copytree(ROOT / name, DIST / name)
+        shutil.copytree(ROOT / name, DIST / name,
+                        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"))
     print(f"Static app built in {DIST}. Private notes and repository metadata excluded.")
 
 if __name__ == "__main__":
