@@ -1,6 +1,6 @@
 # Fieldnotes: the first learning product
 
-Fieldnotes helps a learner choose one 30-minute session, investigate a mechanism, keep their own explanation, and return for spaced recall. Its first release contains five English lessons with graphics and working experiments, plus a broader 37-session map. Planned sessions have outlines and cannot be completed.
+Fieldnotes helps a learner choose one 30-minute session, investigate a mechanism, keep their own explanation, and return for spaced recall. It now contains ten English lessons with graphics and working experiments, plus a broader 37-session map. Planned sessions have outlines and cannot be completed.
 
 ## Behaviour and evidence
 
@@ -27,9 +27,13 @@ flowchart LR
 
 The product is static HTML, CSS, and ES modules. It has no application backend, analytics, sign-in system, or automatic cloud sync. Hosted Site access is managed by Sites; it is separate from the simulated identity examples. Fonts are bundled under their included OFL licenses, so lessons do not request a font CDN.
 
-`assets/curriculum.js` defines the route and ready/planned state. `assets/lesson-data.js` defines recall prompts, checks, hints, and changed review questions. `assets/lesson.js` provides the reusable lesson engine. `assets/lab-models.js` contains the inspectable mechanisms, and `assets/labs.js` connects them to visual controls. `assets/store.js` validates data and manages persistence and review dates.
+`assets/curriculum.js` defines the route and ready/planned state. `assets/lesson-data.js` and `assets/lesson-data-next.js` define recall prompts, checks, hints, and changed review questions. `assets/lesson.js` provides the reusable lesson engine. `assets/lab-models.js` and `assets/next-models.js` contain inspectable mechanisms; `assets/labs.js` and `assets/labs-next.js` connect them to visual controls through `assets/lab-ui.js`. `assets/store.js` validates data and manages persistence and review dates.
 
 Lesson one's fetch uses a real static response; it does not call a product API or database. Authentication, sessions, and caches use explicitly labelled browser-side models. They must not be reused as production security implementations.
+
+The hardware lesson downloads a bounded standard-library Python script. It uses fresh processes, separate timing and allocation-tracing runs, equal-output checks, and two input sizes. The app accepts a learner-supplied JSON report and saves only short observation summaries, never the raw report. Validation is not an authenticity check or a grade. Peak RSS is optional and distinct from traced Python allocations.
+
+The SQL lesson's browser table is an explicitly labelled relational model. The downloadable Python script executes the same fixture queries in a disposable SQLite database. API, TTL, and invalidation labs are local deterministic models, not live service integrations.
 
 ## Persistence and privacy
 
@@ -47,11 +51,12 @@ Run the unit and static checks:
 
 ```sh
 npm test
+python -m unittest discover -s tests -p "*_test.py"
 npm run build
 python tests/build_smoke.py
 ```
 
-The Node suite checks persistence failure handling, corrupt data protection, backup validation/merging, completion gates, review scheduling, curriculum breadth, session expiry/logout, and cache isolation/expiry/empty results.
+The Python tests execute both downloadable exercises, check equal results at two input sizes without machine-specific timing thresholds, and reproduce the SQL download layout. The Node suite also checks API shape/validation, pagination, join edge cases, fixed TTL, commit/rollback interleavings, and resource-report validation. It checks persistence failure handling, corrupt data protection, backup validation/merging, completion gates, review scheduling, curriculum breadth, session expiry/logout, and cache isolation/expiry/empty results.
 
 For isolated end-to-end QA, start the built app and use Python Playwright with a Chromium browser:
 
@@ -63,7 +68,9 @@ python -m venv .local/qa-venv
 .local/qa-venv/bin/python tests/browser_smoke.py
 ```
 
-An installed Chrome can be used via `FIELDNOTES_CHROME=/path/to/google-chrome`. `FIELDNOTES_TEST_URL` overrides localhost. Screenshots and synthetic test backups stay under ignored `.local/qa/`; tests never use the learner's browser profile. Browser QA covers every lab and completion flow, reload persistence, filtering, invalid imports, backup transfer, escaped notes, due reviews, storage failure recovery, mobile layout, print styling, and page errors.
+An installed Chrome can be used via `FIELDNOTES_CHROME=/path/to/google-chrome`. `FIELDNOTES_TEST_URL` overrides localhost. Screenshots and synthetic test backups stay under ignored `.local/qa/`; tests never use the learner's browser profile. The original browser QA script covers the first five labs and completion flows, reload persistence, filtering, invalid imports, backup transfer, escaped notes, due reviews, storage failure recovery, mobile layout, print styling, and page errors.
+
+Sessions 6–10 were also checked through the browser UI on an isolated local origin: every lab path, completion gates, checks, saved explanations, and reload persistence. This included invalid resource reports, a locally generated four-case report, all four SQL presets, TTL expiry/reload, and three invalidation scenarios. All five pages were checked at a 390-pixel viewport; the populated resource table scrolls within its container. These are agent QA results, not learner practice. This batch did not repeat browser print rendering.
 
 ## Extend a lesson
 

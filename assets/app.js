@@ -29,12 +29,6 @@ function card(lesson, state) {
 function heading(eyebrow, title, description, badge = "") {
   return `<div class="page-heading"><div><p class="eyebrow">${eyebrow}</p><h1>${title}</h1><p>${description}</p></div>${badge}</div>`;
 }
-function plannedLessonDetails(lesson) {
-  if (!lesson.outline)
-    return "<p>Your tutor will choose a focused exercise and primary reference when preparing this session. It cannot be marked as practised from an outline.</p>";
-  const plan = lesson.outline;
-  return `<div class="node-track" role="img" aria-label="A simplified data path between storage or network, working objects in RAM, and CPU cores with caches.">${plan.flow.map(([label, detail], index) => `${index ? '<span class="node-connector" aria-hidden="true">↔</span>' : ""}<div class="node">${e(label)}<span>${e(detail)}</span></div>`).join("")}</div><p class="figure-caption">A simplified mechanism map. The lesson will connect each resource to a measured Python workload.</p><h3>What you will practise</h3><ul>${plan.topics.map((topic) => `<li>${e(topic)}</li>`).join("")}</ul><h3>The 30-minute experiment</h3><p>${e(plan.exercise)}</p><p>${e(plan.evidence)}</p><p class="small muted">5 minutes recall · 5 minutes visual explanation · 15 minutes experiment · 5 minutes explanation. This outline cannot be marked as practised.</p><h3>Primary references</h3><div class="resource-links">${plan.references.map(([title, url]) => `<a href="${e(url)}" target="_blank" rel="noopener">${e(title)} ↗</a>`).join("")}</div>`;
-}
 function today() {
   const state = store.get(),
     entries = Object.values(state.lessons),
@@ -48,14 +42,18 @@ function today() {
     readyLessons.find(
       (l) => state.lessons[l.id] && !state.lessons[l.id].practicedAt,
     ) || readyLessons.find((l) => !state.lessons[l.id]?.practicedAt);
+  const upcoming = readyLessons.slice(
+    next ? readyLessons.indexOf(next) : 0,
+    (next ? readyLessons.indexOf(next) : 0) + 5,
+  );
   main.innerHTML =
     heading(
       "Your learning workspace",
       "Your next 30 minutes.",
       `${scheduleLabel} · 30 minutes each weekday. One visual explanation, one experiment, and your own reasoning.`,
-      '<span class="pill blue">5 lessons ready · 37 sessions planned</span>',
+      `<span class="pill blue">${readyLessons.length} lessons ready · ${lessons.length} sessions planned</span>`,
     ) +
-    `${due.length ? `<div class="notice"><strong>${due.length} spaced review${due.length === 1 ? " is" : "s are"} due.</strong> Try recalling the mechanism before reopening the lesson. <button class="text-button" id="open-due">Open review queue</button></div>` : ""}<div class="two-column"><section class="panel next-session">${next ? `<div class="lesson-label"><span class="pill blue">Suggested next</span> SESSION ${String(next.number).padStart(2, "0")} · 30 MIN</div><h2>${e(next.title)}</h2><p>${e(next.objective)}</p><div class="request-map" role="img" aria-label="A request travels from browser to application to database, then returns a response."><div class="map-stop"><div class="map-box">Browser</div><small>inspect the response</small></div><div class="map-line"></div><div class="map-stop"><div class="map-box accent">Application</div><small>trace the decision</small></div><div class="map-line"></div><div class="map-stop"><div class="map-box">Data & state</div><small>check the boundary</small></div></div><a class="button" href="${lessonUrl(next)}">${state.lessons[next.id] ? "Continue session" : "Begin session"} <span aria-hidden="true">→</span></a><p class="small muted" style="margin:13px 0 0">Your answers and progress stay in this browser.</p>` : `<p class="lesson-label">FIRST FIVE SESSIONS</p><h2>Your first fieldnotes are in.</h2><p>Revisit a lesson, try a due review, or bring an explanation to your tutor. Later sessions are outlined in the course map.</p><a class="button" href="#evidence">View practice evidence →</a>`}<div class="stats-row"><div class="stat"><strong>${practised}<span style="display:inline;font-size:17px"> / 5</span></strong><span>sessions practised</span></div><div class="stat"><strong>${due.length}</strong><span>reviews due</span></div><div class="stat"><strong>${entries.filter((v) => v.reflection.trim()).length}</strong><span>explanations saved</span></div></div></section><aside class="panel week-panel"><p class="eyebrow">A small, repeatable routine</p><h3 style="margin-top:10px">Learn by tracing.</h3><div class="phase-strip" aria-hidden="true"><span style="flex:5"></span><span style="flex:5"></span><span style="flex:15"></span><span style="flex:5"></span></div><div class="phase-labels"><span>Recall · 5m</span><span>Explore · 5m</span><span>Try · 15m</span><span>Explain · 5m</span></div><div class="week-list">${readyLessons.map((l) => `<div class="week-item"><span class="week-date">${formatDate(l.date).replace(" ", "<br>")}</span><div><a href="${lessonUrl(l)}">${e(l.title)}</a><small>${entryStatus(state.lessons[l.id])}</small></div></div>`).join("")}</div></aside></div><div class="section-heading"><h2>Your first five lessons</h2><a class="button-quiet" href="#course">See the complete route →</a></div><div class="lesson-grid">${readyLessons.map((l) => card(l, state)).join("")}</div><p class="outline-note">The initial diagnostic is complete. It is kept separately from this app. Lesson visits and correct answers are practice evidence, not a claim of mastery.</p>`;
+    `${due.length ? `<div class="notice"><strong>${due.length} spaced review${due.length === 1 ? " is" : "s are"} due.</strong> Try recalling the mechanism before reopening the lesson. <button class="text-button" id="open-due">Open review queue</button></div>` : ""}<div class="two-column"><section class="panel next-session">${next ? `<div class="lesson-label"><span class="pill blue">Suggested next</span> SESSION ${String(next.number).padStart(2, "0")} · 30 MIN</div><h2>${e(next.title)}</h2><p>${e(next.objective)}</p><div class="request-map" role="img" aria-label="A request travels from browser to application to database, then returns a response."><div class="map-stop"><div class="map-box">Browser</div><small>inspect the response</small></div><div class="map-line"></div><div class="map-stop"><div class="map-box accent">Application</div><small>trace the decision</small></div><div class="map-line"></div><div class="map-stop"><div class="map-box">Data & state</div><small>check the boundary</small></div></div><a class="button" href="${lessonUrl(next)}">${state.lessons[next.id] ? "Continue session" : "Begin session"} <span aria-hidden="true">→</span></a><p class="small muted" style="margin:13px 0 0">Your answers and progress stay in this browser.</p>` : `<p class="lesson-label">AVAILABLE SESSIONS</p><h2>Your available practice sessions are recorded.</h2><p>Revisit a lesson, try a due review, or bring an explanation to your tutor. Later sessions are outlined in the course map.</p><a class="button" href="#evidence">View practice evidence →</a>`}<div class="stats-row"><div class="stat"><strong>${practised}<span style="display:inline;font-size:17px"> / ${readyLessons.length}</span></strong><span>sessions practised</span></div><div class="stat"><strong>${due.length}</strong><span>reviews due</span></div><div class="stat"><strong>${entries.filter((v) => v.reflection.trim()).length}</strong><span>explanations saved</span></div></div></section><aside class="panel week-panel"><p class="eyebrow">A small, repeatable routine</p><h3 style="margin-top:10px">Learn by tracing.</h3><div class="phase-strip" aria-hidden="true"><span style="flex:5"></span><span style="flex:5"></span><span style="flex:15"></span><span style="flex:5"></span></div><div class="phase-labels"><span>Recall · 5m</span><span>Explore · 5m</span><span>Try · 15m</span><span>Explain · 5m</span></div><div class="week-list">${upcoming.map((l) => `<div class="week-item"><span class="week-date">${formatDate(l.date).replace(" ", "<br>")}</span><div><a href="${lessonUrl(l)}">${e(l.title)}</a><small>${entryStatus(state.lessons[l.id])}</small></div></div>`).join("")}</div></aside></div><div class="section-heading"><h2>Your available lessons</h2><a class="button-quiet" href="#course">See the complete route →</a></div><div class="lesson-grid">${readyLessons.map((l) => card(l, state)).join("")}</div><p class="outline-note">The initial diagnostic is complete. It is kept separately from this app. Lesson visits and correct answers are practice evidence, not a claim of mastery.</p>`;
   document.querySelector("#open-due")?.addEventListener("click", () => {
     location.hash = "evidence";
   });
@@ -65,7 +63,7 @@ function course() {
     heading(
       "The complete route",
       "A foundation across domains.",
-      `${lessons.length} weekday sessions: ${scheduleLabel}. The first five lessons are ready; later sessions have honest outlines and will be authored as you progress.`,
+      `${lessons.length} weekday sessions: ${scheduleLabel}. ${readyLessons.length} lessons are ready; later sessions have honest outlines and will be authored as you progress.`,
     ) +
     `<div class="filters"><label class="sr-only" for="course-search">Search lessons</label><input id="course-search" type="search" placeholder="Search a topic, such as Docker or sessions"><label class="sr-only" for="domain-filter">Filter domain</label><select id="domain-filter"><option value="all">All domains</option>${Object.entries(
       DOMAINS,
@@ -95,7 +93,7 @@ function course() {
           const l = lessonById(button.dataset.outline);
           showDialog(
             l.title,
-            `<p>${e(l.objective)}</p><div class="notice">Planned for ${formatDate(l.date)}. This lesson has not been authored yet.</div>${plannedLessonDetails(l)}`,
+            `<p>${e(l.objective)}</p><div class="notice">Planned for ${formatDate(l.date)}. This lesson has not been authored yet.</div><p>Your tutor will choose a focused exercise and primary reference when preparing this session. It cannot be marked as practised from an outline.</p>`,
           );
         }),
     );

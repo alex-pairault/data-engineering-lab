@@ -24,6 +24,7 @@ for path in files:
     relative = path.relative_to(ROOT)
     assert relative.parts[0] in {"index.html", "assets", "lessons", "reference"}, relative
     assert not any(part.startswith(".") for part in relative.parts), relative
+    assert "__pycache__" not in relative.parts and path.suffix not in {".pyc", ".pyo"}, relative
     if path.suffix != ".html":
         continue
     parser = Links()
@@ -36,8 +37,12 @@ for path in files:
         assert linked.is_relative_to(ROOT.resolve()), (relative, target)
         assert linked.is_file(), (relative, target)
 
-assert len(list((ROOT / "lessons").glob("*.html"))) == 5
+assert len(list((ROOT / "lessons").glob("*.html"))) == 10
 assert (ROOT / "reference/0001-request-identity-state.html").is_file()
+assert (ROOT / "reference/0002-contracts-resources-data.html").is_file()
+assert (ROOT / "assets/exercises/profile_records.py").is_file()
+assert (ROOT / "assets/exercises/sql_join_lab.py").is_file()
+assert (ROOT / "assets/fixtures/join-data.json").is_file()
 fixture = json.loads((ROOT / "assets/fixtures/product.json").read_text())
 assert fixture["product_id"] == "P-41" and fixture["price"] == 25
 print(f"Public build passed: {len(files)} files; internal HTML links resolve; private paths excluded.")

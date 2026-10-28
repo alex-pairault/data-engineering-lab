@@ -27,7 +27,7 @@ Keep Python active through small exercises throughout the course. A focused inte
 
 ## First five weekday sessions
 
-These are planned lessons, not completed portfolio exercises. Their allocation is included in the table above.
+These authored lessons are available, not completed portfolio exercises. Their allocation is included in the table above.
 
 | Date | Allocation | Focus and planned evidence |
 | --- | --- | --- |
@@ -38,6 +38,18 @@ These are planned lessons, not completed portfolio exercises. Their allocation i
 | November 9 | Product/agent verification 01 | Write and run behavioural checks for a small agent change, then record the evidence supporting acceptance. |
 
 Continue with Web 02, caching/freshness/invalidation, and the remaining web topics. Interleave Python and SQL practice, including outer-join filters, nulls, and edge-case fixtures. Later deployment and retry exercises must collect executed evidence, in addition to verbal explanations.
+
+## Next five weekday sessions
+
+These authored lessons are available in Fieldnotes. Availability is not a claim that the learner completed them.
+
+| Date | Session | Focus and guided evidence |
+| --- | --- | --- |
+| November 10 | 06 | API validation, pagination, and a response-shape compatibility failure. |
+| November 11 | 07 | CPU/RAM/I/O model; a locally executed Python comparison with equal-output and resource measurements. |
+| November 12 | 08 | LEFT JOIN filtering, missing groups, NULL sums, and executed SQLite examples using a shared fixture. |
+| November 13 | 09 | A live but stale entry, fixed TTL expiry, and a later miss/reload. |
+| November 16 | 10 | Controlled invalidation/commit interleavings, rollback, and remaining failure limits. |
 
 ## Web sequence and explicit authentication step
 
@@ -73,7 +85,7 @@ These are a coverage checklist with selected practical examples. The 37-session 
 
 ## Dedicated hardware and script-efficiency lesson
 
-**Session 07 — November 11: Hardware for scripts: CPU, RAM, and I/O.** This refocuses the existing Python refresh/debugging slot, keeping the course at 37 sessions. Its objective is to justify one script change using resource measurements. It remains planned until the runnable lesson is authored.
+**Session 07 — November 11: Hardware for scripts: CPU, RAM, and I/O.** This refocuses the existing Python refresh/debugging slot, keeping the course at 37 sessions. Its objective is to justify one script change using resource measurements. The runnable lesson is available at [session 07](lessons/0007-hardware-resources.html), with a downloadable standard-library Python exercise and local measurement-report inspection.
 
 - **Recall, 5 minutes:** predict what happens when the input doubles and distinguish RAM from persistent storage.
 - **Visual explanation, 5 minutes:** trace storage/network → live objects in RAM → CPU cores and caches. Locate CPU work, I/O waits, the working set, and memory pressure. Introduce paging/swap and out-of-memory failures without deliberately exhausting the learner's machine.
@@ -110,4 +122,4 @@ Record the exercise, date, assistance used, and verification behind a state chan
 
 Personal diagnostic results stay local. Public progress is expressed through completed exercises and their evidence.
 
-Fieldnotes now shows this course map, practice evidence, and next-review dates. Five lessons are ready; the remaining sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.
+Fieldnotes now shows this course map, practice evidence, and next-review dates. Ten lessons are ready; the remaining 27 sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.

@@ -61,5 +61,20 @@ No community has been selected. Seek focused feedback on a working example once 
 
 ## Gaps
 
-- Add focused references for API design, protocol-level OAuth/OpenID Connect/JWT distinctions, application caching, and observability when designing the corresponding exercises.
+- Add focused references for protocol-level OAuth/OpenID Connect/JWT distinctions and observability when designing the corresponding exercises.
 - Select version-specific setup references after choosing the project's runtime and database.
+
+## Sources used for lessons 6–10
+
+Checked October 27, 2026. Select the named sections; do not treat the full reference as a 30-minute reading assignment.
+
+- [OpenAPI 3.1.1 specification](https://spec.openapis.org/oas/v3.1.1.html): interface description, parameters, and response schemas; a specification is not automatic validation.
+- [OWASP input validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html): server-side syntactic and semantic validation.
+- [Google AIP-180](https://google.aip.dev/180): compatibility assumptions when fields and types change.
+- [IBM hardware overview](https://www.ibm.com/think/topics/hardware): CPU, memory, and storage roles.
+- [Python file objects](https://docs.python.org/3/tutorial/inputoutput.html#methods-of-file-objects): iteration versus reading a file into memory. Use the timing and tracemalloc references above for the measured exercise.
+- [Python resource usage](https://docs.python.org/3/library/resource.html): process resource accounting and platform differences. [Linux getrusage](https://www.man7.org/linux/man-pages/man2/getrusage.2.html) specifies Linux peak RSS units.
+- [PostgreSQL aggregates](https://www.postgresql.org/docs/current/functions-aggregate.html): NULL aggregate behaviour. [COALESCE](https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL) supplies a fallback for a retained group; see table expressions above for join/filter ordering.
+- [Redis EXPIRE](https://redis.io/docs/latest/commands/expire/): entry lifetime and expiration behaviour.
+- [Microsoft cache-aside](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside): miss/reload behaviour, stale data, and ordering of source updates and invalidation.
+- [Django after-commit actions](https://docs.djangoproject.com/en/5.2/topics/db/transactions/#performing-actions-after-commit): successful-commit callbacks, rollback behaviour, and callback failure limits. The lesson's transaction code is pseudocode, not a Django integration.

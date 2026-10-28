@@ -6,17 +6,22 @@ The emphasis is on tracing how a product works, explaining decisions, testing fa
 
 ## Current status
 
-The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes five English visual lessons and interactive labs:
+The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes ten English visual lessons and interactive labs:
 
 1. Trace a real request and distinguish its response from the page display.
 2. Locate authentication and distinguish it from permission checks.
 3. Inspect browser-held and server-held session state, expiry, and logout.
 4. Reproduce and repair cross-user leakage in a cache model.
 5. Reject an agent's incorrect change with behavioural regression checks.
+6. Validate an API contract and catch a breaking response change.
+7. Measure CPU time, elapsed time, and memory while comparing eager and streamed Python processing.
+8. Preserve SQL outer-join groups and handle NULL aggregates.
+9. Distinguish TTL lifetime from source freshness.
+10. Reproduce an invalidation race and verify after-commit ordering.
 
 [Open Fieldnotes](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
 
-The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with five ready and 32 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
+The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with ten ready and 27 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
 
 Personal assessment answers remain local. The application, lesson content, and QA were prepared with an agent; they are not learner-authored demonstrations of understanding. No public learner portfolio exercise has been completed yet.
 
@@ -26,6 +31,7 @@ Requires Node.js 22+ and Python 3.10+. The app has no runtime package dependenci
 
 ```sh
 npm test
+python -m unittest discover -s tests -p "*_test.py"
 npm run build
 python tests/build_smoke.py
 npm run dev
