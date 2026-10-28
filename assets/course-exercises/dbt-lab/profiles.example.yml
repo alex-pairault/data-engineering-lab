@@ -1,0 +1,7 @@
+fieldnotes:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: fieldnotes.duckdb
+      threads: 1

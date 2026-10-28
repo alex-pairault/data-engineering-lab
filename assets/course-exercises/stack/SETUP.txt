@@ -1,0 +1,46 @@
+Fieldnotes isolated local stack, lessons 20 and 26.
+Requires a running Docker engine and Docker Compose. Prepare a NEW folder and
+unused project name. The files use only a synthetic counter and loopback port.
+If 18080 is occupied, change only its host mapping to an available local port.
+The images are selected pinned snapshots; review future updates deliberately.
+
+Run from this folder (project name must be unique to your exercise):
+  docker compose -p fieldnotes-local-stack up -d --build --wait
+  curl -X POST http://127.0.0.1:18080/
+  docker compose -p fieldnotes-local-stack logs proxy
+
+Lesson 20:
+  docker compose -p fieldnotes-local-stack stop app
+  curl -i http://127.0.0.1:18080/
+Expected: a gateway failure from Nginx. A refused connection can produce 502;
+network teardown may instead time out and produce 504. Inspect the actual
+proxy status and error log, not just a predicted code.
+  docker compose -p fieldnotes-local-stack start app
+Nginx resolved the original app address at startup in this small configuration.
+If the app is recreated with a different address, restart the proxy to resolve it:
+  docker compose -p fieldnotes-local-stack restart proxy
+Request again and verify recovery. This local HTTP exercise does not test DNS
+infrastructure, TLS certificates, PHP-FPM, or a production deployment.
+
+Lesson 26:
+  docker compose -p fieldnotes-local-stack exec proxy wget -qO- http://app:8000/
+The proxy reaches app:8000 inside the project network; localhost there is the
+proxy itself. The host uses published 127.0.0.1:18080 instead.
+  docker compose -p fieldnotes-local-stack up -d --force-recreate app
+  docker compose -p fieldnotes-local-stack restart proxy
+  curl http://127.0.0.1:18080/
+The counter should remain in the named volume. Inspect your actual count.
+Read the healthcheck and service_healthy condition: this gates initial readiness,
+not every future connection or business operation.
+
+Cleanup only this exercise project:
+  docker compose -p fieldnotes-local-stack down
+The named counter volume remains. Inspect it before choosing to discard it.
+Using down -v also removes this project's declared named volume and its counter.
+Never run prune or remove unrelated projects as part of this exercise.
+Installation/image download is outside the timed lesson. Expected observations
+above are predictions; record what you actually ran, saw and needed help with.
+
+If Docker reports that its default address pools are exhausted, ask your teaching
+agent to select a non-overlapping isolated subnet for this exercise. Do not prune
+unrelated networks. This is an environment setup issue, not an application repair.

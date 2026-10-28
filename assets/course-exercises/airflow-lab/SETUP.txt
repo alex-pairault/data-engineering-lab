@@ -1,0 +1,28 @@
+Fieldnotes Airflow exercise. Linux/macOS or an appropriate Linux environment.
+Prepare a NEW exercise folder and Python 3.12 environment before the timed lesson.
+No cloud credentials or production scheduler are involved.
+
+python3.12 -m venv .venv
+.venv/bin/python -m pip install apache-airflow==3.3.2 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.12.txt
+export AIRFLOW_HOME="$PWD/airflow-local"
+export AIRFLOW__CORE__LOAD_EXAMPLES=False
+export AIRFLOW__CORE__DAGS_FOLDER="$AIRFLOW_HOME/dags"
+mkdir -p "$AIRFLOW_HOME/dags"
+cp lesson_dag.py "$AIRFLOW_HOME/dags/lesson_dag.py"
+.venv/bin/airflow db migrate
+.venv/bin/python "$AIRFLOW_HOME/dags/lesson_dag.py"
+
+Inspect the actual log: extract succeeds; transform fails its first attempt;
+one retry succeeds; verify checks total 10. Each new DAG run gets its own task
+instances. A retry is an additional attempt; retries=1 permits two attempts.
+The DAG file must be in the configured DAG folder for this dag.test() setup.
+
+The local serialized dag.test() run is not a production executor, scheduler or
+web UI test. It may emit telemetry/configuration messages; no business dataset
+or credentials are supplied. Do not run db migrate against an existing Airflow
+installation for this lesson. Keep this AIRFLOW_HOME isolated.
+
+Try a copy with retries=0, run again, and inspect downstream blockage. Restore
+retries=1 and rerun. Clearing task instances or making a new run does not undo
+external side effects, and clearing does not simply reset historical attempts.
+Keep generated metadata, logs and .venv out of Git. Setup is outside 30 minutes.

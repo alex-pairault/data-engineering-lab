@@ -1,0 +1,5 @@
+external_id,customer_id,amount,status
+A,1,10,paid
+B,1,20,paid
+C,2,99,pending
+D,2,5,paid

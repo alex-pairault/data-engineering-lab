@@ -1,0 +1,33 @@
+version: 2
+seeds:
+  - name: customers
+    columns:
+      - name: id
+        data_tests: [not_null, unique]
+  - name: orders
+    columns:
+      - name: external_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('customers')
+                field: id
+      - name: amount
+        data_tests: [not_null]
+      - name: status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [paid, pending, refunded]
+models:
+  - name: paid_totals
+    description: One row per customer with a paid order; integer synthetic units.
+    columns:
+      - name: customer_id
+        data_tests: [not_null, unique]
+      - name: paid_total
+        data_tests: [not_null]

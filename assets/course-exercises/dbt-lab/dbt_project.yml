@@ -1,0 +1,15 @@
+name: fieldnotes
+version: '1.0.0'
+config-version: 2
+profile: fieldnotes
+model-paths: [models]
+seed-paths: [seeds]
+test-paths: [tests]
+seeds:
+  fieldnotes:
+    orders:
+      +column_types:
+        external_id: varchar
+        customer_id: integer
+        amount: integer
+        status: varchar

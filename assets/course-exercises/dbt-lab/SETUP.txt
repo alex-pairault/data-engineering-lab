@@ -1,0 +1,25 @@
+Fieldnotes dbt exercise. Prepare before the timed lesson, in a NEW exercise folder.
+Requires Python 3.12. No warehouse account, packages.yml, or cloud credentials.
+
+python3.12 -m venv .venv
+.venv/bin/python -m pip install dbt-duckdb==1.11.1 dbt-core==1.12.6 duckdb==1.5.5
+export DBT_SEND_ANONYMOUS_USAGE_STATS=false
+cp profiles.example.yml profiles.yml
+.venv/bin/dbt seed --full-refresh --profiles-dir .
+.venv/bin/dbt run --profiles-dir .
+.venv/bin/dbt test --profiles-dir .
+
+Windows: use the virtual environment's Scripts directory, and copy the profile
+with the equivalent shell command. Keep the file-backed database path: an
+in-memory database would not persist between these separate commands.
+
+Expected clean totals: customer 1 -> 30; customer 2 -> 5. Inspect target/run_results.json
+for actual test results, not just a green model run. The model grain excludes
+customers with no paid order; that is this exercise's explicit scope.
+
+Change seeds/orders.csv ONE defect at a time: duplicate A; empty external_id;
+negative amount; unknown customer_id 999. Run seed --full-refresh, run, test again.
+Inspect which assertion fails. Restore the original fixture and verify again.
+Tests select violating current rows; they are not future-write constraints.
+Do not commit generated profiles, fieldnotes.duckdb, logs, target or .venv.
+Installation and input downloading are prerequisites, not part of 30 minutes.
