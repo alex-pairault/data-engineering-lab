@@ -1,3 +1,4 @@
+import { foundationLabs } from "./foundation-labs.js";
 import { nextLabs } from "./labs-next.js";
 import { controls, button, frame, log, status } from "./lab-ui.js";
 import {
@@ -311,6 +312,7 @@ function verificationLab(root, complete) {
 export function mountLab(root, id, complete) {
   ({
     ...nextLabs,
+    ...foundationLabs,
     "request-trace": requestLab,
     authentication: authenticationLab,
     sessions: sessionLab,

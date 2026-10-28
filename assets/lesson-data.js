@@ -1,5 +1,7 @@
+import { foundationLessonData } from "./lesson-data-foundations.js";
 import { nextLessonData } from "./lesson-data-next.js";
 export const lessonData = {
+  ...foundationLessonData,
   ...nextLessonData,
   "request-trace": {
     recall:
