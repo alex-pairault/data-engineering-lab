@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Use logs, request context, and error reporting to narrow a cause."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Find the evidence of failure — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="logs-sentry">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 22</p>
+        <h1>Find the evidence of failure</h1>
+        <p>Use logs, request context, and error reporting to narrow a cause.</p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Request r-18: release demo-b → Proxy log: 502 → Upstream context: connection refused"
+          >
+            <div class="node">Request r-18<span>release demo-b</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">Proxy log<span>502</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Upstream context<span>connection refused</span>
+            </div>
+          </div>
+          <p>
+            Useful failure evidence locates an operation, release, stage and
+            outcome. A <strong>request ID</strong> can correlate records across
+            a proxy and application. A nearby successful message may belong to a
+            completely different request.
+          </p>
+          <p>
+            Follow r-18 in the synthetic stream. The proxy’s 502 and upstream
+            connection refusal share its identity and release. That supports
+            checking the intended upstream listener and configuration.
+            Correlation helps narrow the investigation; it is not proof that
+            every similarly timed record caused the failure.
+          </p>
+          <p>
+            Sentry can capture error events and context. An
+            <strong>event</strong> is an occurrence; an
+            <strong>issue</strong> groups related events. Reporting an exception
+            does not repair an operation, and a caught exception may need
+            deliberate capture. Logs, metrics, traces and error reports answer
+            related but different questions.
+          </p>
+          <p>
+            Keep credentials, session tokens and raw sensitive payloads out of
+            context. The download serializes an explicit narrow field schema and
+            checks that a planted synthetic token is absent. Review values as
+            well as field names. Default SDK scrubbing is not proof that
+            arbitrary context is safe. This lesson sends no outbound Sentry
+            event and requires no account.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <p>
+          <a
+            class="button-secondary"
+            href="../assets/course-exercises/reliability_lab.py"
+            download
+            >Download reliability_lab.py</a
+          >
+        </p>
+        <ol>
+          <li>
+            Read the mixed stream, then correlate r-18 and compare the failing
+            stage.
+          </li>
+          <li>
+            Run <code>python reliability_lab.py --case logs</code>. Locate the
+            allowed context fields and planted token assertion.
+          </li>
+          <li>
+            Propose one next operational check supported by the evidence and one
+            conclusion the evidence does not support.
+          </li>
+          <li>
+            Write a short incident note with observation, hypothesis, next check
+            and recovery verification.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+            target="_blank"
+            rel="noopener"
+            >OWASP: logging ↗</a
+          ><a
+            href="https://docs.sentry.io/platforms/python/usage/"
+            target="_blank"
+            rel="noopener"
+            >Sentry: capture errors ↗</a
+          ><a
+            href="https://docs.sentry.io/platforms/python/data-management/sensitive-data/"
+            target="_blank"
+            rel="noopener"
+            >Sentry: sensitive data ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0004-web-reliability.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>

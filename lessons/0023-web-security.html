@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Investigate a focused injection, XSS, or CSRF example."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Follow the trust boundary — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="web-security">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 23</p>
+        <h1>Follow the trust boundary</h1>
+        <p>Investigate a focused injection, XSS, or CSRF example.</p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Input: untrusted note text → Query boundary: concatenate or bind → Rows: owner must remain scoped"
+          >
+            <div class="node">Input<span>untrusted note text</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Query boundary<span>concatenate or bind</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">Rows<span>owner must remain scoped</span></div>
+          </div>
+          <p>
+            <strong>SQL injection</strong> changes how a query is interpreted
+            when untrusted text becomes syntax. In this local search,
+            concatenation can turn an intended owner-scoped predicate into an OR
+            expression that returns another owner’s rows.
+          </p>
+          <p>
+            <strong>Parameter binding</strong> keeps input values separate from
+            SQL structure. Bind the authenticated owner and search text. The
+            same injection-shaped value then matches no note; an ordinary
+            apostrophe is handled as data. Binding values does not automatically
+            provide authorization, and identifiers such as table names need
+            fixed mappings or allowlists rather than value placeholders.
+          </p>
+          <p>
+            Keep related web risks distinct. <strong>XSS</strong> runs
+            attacker-controlled browser code; context-appropriate output
+            handling is needed. For ordinary element text, textContent avoids
+            HTML parsing. <strong>CSRF</strong> induces an authenticated browser
+            action; it needs an appropriate server defense, not merely cookie
+            authentication or CORS. HTTPS protects transport but does not remove
+            these application risks.
+          </p>
+          <p>
+            The focused exercise executes read-only SQLite searches on synthetic
+            rows. It does not attack a real site or provide a full production
+            security implementation. The tangible win is showing that unsafe
+            query construction widens results while the bound owner-and-value
+            query preserves the intended boundary.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <p>
+          <a
+            class="button-secondary"
+            href="../assets/course-exercises/data_lab.py"
+            download
+            >Download data_lab.py</a
+          >
+        </p>
+        <ol>
+          <li>
+            Run ordinary, concatenated-injection and bound-value browser cases.
+            Inspect owners in the returned rows.
+          </li>
+          <li>
+            Run <code>python data_lab.py --case security</code>. Compare
+            ordinary text, an apostrophe and the planted injection-shaped value.
+          </li>
+          <li>
+            Locate both bound values and explain where the authenticated owner
+            should come from.
+          </li>
+          <li>
+            Classify these separate examples: SQL text changes a predicate; HTML
+            input executes script; a foreign page induces a cookie-authenticated
+            change.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+            target="_blank"
+            rel="noopener"
+            >OWASP: SQL injection prevention ↗</a
+          ><a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+            target="_blank"
+            rel="noopener"
+            >OWASP: XSS prevention ↗</a
+          ><a
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"
+            target="_blank"
+            rel="noopener"
+            >OWASP: CSRF prevention ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0004-web-reliability.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>
