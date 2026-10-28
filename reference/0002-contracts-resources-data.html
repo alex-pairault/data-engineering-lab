@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contracts, resources, queries, and cache state — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Quick reference 02</p>
+        <h1>Keep the boundary visible.</h1>
+        <p>A compact guide for lessons 6–10. Try recall before opening it.</p>
+        <p><a href="../index.html">← Learning workspace</a></p>
+      </header>
+      <section class="lesson-section">
+        <h2>Interface contracts</h2>
+        <p>
+          Check method, path, input constraints, response types, status/error
+          meaning, and pagination. A specification describes the promise;
+          implementation and tests enforce it. HTTP 200 does not establish shape
+          compatibility.
+        </p>
+        <pre><code>Request valid? → Documented status + body → Existing client still accepts it?</code></pre>
+        <p>
+          Adding an optional field may be compatible when consumers tolerate it.
+          Removing a field, changing its type, or adding a required request
+          field can break consumers. Verify them.
+        </p>
+        <p>
+          <a href="../lessons/0006-api-contracts.html"
+            >Practise API contracts</a
+          >
+          · <a href="https://google.aip.dev/180">Google: API compatibility</a>
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>CPU, memory, and I/O</h2>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="Data moves between storage or network, RAM holding working objects, and CPU cores with hardware caches."
+        >
+          <div class="node">Storage / network<span>I/O moves bytes</span></div>
+          <span class="node-connector" aria-hidden="true">↔</span>
+          <div class="node">RAM<span>Live objects and working sets</span></div>
+          <span class="node-connector" aria-hidden="true">↔</span>
+          <div class="node">
+            CPU + caches<span>Execute and reuse data</span>
+          </div>
+        </div>
+        <dl class="glossary">
+          <dt>Elapsed time</dt>
+          <dd>Duration between perf_counter calls, including waits.</dd>
+          <dt>Process CPU time</dt>
+          <dd>
+            Current-process user/system CPU time between process_time calls;
+            excludes sleep. Elapsed minus CPU is not an exact disk-I/O
+            measurement.
+          </dd>
+          <dt>Traced peak allocations</dt>
+          <dd>
+            The peak of the Python allocations tracemalloc tracks. It is not
+            total process or system memory.
+          </dd>
+          <dt>Peak RSS</dt>
+          <dd>
+            A process memory high-water mark. It includes baseline memory, and
+            platform reporting differs. Use a fresh process per case when
+            comparing peaks.
+          </dd>
+          <dt>Streaming / batching</dt>
+          <dd>
+            Bound how many records remain live, provided input records and
+            retained results are also bounded. This can reduce memory without
+            guaranteeing faster execution.
+          </dd>
+        </dl>
+        <p>
+          Verify equal output, compare two input sizes, and describe measurement
+          limits. Separate allocation tracing from timing runs; account for warm
+          file caches. More cores or workers do not automatically accelerate a
+          serial workload.
+        </p>
+        <p>
+          <a href="../lessons/0007-hardware-resources.html"
+            >Practise resource measurement</a
+          >
+          ·
+          <a href="https://docs.python.org/3/library/tracemalloc.html"
+            >Python: tracemalloc</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Preserve SQL groups before filling values</h2>
+        <pre><code>LEFT JOIN → WHERE → GROUP BY / SUM
+
+-- Preserve each customer; match only qualifying orders.
+LEFT JOIN orders o
+  ON o.customer_id = c.id AND o.status = 'paid'
+
+-- Zero for a retained group with no qualifying amount.
+COALESCE(SUM(o.amount), 0)</code></pre>
+        <p>
+          A right-side WHERE filter can remove the null-extended rows and
+          customers with only excluded orders. COALESCE cannot restore a missing
+          group. CASE with an explicit ELSE 0 is another solution for this
+          fixture. Test no orders, excluded-only orders, multiple paid orders,
+          and a paid zero.
+        </p>
+        <p>
+          <a href="../lessons/0008-sql-outer-joins.html"
+            >Practise outer joins</a
+          >
+          ·
+          <a
+            href="https://www.postgresql.org/docs/current/queries-table-expressions.html"
+            >PostgreSQL: table expressions</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Lifetime, freshness, and invalidation</h2>
+        <dl class="glossary">
+          <dt>Fixed TTL</dt>
+          <dd>
+            The entry's reuse lifetime in this model. A source change can make a
+            live entry stale; expiry itself does not load a replacement.
+          </dd>
+          <dt>Cache-aside miss</dt>
+          <dd>
+            The application loads from the source on a miss, then stores the
+            result. Source freshness and failure/race behaviour affect what gets
+            cached.
+          </dd>
+          <dt>Early-deletion race</dt>
+          <dd>
+            Delete → reader refills old source → writer commits → stale cache
+            survives.
+          </dd>
+          <dt>After-commit deletion</dt>
+          <dd>
+            Invalidate after a successful commit for this ordering problem.
+            Rollback should not run the callback. Failures or late in-flight
+            refills need additional handling.
+          </dd>
+        </dl>
+        <p>
+          <a href="../lessons/0009-cache-freshness.html">Practise freshness</a>
+          ·
+          <a href="../lessons/0010-cache-invalidation.html"
+            >Practise invalidation</a
+          >
+          ·
+          <a
+            href="https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside"
+            >Microsoft: cache-aside</a
+          >
+          ·
+          <a
+            href="https://docs.djangoproject.com/en/5.2/topics/db/transactions/#performing-actions-after-commit"
+            >Django: after-commit actions</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>One useful verification habit</h2>
+        <p>
+          Predict a result, run the changed example, inspect the returned
+          values, and state what the evidence supports. Include a negative or
+          edge case relevant to the mechanism. Bring your own explanation and
+          follow-up questions to your teaching agent.
+        </p>
+        <p>
+          <a href="0001-request-identity-state.html"
+            >Requests, identity, and state reference</a
+          >
+          · <a href="../index.html#evidence">Your practice evidence</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
