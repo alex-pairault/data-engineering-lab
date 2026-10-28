@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Boundaries, failures, and effects — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Quick reference</p>
+        <h1>Boundaries, failures, and effects</h1>
+        <p>
+          Recall first, then use this compact guide. Detailed primary references
+          live in each lesson.
+        </p>
+        <p><a href="../index.html">← Learning workspace</a></p>
+      </header>
+      <section class="lesson-section">
+        <h2>Origin and CORS</h2>
+        <p>
+          Origin is scheme, host and effective port. A simple cross-origin
+          request can arrive while its response remains unreadable to page
+          JavaScript. A failed preflight can prevent the actual request. CORS
+          does not establish identity, permission or complete CSRF protection.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Test boundaries</h2>
+        <p>
+          A pure-rule check does not exercise storage schema, HTTP or
+          deployment. Include the relevant result and side effect, especially no
+          write on invalid input. A mock cannot prove the real SQL works.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Transactions and replay</h2>
+        <p>
+          Stale reads outside a protecting transaction can support wrong
+          decisions. For a bounded stock rule, conditional decrement plus an
+          affected-row check protects the sale. Keep its database effects
+          together. Stable external IDs and an explicit update/reject contract
+          support replay; database idempotency does not automatically cover
+          external writes.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>DNS, TLS and upstreams</h2>
+        <p>
+          DNS locates an address; TLS validates a peer connection; Nginx may
+          then open a separate upstream connection. Inspect the first failing
+          boundary. A 502 has multiple possible causes. HTTP proxying and
+          PHP-FPM FastCGI configuration use different protocols.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Acceptance evidence</h2>
+        <p>
+          State actor, initial state, trigger, observation and conditions. Tool
+          installation is not a user outcome. Freshness, response cost and
+          isolation are separate requirements. A single sample does not
+          establish a percentile or future service guarantee.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Logs and error events</h2>
+        <p>
+          Correlate operation identity, release, stage and outcome. A Sentry
+          event reports an occurrence; an issue groups related events. Capturing
+          evidence does not repair the failure. Use a narrow context schema and
+          review actual values; never assume default scrubbing proves arbitrary
+          data safe.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Input trust</h2>
+        <p>
+          Bind SQL values, including the authenticated ownership scope. Use
+          fixed mappings for identifiers. Distinguish SQL injection, XSS
+          browser-code execution and CSRF induced authenticated actions. HTTPS
+          alone does not prevent them.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Practise and go to the sources</h2>
+        <ul>
+          <li>
+            <a href="../lessons/0016-browser-origins.html"
+              >16 · Understand the browser boundary</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0017-test-boundaries.html"
+              >17 · Test behaviour at a boundary</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0018-transactions.html"
+              >18 · Two requests at once</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0019-idempotent-imports.html"
+              >19 · Retry without duplicating effects</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0020-dns-tls-nginx.html"
+              >20 · Follow a request into the server</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0021-product-criteria.html"
+              >21 · Define what better means</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0022-logs-sentry.html"
+              >22 · Find the evidence of failure</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0023-web-security.html"
+              >23 · Follow the trust boundary</a
+            >
+          </li>
+        </ul>
+        <p>
+          Bring your own explanation and follow-up questions to your teaching
+          agent. A completed guide is not evidence of mastery.
+        </p>
+        <p>
+          <a href="0001-request-identity-state.html"
+            >Requests, identity and state</a
+          >
+          ·
+          <a href="0002-contracts-resources-data.html"
+            >Contracts and resources</a
+          >
+          · <a href="0003-runtime-code-data.html">Runtime and code</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

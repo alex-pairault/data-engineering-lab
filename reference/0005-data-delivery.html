@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data, delivery, and evidence — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Quick reference</p>
+        <h1>Data, delivery, and evidence</h1>
+        <p>
+          Recall first, then use this compact guide. Detailed primary references
+          live in each lesson.
+        </p>
+        <p><a href="../index.html">← Learning workspace</a></p>
+      </header>
+      <section class="lesson-section">
+        <h2>dbt and data assertions</h2>
+        <p>
+          Document one-row meaning before trusting a model. Data tests query
+          current violations; they are not future-write constraints. Default
+          zero-failure success can be changed by configuration. Relationships
+          and accepted_values need separate not_null checks when missingness is
+          invalid. Test input assumptions before filters or aggregation hide
+          them.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Python and network boundaries</h2>
+        <p>
+          Distinguish transport, HTTP, parse and schema failures. Keep failure
+          explicit. Use per-attempt timeouts and bounded retry policy. A POST
+          timeout can leave a committed effect uncertain; retry only according
+          to its business contract.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Containers and replicas</h2>
+        <p>
+          Inside an ordinary bridge container, localhost is that container.
+          Peers use service names and internal ports; hosts use published ports.
+          Healthchecks gate initial readiness only. Named volumes survive
+          ordinary replacement. Affinity does not replicate sessions; shared
+          state needs design, including when Kubernetes manages routing.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Context and CI</h2>
+        <p>
+          Bound a task with user need, relevant sources, invariants, acceptance
+          cases, verification and a stop condition. Review the final diff
+          independently. Tie check results, build artifact and deployment to the
+          intended source identity. Green CI establishes its assertions, not
+          every production behaviour.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Workflow, queue and Airflow</h2>
+        <p>
+          A schedule creates runs; dependencies order work; queues distribute
+          jobs; webhooks deliver HTTP events. Acknowledgement failure can cause
+          redelivery. Airflow retries=1 permits two attempts. Local dag.test()
+          is not a production distributed-executor check. Clearing or retrying
+          tasks does not undo external effects.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Plans and resource evidence</h2>
+        <p>
+          Count N+1 accesses and verify equal results after batching. Bound
+          batches and memory. A plan is not a timing guarantee; PostgreSQL
+          EXPLAIN ANALYZE executes the statement. Indexes add storage/write
+          costs and do not improve every query.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Recovery and compatibility</h2>
+        <p>
+          Code rollback is not deleted-data recovery. Restore into a separate
+          disposable target and verify rows, schema and a business assertion. An
+          older snapshot can omit later writes. Plan compatible schema
+          evolution, acceptable recovery point and reconciliation.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Interview and capstone</h2>
+        <p>
+          State assumptions, trace a mechanism, test a changed case and name
+          limits. Reuse one existing slice for the capstone. Record your actual
+          commands/results, changed case, reasoning and assistance using the
+          exercise template. Generated scaffolding, guided practice, independent
+          demonstration and later retention are distinct.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Practise and go to the sources</h2>
+        <ul>
+          <li>
+            <a href="../lessons/0024-dbt-quality.html"
+              >24 · Make a data assumption executable</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0025-python-errors.html"
+              >25 · Handle the failure path</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0026-container-network.html"
+              >26 · Connect the local stack</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0027-context-packets.html"
+              >27 · Give the agent the right context</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0028-ci-delivery.html"
+              >28 · Let the checks travel with the change</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0029-orchestration.html"
+              >29 · Dependencies, schedules, and events</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0030-query-plans.html"
+              >30 · Measure before optimising</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0031-mixed-trace.html"
+              >31 · Trace an unfamiliar failure</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0032-load-balancing.html"
+              >32 · One application, several instances</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0033-airflow-failures.html"
+              >33 · A workflow fails halfway</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0034-recovery.html"
+              >34 · Make the way back explicit</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0035-agent-diff.html"
+              >35 · Review the actual change</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0036-interview-practice.html"
+              >36 · Explain a system out loud</a
+            >
+          </li>
+          <li>
+            <a href="../lessons/0037-capstone.html"
+              >37 · Show what you can verify</a
+            >
+          </li>
+        </ul>
+        <p>
+          Bring your own explanation and follow-up questions to your teaching
+          agent. A completed guide is not evidence of mastery.
+        </p>
+        <p>
+          <a href="0001-request-identity-state.html"
+            >Requests, identity and state</a
+          >
+          ·
+          <a href="0002-contracts-resources-data.html"
+            >Contracts and resources</a
+          >
+          · <a href="0003-runtime-code-data.html">Runtime and code</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
