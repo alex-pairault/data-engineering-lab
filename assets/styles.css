@@ -1684,3 +1684,58 @@ details p {
     display: none !important;
   }
 }
+
+/* Measurement and table surfaces shared by the second lesson batch. */
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.table-scroll table {
+  min-width: 340px;
+}
+.table-scroll caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 14px 0;
+}
+.resource-bars {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0;
+}
+.resource-bars span {
+  display: block;
+  font-size: 14px;
+}
+.resource-bars progress {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin-top: 5px;
+  accent-color: var(--teal);
+}
+.event-list {
+  font-size: 15px;
+  margin: 20px 0;
+  padding-left: 25px;
+}
+.event-list .done {
+  color: #086e59;
+}
+#fresh-remaining {
+  width: 100%;
+  accent-color: var(--teal);
+}
+@media print {
+  .table-scroll {
+    overflow: visible;
+  }
+  .table-scroll table {
+    min-width: 0;
+  }
+  .resource-bars progress {
+    print-color-adjust: exact;
+  }
+}

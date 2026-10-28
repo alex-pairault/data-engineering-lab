@@ -1,3 +1,5 @@
+import { nextLabs } from "./labs-next.js";
+import { controls, button, frame, log, status } from "./lab-ui.js";
 import {
   createNoteCache,
   createSessionModel,
@@ -6,22 +8,6 @@ import {
   runReviewCases,
 } from "./lab-models.js";
 import { escapeHtml as e } from "./curriculum.js";
-const controls = (html) => `<div class="lab-controls">${html}</div>`;
-const button = (id, label, kind = "button-secondary") =>
-  `<button class="${kind}" data-action="${id}">${label}</button>`;
-function frame(root, title, body) {
-  root.innerHTML = `<div class="lab-top"><strong>${title}</strong><span>Interactive experiment</span></div><div class="lab-body">${body}</div>`;
-}
-function log(root, message) {
-  const target = root.querySelector(".lab-log");
-  target.textContent += `${target.textContent ? "\n" : ""}${message}`;
-  target.scrollTop = target.scrollHeight;
-}
-function status(root, message, type = "") {
-  const target = root.querySelector(".lab-status");
-  target.textContent = message;
-  target.className = `lab-status ${type}`;
-}
 function requestLab(root, complete) {
   frame(
     root,
@@ -324,6 +310,7 @@ function verificationLab(root, complete) {
 }
 export function mountLab(root, id, complete) {
   ({
+    ...nextLabs,
     "request-trace": requestLab,
     authentication: authenticationLab,
     sessions: sessionLab,

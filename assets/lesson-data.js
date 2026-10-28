@@ -1,4 +1,6 @@
+import { nextLessonData } from "./lesson-data-next.js";
 export const lessonData = {
+  ...nextLessonData,
   "request-trace": {
     recall:
       "A page displays an old value. Before changing code, what evidence would you collect to locate the problem?",
