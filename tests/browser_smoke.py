@@ -37,12 +37,14 @@ def run():
     overflow(page)
     open_page(page,'index.html#course')
     expect(page.locator('.course-row')).to_have_count(37)
-    page.locator('#ready-filter').select_option('ready');expect(page.locator('.course-row')).to_have_count(15)
+    page.locator('#ready-filter').select_option('ready');expect(page.locator('.course-row')).to_have_count(37)
     page.locator('#ready-filter').select_option('all');page.locator('#domain-filter').select_option('web');expect(page.locator('.course-row')).to_have_count(9)
     page.locator('#domain-filter').select_option('all');page.locator('#course-search').fill('docker');expect(page.locator('.course-row')).to_have_count(1)
     expect(page.get_by_role('link',name='Open lesson',exact=True)).to_have_count(1)
     page.locator('#course-search').fill('nginx');expect(page.locator('.course-row')).to_have_count(1)
-    page.get_by_role('button',name='View outline').click();expect(page.get_by_role('dialog')).to_contain_text('has not been authored yet');page.get_by_role('button',name='Close dialog').click()
+    expect(page.get_by_role('link',name='Open lesson',exact=True)).to_have_count(1)
+    page.locator('#course-search').fill('');page.locator('#ready-filter').select_option('planned');expect(page.get_by_role('heading',name='No matching sessions')).to_be_visible()
+    page.locator('#ready-filter').select_option('all')
     page.locator('#course-search').fill('no-such-topic');expect(page.get_by_role('heading',name='No matching sessions')).to_be_visible()
 
     for lesson_id,(filename,answers) in PAGES.items():

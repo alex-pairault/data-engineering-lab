@@ -1,4 +1,4 @@
-# Provisional roadmap
+# Course roadmap
 
 The initial diagnostic was completed on October 24, 2026. This sequence now starts with request/state mechanisms, user isolation, and practical verification, while retaining shared foundations across software, data, and product work. Personal assessment answers and ratings stay local; later lessons will probe areas not covered by the initial triage.
 
@@ -134,4 +134,34 @@ Record the exercise, date, assistance used, and verification behind a state chan
 
 Personal diagnostic results stay local. Public progress is expressed through completed exercises and their evidence.
 
-Fieldnotes now shows this course map, practice evidence, and next-review dates. Fifteen lessons are ready; the remaining 22 sessions are outlines. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.
+Fieldnotes now shows this course map, practice evidence, and next-review dates. All 37 lessons are authored and available. Availability is separate from learner completion. Completing the data exercises must not imply that sessions, caching, or deployment have been demonstrated.
+
+
+## Sessions 16–37
+
+The learner requested the remainder of the course in advance. These are authored sessions, not completed learner demonstrations. Keep the 30-minute focus and adapt support after each actual attempt. Tool setup is a prerequisite for the dbt, Airflow and Docker exercises.
+
+| Date | Session | Focus |
+| --- | --- | --- |
+| 2026-11-24 | 16 | Understand the browser boundary |
+| 2026-11-25 | 17 | Test behaviour at a boundary |
+| 2026-11-26 | 18 | Two requests at once |
+| 2026-11-27 | 19 | Retry without duplicating effects |
+| 2026-11-30 | 20 | Follow a request into the server |
+| 2026-12-01 | 21 | Define what better means |
+| 2026-12-02 | 22 | Find the evidence of failure |
+| 2026-12-03 | 23 | Follow the trust boundary |
+| 2026-12-04 | 24 | Make a data assumption executable |
+| 2026-12-07 | 25 | Handle the failure path |
+| 2026-12-08 | 26 | Connect the local stack |
+| 2026-12-09 | 27 | Give the agent the right context |
+| 2026-12-10 | 28 | Let the checks travel with the change |
+| 2026-12-11 | 29 | Dependencies, schedules, and events |
+| 2026-12-14 | 30 | Measure before optimising |
+| 2026-12-15 | 31 | Trace an unfamiliar failure |
+| 2026-12-16 | 32 | One application, several instances |
+| 2026-12-17 | 33 | A workflow fails halfway |
+| 2026-12-18 | 34 | Make the way back explicit |
+| 2026-12-21 | 35 | Review the actual change |
+| 2026-12-22 | 36 | Explain a system out loud |
+| 2026-12-23 | 37 | Show what you can verify |

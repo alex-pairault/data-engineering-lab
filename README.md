@@ -6,7 +6,7 @@ The emphasis is on tracing how a product works, explaining decisions, testing fa
 
 ## Current status
 
-The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes fifteen English visual lessons and interactive labs:
+The initial diagnostic is complete. **Fieldnotes**, the learning product, now includes all 37 English visual lessons and interactive labs:
 
 1. Trace a real request and distinguish its response from the page display.
 2. Locate authentication and distinguish it from permission checks.
@@ -23,10 +23,32 @@ The initial diagnostic is complete. **Fieldnotes**, the learning product, now in
 13. Resolve a real Git conflict by behaviour and explain dependency lockfiles.
 14. Run a small Docker image and compare writable-layer and volume lifecycles.
 15. Prevent SQL fanout totals and test keys, references, and constraints.
+16. Understand the browser boundary.
+17. Test behaviour at a boundary.
+18. Two requests at once.
+19. Retry without duplicating effects.
+20. Follow a request into the server.
+21. Define what better means.
+22. Find the evidence of failure.
+23. Follow the trust boundary.
+24. Make a data assumption executable.
+25. Handle the failure path.
+26. Connect the local stack.
+27. Give the agent the right context.
+28. Let the checks travel with the change.
+29. Dependencies, schedules, and events.
+30. Measure before optimising.
+31. Trace an unfamiliar failure.
+32. One application, several instances.
+33. A workflow fails halfway.
+34. Make the way back explicit.
+35. Review the actual change.
+36. Explain a system out loud.
+37. Show what you can verify.
 
 [Open Fieldnotes](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
 
-The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with fifteen ready and 22 clearly marked planned. Later lessons will be authored as practice reveals what is needed. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
+The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with all 37 authored and available for November 3–December 23, 2026. Practice and later review will guide adjustments to difficulty. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
 
 Personal assessment answers remain local. The application, lesson content, and QA were prepared with an agent; they are not learner-authored demonstrations of understanding. No public learner portfolio exercise has been completed yet.
 
@@ -42,7 +64,7 @@ python tests/build_smoke.py
 npm run dev
 ```
 
-Open <http://127.0.0.1:8766>. Serve over HTTP so lesson one's real fixture request can run. A shared [reference sheet](reference/0001-request-identity-state.html) provides printable terminology and investigation steps.
+Open <http://127.0.0.1:8766>. Serve over HTTP so lesson one's real fixture request can run. The shared [reference sheets](reference/) provide compact terminology and investigation steps.
 
 Progress, explanations, hints, and review dates save in this browser. Use **Backups → Export progress** before clearing browser data, switching devices, or moving between localhost and the hosted app. Restore explicitly merges the newest saved entry per lesson. There is no automatic cloud or GitHub progress synchronization. Use one active learning tab at a time. Personal notes and JSON backups should stay outside the public repository.
 
@@ -98,3 +120,6 @@ Agents may help prepare exercises, explain concepts, suggest implementations, an
 - [Exercise template](templates/exercise.md): the format for portfolio evidence.
 
 Personal coaching notes and assessment answers are stored separately under the ignored `.local/` directory.
+
+
+The browser experiments are explicitly labelled models. Downloadable standard-library exercises cover real Python/SQLite/Git mechanisms; separate prepared bundles cover dbt/DuckDB, Airflow, and a Docker/Nginx stack. Tool installation and image downloading are prerequisites, outside the 30-minute session. These examples use synthetic data and do not require an employer account. A lesson visit or guided quiz pass is not a claim of production experience.

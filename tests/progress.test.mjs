@@ -50,9 +50,9 @@ const completedEntry = () => ({
     "The response and displayed state were different; I inspected the boundary.",
 });
 
-test("the honest course allocation has 37 weekdays, fifteen ready lessons, and balanced domains", () => {
+test("the honest course allocation has 37 weekdays, all 37 ready lessons, and balanced domains", () => {
   assert.equal(lessons.length, 37);
-  assert.equal(readyLessons.length, 15);
+  assert.equal(readyLessons.length, 37);
   assert.equal(lessons[0].date, "2026-11-03");
   assert.equal(lessons.at(-1).date, "2026-12-23");
   assert.deepEqual(

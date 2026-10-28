@@ -1,6 +1,7 @@
 """Check the public build boundary and internal HTML links using the standard library."""
 from html.parser import HTMLParser
 import json
+import hashlib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -28,7 +29,10 @@ for path in files:
     if path.suffix != ".html":
         continue
     parser = Links()
-    parser.feed(path.read_text())
+    page_text = path.read_text()
+    style_revision = hashlib.sha256((ROOT / "assets/styles.css").read_bytes()).hexdigest()[:12]
+    assert f"assets/styles.css?v={style_revision}" in page_text, relative
+    parser.feed(page_text)
     for target in parser.targets:
         url = urlsplit(target)
         if url.scheme or url.netloc or not url.path:
@@ -37,7 +41,7 @@ for path in files:
         assert linked.is_relative_to(ROOT.resolve()), (relative, target)
         assert linked.is_file(), (relative, target)
 
-assert len(list((ROOT / "lessons").glob("*.html"))) == 15
+assert len(list((ROOT / "lessons").glob("*.html"))) == 37
 assert (ROOT / "reference/0001-request-identity-state.html").is_file()
 assert (ROOT / "reference/0002-contracts-resources-data.html").is_file()
 assert (ROOT / "assets/exercises/profile_records.py").is_file()
@@ -47,6 +51,14 @@ for name in ["service_probe.py", "quote_boundaries.py", "git_conflict_lab.py", "
     assert (ROOT / "assets/exercises" / name).is_file(), name
 assert (ROOT / "assets/fixtures/grain-data.json").is_file()
 assert (ROOT / "reference/0003-runtime-code-data.html").is_file()
+from zipfile import ZipFile
+for project in ["dbt-lab", "airflow-lab", "stack"]:
+    with ZipFile(ROOT / f"assets/course-exercises/{project}.zip") as archive:
+        assert "SETUP.txt" in archive.namelist()
+        assert all(not Path(name).is_absolute() and ".." not in Path(name).parts for name in archive.namelist())
+        assert not any(name.endswith((".db", ".duckdb", ".pyc")) or "profiles.yml" in name for name in archive.namelist())
+for reference in ["0004-web-reliability.html", "0005-data-delivery.html"]:
+    assert (ROOT / "reference" / reference).is_file()
 fixture = json.loads((ROOT / "assets/fixtures/product.json").read_text())
 assert fixture["product_id"] == "P-41" and fixture["price"] == 25
 print(f"Public build passed: {len(files)} files; internal HTML links resolve; private paths excluded.")
