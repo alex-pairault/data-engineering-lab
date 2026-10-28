@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Distinguish a scheduled workflow from a queue or webhook."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Dependencies, schedules, and events — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="orchestration">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 29</p>
+        <h1>Dependencies, schedules, and events</h1>
+        <p>Distinguish a scheduled workflow from a queue or webhook.</p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Trigger: schedule or event → Execution: DAG or worker → Effects: acknowledgement + retry boundary"
+          >
+            <div class="node">Trigger<span>schedule or event</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">Execution<span>DAG or worker</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Effects<span>acknowledgement + retry boundary</span>
+            </div>
+          </div>
+          <p>
+            A <strong>scheduled workflow</strong> creates a run at a planned
+            time and can express task dependencies. A
+            <strong>queue</strong> distributes work to workers. A
+            <strong>webhook</strong> delivers an event over HTTP. They describe
+            different parts of a system and can be combined.
+          </p>
+          <p>
+            For the daily pipeline, extract must produce input before transform,
+            and load must wait for transform. A schedule does not itself
+            establish task success or correct dependency order. Avoid heavy
+            processing at workflow-definition time; orchestration should
+            coordinate bounded work.
+          </p>
+          <p>
+            For event work, delivery and acknowledgement can fail independently
+            of the business effect. If an acknowledgement is lost after the
+            effect commits, a broker may redeliver the event. Without
+            idempotency, the same event can apply twice.
+          </p>
+          <p>
+            In the local SQLite example, the event identity and its counter
+            update commit together. A duplicate changes nothing, and an error
+            before commit rolls both back. This is a controlled database
+            boundary, not a universal exactly-once guarantee for external
+            services. The later Airflow lesson adds real task attempts to the
+            dependency picture.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <p>
+          <a
+            class="button-secondary"
+            href="../assets/course-exercises/data_lab.py"
+            download
+            >Download data_lab.py</a
+          >
+        </p>
+        <ol>
+          <li>
+            Run the load-first and ordered-workflow scenarios; trace missing
+            inputs.
+          </li>
+          <li>
+            Compare duplicate event delivery with and without idempotent effect
+            handling.
+          </li>
+          <li>
+            Run <code>python data_lab.py --case events</code>. Locate the
+            identity and counter update in one transaction.
+          </li>
+          <li>
+            Describe a webhook that enqueues work and a daily reconciliation
+            workflow. Identify acknowledgements and possible duplicate effects.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://airflow.apache.org/docs/apache-airflow/stable/concepts/dags.html"
+            target="_blank"
+            rel="noopener"
+            >Airflow: DAG concepts ↗</a
+          ><a
+            href="https://www.rabbitmq.com/tutorials/tutorial-two-python"
+            target="_blank"
+            rel="noopener"
+            >RabbitMQ: work queues ↗</a
+          ><a
+            href="https://docs.stripe.com/webhooks#handle-duplicate-events"
+            target="_blank"
+            rel="noopener"
+            >Stripe: duplicate webhook events ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0005-data-delivery.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>

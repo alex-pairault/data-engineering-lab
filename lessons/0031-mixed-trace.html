@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Apply the same reasoning to a changed scenario without the worked example."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Trace an unfamiliar failure — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="mixed-trace">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Session 31</p>
+        <h1>Trace an unfamiliar failure</h1>
+        <p>
+          Apply the same reasoning to a changed scenario without the worked
+          example.
+        </p>
+        <div class="lesson-meta">
+          <span class="pill blue">30-minute practice</span
+          ><span>English · visual model + experiment</span
+          ><a href="../index.html#evidence">Your practice evidence</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Try · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Start with your current model.</h2>
+        <p id="recall-prompt">
+          Write what you think happens before reading the explanation.
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row" style="margin-top: 13px">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty is useful. This answer is not automatically
+            graded.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>Follow the mechanism.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Request A / B: same product and caller → HTTP bodies: compare observed values → Source record: current price 120"
+          >
+            <div class="node">
+              Request A / B<span>same product and caller</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              HTTP bodies<span>compare observed values</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">Source record<span>current price 120</span></div>
+          </div>
+          <p>
+            Use this session as a changed task. Record your hypothesis before
+            opening model feedback. Keep four things separate:
+            <strong>observation</strong>, a fact you measured;
+            <strong>hypothesis</strong>, a possible explanation;
+            <strong>experiment</strong>, a discriminating check; and
+            <strong>conclusion</strong>, what the combined evidence supports.
+          </p>
+          <p>
+            The supplied facts concern response values, not merely the page
+            display. Compare equivalent actors, resource IDs and request
+            conditions. A different user, replica, query parameter or release
+            can otherwise confound the comparison. A successful database read
+            elsewhere does not prove every return path used it.
+          </p>
+          <p>
+            The model reveals evidence in steps. Browser cache settings do not
+            change the split. Equivalent HTTP bodies differ by instance while
+            the source agrees. Invalidating A’s application entry makes both
+            return 120. Together these observations support the prepared
+            instance-cache explanation; the initial symptom alone did not prove
+            it.
+          </p>
+          <p>
+            Real incidents can have multiple causes. Prefer a check that
+            distinguishes hypotheses and changes one factor at a time. State
+            what remains uncertain and how you would verify the repair on warm
+            paths and all relevant instances. A rehearsed explanation of this
+            model is not yet evidence of independent incident diagnosis.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / TRY</span>
+        <h2>Predict. Run. Inspect.</h2>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p style="padding: 20px">
+            Enable JavaScript for the interactive experiment. The explanation
+            and instructions remain readable below.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Lab observations not recorded yet
+        </p>
+        <h3>Make the experiment your own</h3>
+        <ol>
+          <li>
+            Write your first hypothesis and next observation before running
+            feedback; the model requires an ungraded scratch attempt.
+          </li>
+          <li>
+            Run each prepared observation and revise the hypothesis only when
+            evidence warrants it.
+          </li>
+          <li>
+            Write a short trace with observation, hypothesis, experiment,
+            conclusion and one remaining uncertainty.
+          </li>
+          <li>
+            Ask your tutor for a changed scenario with no labels or worked
+            example and explain your next check.
+          </li>
+        </ol>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep the reasoning.</h2>
+        <p id="reflection-prompt"></p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="What did you predict? What did you observe? Why did it happen? What would you check next?"
+        ></textarea
+        ><label class="field-label">How confident do you feel?</label>
+        <div
+          id="confidence"
+          class="confidence"
+          role="group"
+          aria-label="Self-reported confidence from one to five"
+        ></div>
+        <p class="small muted">
+          Confidence is self-reported. Your explanation is saved for discussion
+          with your tutor; this app does not judge its correctness.
+        </p>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <button id="save-practice" class="button" disabled>
+          Save practice session
+        </button>
+        <p
+          id="practice-status"
+          class="small muted"
+          style="margin-top: 13px"
+        ></p>
+      </section>
+      <section class="lesson-section">
+        <span class="section-number">PRIMARY REFERENCES</span>
+        <h2>Go to the source.</h2>
+        <p>
+          Read one focused section when you need clarification. Bring follow-up
+          questions and your explanation to your teaching agent.
+        </p>
+        <div class="resource-links">
+          <a
+            href="https://sre.google/sre-book/effective-troubleshooting/"
+            target="_blank"
+            rel="noopener"
+            >Google SRE: effective troubleshooting ↗</a
+          ><a
+            href="https://sre.google/sre-book/monitoring-distributed-systems/"
+            target="_blank"
+            rel="noopener"
+            >Google SRE: monitoring ↗</a
+          >
+        </div>
+        <p class="small muted" style="margin-top: 20px">
+          Related:
+          <a href="../reference/0005-data-delivery.html"
+            >quick reference for these lessons</a
+          >
+          ·
+          <a href="../reference/0001-request-identity-state.html"
+            >requests, identity, and state</a
+          >
+          ·
+          <a href="../index.html#evidence"
+            >practice evidence and tutor context</a
+          >. Progress stays in this browser;
+          <a href="../index.html#backups">export a backup</a> to keep a separate
+          copy.
+        </p>
+      </section>
+      <footer class="lesson-footer">
+        <a href="../index.html">← Back to your workspace</a>
+        <div id="next-lesson"></div>
+      </footer>
+    </main>
+  </body>
+</html>
