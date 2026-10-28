@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Runtime, code boundaries, Git, containers and grain — Fieldnotes
+    </title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <header class="lesson-header">
+        <p class="eyebrow">Fieldnotes / Quick reference 03</p>
+        <h1>Locate the responsibility.</h1>
+        <p>A compact guide for sessions 11–15. Try recall before opening it.</p>
+        <p><a href="../index.html">← Learning workspace</a></p>
+      </header>
+      <section class="lesson-section">
+        <h2>A running service</h2>
+        <pre><code>Process: running program instance; PID identifies the process.
+Endpoint: address + port + protocol in a network context.
+Connection → HTTP responder → route → application behaviour.</code></pre>
+        <p>
+          A process can listen on several ports or none. A controlled refusal
+          has no HTTP status; a 404 means an HTTP responder handled the request,
+          though it may be the wrong deployment. Compare endpoint, service
+          identity, and logs.
+        </p>
+        <p>
+          Startup configuration captured by a process does not automatically
+          change when a shell variable or file changes. Python does not load
+          .env files on its own. Reconfigure or restart according to the actual
+          runtime's behaviour.
+        </p>
+        <p>
+          <a href="../lessons/0011-processes-ports.html"
+            >Practise processes and ports</a
+          >
+          ·
+          <a href="https://docs.python.org/3/library/socket.html"
+            >Python: sockets</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Code responsibilities</h2>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="HTTP and job adapters call an application operation, which applies domain rules before storage."
+        >
+          <div class="node">Adapter<span>Translate input / output</span></div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Application + domain<span>Coordinate / enforce rule</span>
+          </div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">Storage<span>Persist valid state</span></div>
+        </div>
+        <p>
+          Share business rules across entry points. Keep domain invariants
+          effective even when HTTP is bypassed. Pure functions can make a
+          calculation easy to verify without a database. Logical boundaries do
+          not require multiple servers or elaborate class hierarchies. Storage
+          constraints still protect persisted state.
+        </p>
+        <p>
+          <a href="../lessons/0012-code-boundaries.html"
+            >Practise shared rules</a
+          >
+          ·
+          <a
+            href="https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures"
+            >Microsoft: logical layers</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Merge behaviour and reproduce dependencies</h2>
+        <p>
+          Resolve a conflict from accepted requirements. Removing markers,
+          choosing a side, or staging a file does not establish correctness.
+          Inspect the final and staged diffs; run behaviour checks.
+        </p>
+        <dl class="glossary">
+          <dt>Manifest</dt>
+          <dd>
+            Declares dependency requirements, often including allowed version
+            ranges.
+          </dd>
+          <dt>Lockfile</dt>
+          <dd>
+            Records the resolved graph, including transitive dependencies.
+            Review and commit the intended manifest/lock pair.
+          </dd>
+          <dt>npm ci</dt>
+          <dd>
+            Requires an existing matching lockfile, removes existing
+            node_modules in its project, installs the locked graph, and does not
+            rewrite the manifest or lock. Runtime, flags and platform still
+            matter.
+          </dd>
+        </dl>
+        <p>
+          <a href="../lessons/0013-git-dependencies.html"
+            >Practise a conflict</a
+          >
+          ·
+          <a href="https://git-scm.com/docs/git-merge#_how_to_resolve_conflicts"
+            >Git: resolution</a
+          >
+          ·
+          <a href="https://docs.npmjs.com/cli/v11/commands/npm-ci/">npm: ci</a>
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Container lifecycle and state</h2>
+        <dl class="glossary">
+          <dt>Image</dt>
+          <dd>
+            Packaged files and runtime configuration. Multiple containers can
+            start from it. A tag may move; a digest identifies a snapshot.
+          </dd>
+          <dt>Container writable layer</dt>
+          <dd>
+            Runtime writes belonging to that container. Stop/start retains it;
+            removal discards it.
+          </dd>
+          <dt>Named volume</dt>
+          <dd>
+            Storage mounted outside the writable layer, retained across
+            container removal until the volume is removed. Persistence is not a
+            backup.
+          </dd>
+          <dt>Port publishing</dt>
+          <dd>
+            127.0.0.1:18080:8000 maps host loopback 18080 to container 8000. The
+            application still listens inside on 8000. EXPOSE alone does not
+            publish a port.
+          </dd>
+        </dl>
+        <p>
+          CPU and memory limits constrain a container's budget. Measure actual
+          output and resource use; extra workers can increase memory pressure.
+          The teaching counter is single-process, not a production server.
+        </p>
+        <p>
+          <a href="../lessons/0014-docker-basics.html">Practise Docker</a> ·
+          <a href="https://docs.docker.com/engine/storage/volumes/"
+            >Docker: volumes</a
+          >
+          ·
+          <a href="https://docs.docker.com/engine/network/port-publishing/"
+            >Docker: publishing</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>SQL grain and constraints</h2>
+        <pre><code>2 lines × 3 payments → 6 matching pairs
+SUM after that join repeats both measures.
+Preaggregate each child per order → join one total from each.</code></pre>
+        <p>
+          State what one row represents before trusting a metric. SUM(DISTINCT
+          amount) can remove legitimate equal amounts. A primary key protects
+          row identity; a foreign key checks references and does not imply
+          one-to-one cardinality. Add the business uniqueness rule explicitly
+          when required. Enable SQLite foreign keys for each connection.
+        </p>
+        <p>
+          <a href="../lessons/0015-sql-grain.html">Practise grain and fanout</a>
+          ·
+          <a href="https://www.postgresql.org/docs/current/ddl-constraints.html"
+            >PostgreSQL: constraints</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Keep evidence specific</h2>
+        <p>
+          Separate predictions, browser-model observations, real command output,
+          and your own explanation. Bring follow-up questions to your teaching
+          agent. A completed model does not establish independent deployment
+          experience.
+        </p>
+        <p>
+          <a href="0002-contracts-resources-data.html"
+            >Previous quick reference</a
+          >
+          · <a href="../index.html#evidence">Practice evidence</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
