@@ -1,0 +1,57 @@
+Fieldnotes session 14 — local Docker experiment
+
+Prerequisite: Docker is running. Download Dockerfile and docker_counter.py into a
+new exercise folder. Read both. The base image may need a download before the
+30-minute session. These names must be unused; choose a unique prefix if needed.
+The sample stores only a synthetic integer and publishes only IPv4 loopback.
+
+1. Build from that folder:
+   docker build -t fieldnotes-counter:lesson14 .
+
+2. Create a container with a bounded CPU/RAM budget:
+   docker run -d --name fieldnotes-l14-layer --memory=128m --cpus=0.5 -p 127.0.0.1:18080:8000 fieldnotes-counter:lesson14
+   curl -X POST http://127.0.0.1:18080/
+   Expected: {"count": 1}
+   docker stop fieldnotes-l14-layer
+   docker start fieldnotes-l14-layer
+   curl http://127.0.0.1:18080/
+   Expected: {"count": 1} — stopping retained the writable layer.
+
+3. Replace only the container you created:
+   docker stop fieldnotes-l14-layer
+   docker rm fieldnotes-l14-layer
+   docker run -d --name fieldnotes-l14-layer --memory=128m --cpus=0.5 -p 127.0.0.1:18080:8000 fieldnotes-counter:lesson14
+   curl http://127.0.0.1:18080/
+   Expected: {"count": 0} — the new writable layer starts from the image.
+   docker stop fieldnotes-l14-layer
+   docker rm fieldnotes-l14-layer
+
+4. Use a new named volume; preserve it when replacing the container:
+   docker volume create fieldnotes-l14-data
+   docker run -d --name fieldnotes-l14-volume --memory=128m --cpus=0.5 -p 127.0.0.1:18080:8000 -v fieldnotes-l14-data:/data fieldnotes-counter:lesson14
+   curl -X POST http://127.0.0.1:18080/
+   docker stop fieldnotes-l14-volume
+   docker rm fieldnotes-l14-volume
+   docker run -d --name fieldnotes-l14-volume --memory=128m --cpus=0.5 -p 127.0.0.1:18080:8000 -v fieldnotes-l14-data:/data fieldnotes-counter:lesson14
+   curl http://127.0.0.1:18080/
+   Expected: {"count": 1} — the named volume survives replacement.
+
+5. Inspect before cleanup:
+   docker port fieldnotes-l14-volume
+   docker inspect fieldnotes-l14-volume
+   Trace host 18080 -> container 8000 and the mount at /data.
+   Check the memory/CPU limits; these are budgets, not speed guarantees.
+
+6. Stop and remove only your exercise container:
+   docker stop fieldnotes-l14-volume
+   docker rm fieldnotes-l14-volume
+   Keep the volume if you want its synthetic counter. To discard only that
+   exercise data after inspecting it: docker volume rm fieldnotes-l14-data
+   Do not prune or remove unrelated containers, images, or volumes.
+
+Expected output above is a prediction, not a claim you executed the commands.
+Record actual observations and any help. If a command fails, inspect its error;
+a port conflict is not a reason to stop unrelated services. Containers may need
+a moment to start; request again after checking docker logs for this container.
+The Dockerfile pins a base-image digest for this snapshot. Review updates to
+that digest deliberately. Persistent data still needs a separate backup plan.

@@ -1,0 +1,19 @@
+{
+  "orders": [{"id": 901}, {"id": 902}],
+  "lines": [
+    {"id": 1, "order_id": 901, "amount": 50},
+    {"id": 2, "order_id": 901, "amount": 50},
+    {"id": 3, "order_id": 902, "amount": 20}
+  ],
+  "payments": [
+    {"id": 11, "order_id": 901, "amount": 30},
+    {"id": 12, "order_id": 901, "amount": 30},
+    {"id": 13, "order_id": 901, "amount": 40},
+    {"id": 14, "order_id": 902, "amount": 20}
+  ],
+  "queries": {
+    "fanout": "SELECT o.id AS order_id, SUM(l.amount) AS line_total, SUM(p.amount) AS payment_total\nFROM orders o JOIN lines l ON l.order_id = o.id\nJOIN payments p ON p.order_id = o.id\nGROUP BY o.id ORDER BY o.id;",
+    "distinct": "SELECT o.id AS order_id, SUM(DISTINCT l.amount) AS line_total, SUM(DISTINCT p.amount) AS payment_total\nFROM orders o JOIN lines l ON l.order_id = o.id\nJOIN payments p ON p.order_id = o.id\nGROUP BY o.id ORDER BY o.id;",
+    "aggregate": "WITH line_totals AS (\n  SELECT order_id, SUM(amount) AS total FROM lines GROUP BY order_id\n), payment_totals AS (\n  SELECT order_id, SUM(amount) AS total FROM payments GROUP BY order_id\n)\nSELECT o.id AS order_id, COALESCE(l.total, 0) AS line_total, COALESCE(p.total, 0) AS payment_total\nFROM orders o LEFT JOIN line_totals l ON l.order_id = o.id\nLEFT JOIN payment_totals p ON p.order_id = o.id\nORDER BY o.id;"
+  }
+}
