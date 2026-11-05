@@ -1,4 +1,6 @@
 import { readyLessons, lessonUrl, escapeHtml as e } from "./curriculum.js";
+import { lessonById } from "./catalog.js";
+import { pythonLessons } from "./python-curriculum.js";
 import { store, entryStatus } from "./store.js";
 export const base = document.body.dataset.page === "lesson" ? "../" : "./";
 let toastTimer;
@@ -51,16 +53,20 @@ export function mountShell(section = "today", lessonId = null) {
   sidebar.id = "sidebar";
   sidebar.setAttribute("aria-label", "Course navigation");
   const state = store.get();
+  const isPython =
+    section === "python" || lessonById(lessonId)?.track === "python";
+  const visibleLessons = isPython ? pythonLessons : readyLessons;
   const nav = [
     ["today", "◷", "Today"],
     ["course", "≡", "Course map"],
+    ["python", "⌘", "Python practice"],
     ["evidence", "✓", "Practice evidence"],
     ["backups", "↥", "Backups"],
   ];
-  sidebar.innerHTML = `<a class="brand" href="${base}index.html"><span class="brand-mark" aria-hidden="true">F</span><span><strong>Fieldnotes</strong><small>Engineering practice</small></span></a><nav class="main-nav" aria-label="Main">${nav.map(([id, symbol, label]) => `<a href="${base}index.html#${id}" ${section === id ? 'aria-current="page"' : ""}><span class="nav-symbol" aria-hidden="true">${symbol}</span>${label}</a>`).join("")}</nav><p class="side-title">Available sessions</p><nav class="side-lessons" aria-label="Available lessons">${readyLessons.map((lesson) => `<a href="${lessonUrl(lesson, base)}" class="${lesson.id === lessonId ? "current" : ""}" ${lesson.id === lessonId ? 'aria-current="page"' : ""}><span class="side-number">${String(lesson.number).padStart(2, "0")}</span><span>${e(lesson.title)}<small>${entryStatus(state.lessons[lesson.id])}</small></span></a>`).join("")}</nav><div class="sidebar-footer"><p>Thirty minutes.<br/>One thing you can explain.</p><p style="margin-top:15px">Progress stays in this browser.<br/><a href="${base}index.html#backups">Export a backup</a></p><p style="margin-top:18px"><a href="https://github.com/alex-pairault/data-engineering-lab" target="_blank" rel="noopener">Project source ↗</a></p></div>`;
+  sidebar.innerHTML = `<a class="brand" href="${base}index.html"><span class="brand-mark" aria-hidden="true">F</span><span><strong>Fieldnotes</strong><small>Engineering practice</small></span></a><nav class="main-nav" aria-label="Main">${nav.map(([id, symbol, label]) => `<a href="${base}index.html#${id}" ${section === id || (isPython && id === "python") ? 'aria-current="page"' : ""}><span class="nav-symbol" aria-hidden="true">${symbol}</span>${label}</a>`).join("")}</nav><p class="side-title">${isPython ? "Python coding sessions" : "Engineering sessions"}</p><nav class="side-lessons" aria-label="Available lessons">${visibleLessons.map((lesson) => `<a href="${lessonUrl(lesson, base)}" data-lesson="${lesson.id}" class="${lesson.id === lessonId ? "current" : ""}" ${lesson.id === lessonId ? 'aria-current="page"' : ""}><span class="side-number">${String(lesson.number).padStart(2, "0")}</span><span>${e(lesson.title)}<small>${entryStatus(state.lessons[lesson.id])}</small></span></a>`).join("")}</nav><div class="sidebar-footer"><p>Thirty minutes.<br/>One thing you can explain.</p><p style="margin-top:15px">Progress stays in this browser.<br/><a href="${base}index.html#backups">Export a backup</a></p><p style="margin-top:18px"><a href="https://github.com/alex-pairault/data-engineering-lab" target="_blank" rel="noopener">Project source ↗</a></p></div>`;
   const topbar = document.createElement("header");
   topbar.className = "topbar";
-  topbar.innerHTML = `<button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Menu</button><span class="topbar-title">Engineering foundations <span style="color:#a9b7cd;padding:0 10px">/</span> ${lessonId ? "Lesson workspace" : { today: "Your next session", course: "The complete route", evidence: "Evidence of practice", backups: "Your progress, portable" }[section] || "Your next session"}</span><span class="save-indicator ${store.error() ? "error" : ""}" role="status"><span class="save-dot" aria-hidden="true"></span><span>${store.error() ? "Storage needs attention" : "Saved in this browser"}</span></span>`;
+  topbar.innerHTML = `<button class="menu-toggle" aria-controls="sidebar" aria-expanded="false">Menu</button><span class="topbar-title">${isPython ? "Python practice" : "Engineering foundations"} <span style="color:#a9b7cd;padding:0 10px">/</span> ${lessonId ? "Lesson workspace" : { today: "Your next session", course: "The complete route", evidence: "Evidence of practice", backups: "Your progress, portable", python: "Write, test, explain" }[section] || "Your next session"}</span><span class="save-indicator ${store.error() ? "error" : ""}" role="status"><span class="save-dot" aria-hidden="true"></span><span>${store.error() ? "Storage needs attention" : "Saved in this browser"}</span></span>`;
   topbar.querySelector(".menu-toggle").onclick = (event) => {
     const expanded = sidebar.classList.toggle("open");
     event.currentTarget.setAttribute("aria-expanded", String(expanded));
@@ -114,8 +120,8 @@ export function refreshSaveIndicator() {
     }
     recovery.querySelector("p").textContent = store.error();
   } else recovery?.remove();
-  document.querySelectorAll(".side-lessons a").forEach((anchor, index) => {
-    const lesson = readyLessons[index];
+  document.querySelectorAll(".side-lessons a").forEach((anchor) => {
+    const lesson = lessonById(anchor.dataset.lesson);
     if (lesson)
       anchor.querySelector("small").textContent = entryStatus(
         store.entry(lesson.id),

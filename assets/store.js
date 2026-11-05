@@ -1,6 +1,7 @@
-import { COURSE, lessons } from "./curriculum.js";
+import { COURSE } from "./curriculum.js";
+import { allLessons } from "./catalog.js";
 export const STORAGE_KEY = "fieldnotes.progress.v1";
-const validIds = new Set(lessons.map((lesson) => lesson.id));
+const validIds = new Set(allLessons.map((lesson) => lesson.id));
 const text = (value, max = 6000) =>
   typeof value === "string" ? value.slice(0, max) : "";
 const date = (value) =>

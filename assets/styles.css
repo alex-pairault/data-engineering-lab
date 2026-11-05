@@ -1744,3 +1744,154 @@ details p {
     print-color-adjust: exact;
   }
 }
+
+/* Python uses the same lesson workspace, with its own self-paced route. */
+.python-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 34px;
+  padding: 34px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #f0f6ff;
+}
+.python-hero h2 {
+  margin: 12px 0;
+  font-size: 32px;
+}
+.python-hero .eyebrow {
+  color: #85dfd2;
+}
+.python-hero .button {
+  margin-top: 24px;
+}
+.python-terminal {
+  min-width: 0;
+  border: 1px solid #66809e;
+  border-radius: 12px;
+  padding: 24px;
+  font: 16px/1.7 var(--mono);
+}
+.python-terminal p + p {
+  margin-top: 7px;
+}
+.python-terminal p span {
+  color: #85dfd2;
+  margin-right: 16px;
+}
+.python-terminal label {
+  display: block;
+  margin-top: 20px;
+  font: 16px var(--body);
+}
+.python-terminal progress {
+  width: 100%;
+  accent-color: #85dfd2;
+  margin: 8px 0;
+}
+.python-terminal small {
+  display: block;
+  color: #bdcce2;
+  font: 14px var(--body);
+}
+.python-setup {
+  margin: 24px 0 36px;
+}
+.python-setup h2 {
+  margin: 12px 0;
+}
+.python-setup details {
+  margin-top: 20px;
+}
+.python-search {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.python-stage {
+  margin-top: 28px;
+}
+.python-stage > .eyebrow {
+  margin-bottom: 16px;
+}
+.python-progress-section {
+  margin-top: 44px;
+}
+.python-records {
+  display: grid;
+  gap: 16px;
+}
+.python-records h3 {
+  margin: 12px 0;
+}
+.python-reflection {
+  white-space: pre-wrap;
+}
+.python-evidence-form {
+  padding: 24px;
+}
+.python-evidence-form textarea {
+  width: 100%;
+}
+.python-evidence-form .field-label {
+  display: block;
+  margin: 18px 0 10px;
+}
+.exercise-contract {
+  border-left: 3px solid var(--teal);
+  padding: 4px 0 4px 22px;
+  margin: 24px 0;
+}
+.exercise-contract h3 {
+  margin: 15px 0;
+}
+.lesson-section details {
+  margin: 16px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+.lesson-section summary,
+.python-setup summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.lesson-section details p {
+  margin-top: 12px;
+}
+@media (max-width: 700px) {
+  .python-hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 24px;
+  }
+  .python-terminal {
+    padding: 18px;
+  }
+  .exercise-contract {
+    padding-left: 15px;
+  }
+}
+@media print {
+  .python-hero {
+    display: block;
+    color: #172b4d;
+    background: white;
+    padding: 0;
+  }
+  .python-terminal {
+    color: #172b4d;
+    margin-top: 16px;
+  }
+  .python-evidence-form {
+    display: none;
+  }
+  .exercise-contract {
+    break-inside: auto;
+  }
+  .lesson-section details {
+    display: block;
+  }
+}

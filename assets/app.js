@@ -2,12 +2,13 @@ import {
   lessons,
   readyLessons,
   DOMAINS,
-  lessonById,
   lessonUrl,
   formatDate,
   matchesLesson,
   escapeHtml as e,
 } from "./curriculum.js";
+import { lessonById } from "./catalog.js";
+import { renderPython } from "./python-track.js";
 import { store, entryStatus, validateState } from "./store.js";
 import { lessonData } from "./lesson-data.js";
 import {
@@ -31,7 +32,7 @@ function heading(eyebrow, title, description, badge = "") {
 }
 function today() {
   const state = store.get(),
-    entries = Object.values(state.lessons),
+    entries = lessons.map((l) => state.lessons[l.id]).filter(Boolean),
     practised = readyLessons.filter(
       (l) => state.lessons[l.id]?.practicedAt,
     ).length;
@@ -243,9 +244,17 @@ function backups() {
 }
 function render() {
   const section = location.hash.slice(1) || "today";
-  (({ today, course, evidence, backups })[section] || today)();
+  (
+    ({
+      today,
+      course,
+      evidence,
+      backups,
+      python: () => renderPython(main, openReview),
+    })[section] || today
+  )();
   mountShell(
-    ["today", "course", "evidence", "backups"].includes(section)
+    ["today", "course", "evidence", "backups", "python"].includes(section)
       ? section
       : "today",
   );

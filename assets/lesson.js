@@ -1,9 +1,5 @@
-import {
-  lessonById,
-  readyLessons,
-  lessonUrl,
-  escapeHtml as e,
-} from "./curriculum.js";
+import { lessonUrl, escapeHtml as e } from "./curriculum.js";
+import { lessonById, trackLessons } from "./catalog.js";
 import { store, practiceReady, entryStatus } from "./store.js";
 import { lessonData } from "./lesson-data.js";
 import { mountShell, toast, refreshSaveIndicator, base } from "./shell.js";
@@ -24,6 +20,7 @@ function update(change) {
 }
 if (!store.entry(id)) update({});
 const entry = () => store.entry(id);
+const coding = lesson.track === "python";
 const recall = document.querySelector("#recall-answer");
 recall.value = entry()?.recall || "";
 recall.placeholder = data.recall;
@@ -135,19 +132,25 @@ const evidenceLabel = document.querySelector("#lab-evidence");
 document.querySelector("#lab-task").textContent = data.evidence;
 mountLab(document.querySelector("#interactive-lab"), id, (evidence) => {
   if (update({ labComplete: true, labEvidence: evidence })) {
-    evidenceLabel.textContent = "✓ Lab observations recorded";
+    evidenceLabel.textContent = coding
+      ? "✓ Local coding run recorded from your report"
+      : "✓ Lab observations recorded";
     evidenceLabel.classList.add("done");
     refreshCompletion();
+    return true;
   }
+  return false;
 });
 if (entry()?.labComplete) {
-  evidenceLabel.textContent = "✓ Lab observations recorded in an earlier visit";
+  evidenceLabel.textContent = coding
+    ? "✓ Local coding report saved in an earlier visit"
+    : "✓ Lab observations recorded in an earlier visit";
   evidenceLabel.classList.add("done");
 }
 function refreshCompletion() {
   const current = entry();
   document.querySelector("#completion-list").innerHTML = [
-    ["Lab observed", current?.labComplete],
+    [coding ? "Coding run reported" : "Lab observed", current?.labComplete],
     [
       "Two checks correct",
       current?.checks.q1?.correct && current?.checks.q2?.correct,
@@ -180,7 +183,8 @@ document.querySelector("#save-practice").onclick = () => {
 };
 window.addEventListener("fieldnotes:change", refreshCompletion);
 refreshCompletion();
-const next = readyLessons[readyLessons.findIndex((l) => l.id === id) + 1];
+const sequence = trackLessons(lesson);
+const next = sequence[sequence.findIndex((l) => l.id === id) + 1];
 document.querySelector("#next-lesson").innerHTML = next
   ? `<a class="button-secondary" href="${lessonUrl(next, base)}">Next: ${e(next.title)} →</a>`
-  : `<a class="button-secondary" href="${base}index.html#evidence">View your practice evidence →</a>`;
+  : `<a class="button-secondary" href="${base}index.html#${lesson.track === "python" ? "python" : "evidence"}">View your practice evidence →</a>`;
