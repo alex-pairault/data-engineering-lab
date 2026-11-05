@@ -41,7 +41,7 @@ for path in files:
         assert linked.is_relative_to(ROOT.resolve()), (relative, target)
         assert linked.is_file(), (relative, target)
 
-assert len(list((ROOT / "lessons").glob("*.html"))) == 37
+assert len(list((ROOT / "lessons").glob("*.html"))) == 67
 assert (ROOT / "reference/0001-request-identity-state.html").is_file()
 assert (ROOT / "reference/0002-contracts-resources-data.html").is_file()
 assert (ROOT / "assets/exercises/profile_records.py").is_file()
@@ -60,5 +60,12 @@ for project in ["dbt-lab", "airflow-lab", "stack"]:
 for reference in ["0004-web-reliability.html", "0005-data-delivery.html"]:
     assert (ROOT / "reference" / reference).is_file()
 fixture = json.loads((ROOT / "assets/fixtures/product.json").read_text())
+with ZipFile(ROOT / "assets/python-exercises.zip") as archive:
+    assert "SETUP.txt" in archive.namelist()
+    assert "requirements.lock.txt" in archive.namelist()
+    assert len([name for name in archive.namelist() if name.startswith("exercises/day")]) == 30
+    assert len([name for name in archive.namelist() if name.startswith("solutions/day")]) == 30
+    assert len([name for name in archive.namelist() if name.startswith("tests/test_")]) == 30
+    assert not any(Path(name).is_absolute() or ".." in Path(name).parts or "__pycache__" in name or name.endswith(".pyc") for name in archive.namelist())
 assert fixture["product_id"] == "P-41" and fixture["price"] == 25
 print(f"Public build passed: {len(files)} files; internal HTML links resolve; private paths excluded.")

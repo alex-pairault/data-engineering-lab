@@ -20,6 +20,9 @@ def build():
             DIST / name,
             ignore=shutil.ignore_patterns(
                 "__pycache__",
+                ".pytest_cache",
+                ".ruff_cache",
+                "*.egg-info",
                 "*.pyc",
                 "*.pyo",
                 "*.duckdb*",
@@ -55,6 +58,16 @@ def build():
                     entry.compress_type = ZIP_DEFLATED
                     entry.external_attr = 0o644 << 16
                     archive.writestr(entry, path.read_bytes())
+    folder = DIST / "assets/python-exercises"
+    with ZipFile(folder.with_suffix(".zip"), "w", compression=ZIP_DEFLATED) as archive:
+        for path in sorted(folder.rglob("*")):
+            if path.is_file():
+                entry = ZipInfo(
+                    str(path.relative_to(folder)), date_time=(1980, 1, 1, 0, 0, 0)
+                )
+                entry.compress_type = ZIP_DEFLATED
+                entry.external_attr = 0o644 << 16
+                archive.writestr(entry, path.read_bytes())
     print(
         f"Static app built in {DIST}. Private notes and repository metadata excluded."
     )

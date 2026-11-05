@@ -106,3 +106,44 @@ The private Site and the public GitHub repository have distinct source histories
 Final browser QA ran all 22 new lesson flows on an isolated localhost origin: every prepared scenario, both concept checks, explanation gates, practice save and reload persistence. All 22 populated model layouts fit 390px; long scenario names also have a wrapped description and result heading. The complete map has 37 ready and zero planned entries, ending December 23. No app runtime errors were observed. Synthetic QA records are not learner evidence and were not entered on the hosted origin.
 
 Build output versions the stylesheet URL by its content hash so a new page does not keep an older cached style. Public-boundary checks cover all 37 HTML lessons, linked assets, and the three deterministic source-only download bundles. The normal suite has 40 Node tests and 17 standard-library Python tests; dbt, Airflow, real CORS and Compose checks were run separately with their prepared environments.
+
+## Python section
+
+`#python` is an independent self-paced route of 30 coding sessions. The engineering
+route remains 37 lessons with its original IDs and dates. `assets/catalog.js`
+combines the two sets only for lookup and progress validation; track navigation
+and counts remain separate. Old engineering backups remain valid; current backups
+include both tracks without changing the existing storage key or schema.
+
+Python lessons reuse the shared lesson/check/explanation/review engine. Their lab
+component accepts self-recorded local command results and a changed-case statement;
+it does not execute or authenticate Python, infer passing tests from pasted text,
+or upload learner code. A minimum note length is a completion gate, not a grade.
+The Python page shows its own evidence and due reviews; normal Backups exports both.
+
+The deterministic `assets/python-exercises.zip` contains 30 starters, 30 test modules,
+30 separate reference solutions, synthetic fixtures, setup, an exact resolved package
+snapshot, and bounded memory/version probes. The build excludes caches/environments
+from both the public tree and archive. Source uses Python3.12-compatible syntax;
+newer syntax is compiled from isolated strings, never parsed in baseline modules.
+
+For author verification, run the 3.12 reference suite using the recorded dependencies.
+A local in-process HTTPX transport tests request/status/schema/error logic, not real
+network timing. FastAPI TestClient tests local ASGI behaviour. SQLAlchemy tests real
+SQLite commit/rollback, and process tests launch actual spawn workers. The pinned
+Starlette version currently emits a deprecation notice for its supported HTTPX
+fallback; it does not fail the exercise. The environment was tested on Linux,
+not on every operating system in the setup guide.
+
+Python release verification: 44 Node tests, 17 standard-library Python tests,
+and 32 dependency-backed reference tests passed (93 total). The extracted ZIP
+also passed the reference suite, expected starter failures, and a newly added
+day-11 regression that rejects the buggy starter and accepts the reference.
+Memory/version tools executed with real Python3.12, and the public build contains
+246 files with internal HTML links and archive boundaries checked.
+
+Static WeasyPrint previews cover all 30 new lessons and the field guide (31
+documents, 105 pages); page montages and detailed memory/reference pages were
+visually inspected. These cover static HTML/CSS only. Browser access was
+unavailable after a retry, so this release has no new interactive or mobile
+browser QA. No learner progress was entered or inferred.

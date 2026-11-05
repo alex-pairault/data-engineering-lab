@@ -54,7 +54,7 @@ Personal assessment answers remain local. The application, lesson content, and Q
 
 ## Run the product locally
 
-Requires Node.js 22+ and Python 3.10+. The app has no runtime package dependencies.
+Requires Node.js 22+ and Python 3.12+. The app has no runtime package dependencies.
 
 ```sh
 npm test
@@ -123,3 +123,49 @@ Personal coaching notes and assessment answers are stored separately under the i
 
 
 The browser experiments are explicitly labelled models. Downloadable standard-library exercises cover real Python/SQLite/Git mechanisms; separate prepared bundles cover dbt/DuckDB, Airflow, and a Docker/Nginx stack. Tool installation and image downloading are prerequisites, outside the 30-minute session. These examples use synthetic data and do not require an employer account. A lesson visit or guided quiz pass is not a claim of production experience.
+
+## Python practice: 30 minutes per study day
+
+[Open the Python track](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/#python).
+Thirty additional self-paced sessions progress from values, collections, functions,
+references, and exceptions to resource measurement, typing, tests, Pydantic v2,
+HTTP clients, database transactions, DataFrames, concurrency, and a small API.
+The 37 engineering dates stay unchanged. Alternate tracks for a 30-minute total,
+or use Python as additional practice; setup and optional stretches are separate.
+
+Each lesson has an original local coding task, prepared behaviour tests, an
+additional case to write, concise graphics, checks, and spaced review. A complete
+workspace download is available inside the site. See
+[setup](assets/python-exercises/SETUP.txt),
+[exercise sources](assets/python-exercises/), and the
+[Python field guide](reference/0006-python-field-guide.html).
+
+Use Python 3.12 and the recorded `requirements.lock.txt` environment for library
+exercises. The site itself still has no runtime package dependency. Source files
+use 3.12-compatible syntax; newer language features are isolated probes and
+version-specific readings. The dependency snapshot is tested on Linux/CPython
+3.12; setup commands for Windows and macOS are also provided.
+
+After extracting the bundle and preparing its environment:
+
+```sh
+python tools/check.py 01
+# Edit exercises/day01.py and add a changed case in tests/test_01.py.
+python tools/check.py 01
+# Compare only after your own attempt:
+python tools/check.py 01 --reference
+```
+
+Most unfinished starters fail immediately. Session 11 deliberately starts with a
+bug that passes the simple supplied baseline: write its missing regression first.
+Reference solutions and agent QA are teaching scaffolding, not learner evidence.
+Local command results are self-recorded in Fieldnotes; the static site does not
+execute Python, authenticate test output, or upload source. Both tracks travel in
+one progress backup, with independent practice/review entries.
+
+CI also executes the reference implementations against the shared exercise tests:
+
+```sh
+python -m pip install -r assets/python-exercises/requirements.lock.txt
+python -m pytest assets/python-exercises/tests --target solutions -q
+```

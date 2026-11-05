@@ -165,3 +165,27 @@ The learner requested the remainder of the course in advance. These are authored
 | 2026-12-21 | 35 | Review the actual change |
 | 2026-12-22 | 36 | Explain a system out loud |
 | 2026-12-23 | 37 | Show what you can verify |
+
+## Separate Python practice track
+
+At the learner's request, Fieldnotes also contains 30 self-paced Python coding
+sessions, each planned for 30 minutes. This adds 15 hours of core practice rather
+than changing the existing 37-session calendar. Alternate tracks for a 30-minute
+total per day, or use Python as additional time. Setup and stretches are separate;
+resume an unfinished task on the next study day instead of rushing a solution.
+
+1–8 restart Python: interpreter/environment, values, collections, functions,
+references/copies, exceptions, measured CPU/RAM/I/O, iterators/generators.
+9–16 reliable code: files/cleanup, complexity, regression tests, typing/dataclasses,
+Pydantic validation and serialization, decimal/time reasoning, modules/metadata.
+17–24 boundaries/libraries: CLI/config/logging, HTTPX, narrow retries, SQLAlchemy
+transactions, pandas/grain/exact money, composition/protocols, caches/decorators,
+Python version migration.
+25–30 performance/delivery: threads/GIL, bounded asyncio, processes/spawn,
+quality tools/untrusted data, ingestion debugging, FastAPI capstone.
+
+Every session includes real runnable starter code and behaviour tests, a genuinely
+additional case for the learner to add, a reference implementation for comparison
+after attempting, and an own-words evidence record. Extra library explorations
+(NumPy, Polars, Hypothesis, static type checkers, settings) live in the field guide.
+No new learner understanding is inferred from authored materials or reference QA.
