@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Build one FastAPI endpoint with an explicit request and response contract."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Serve a small, verified Python API — Fieldnotes Python</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="py-capstone">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">
+          Fieldnotes / Python 30 / Performance &amp; delivery
+        </p>
+        <h1>Serve a small, verified Python API</h1>
+        <p>
+          Build one FastAPI endpoint with an explicit request and response
+          contract.
+        </p>
+        <div class="lesson-meta">
+          <span class="pill teal">30-minute coding practice</span
+          ><span>English · self-paced</span
+          ><a href="../index.html#python">Python track &amp; progress</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Code · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Predict before running.</h2>
+        <p id="recall-prompt">
+          What evidence would let a reviewer trust an agent-assisted endpoint?
+          Which parts would a local test still leave unproven?
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty helps choose the next check.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>One mechanism to use today.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="POST /quote: validated integer cents → Pure calculation: add fixed delivery charge → Response model: explicit public fields"
+          >
+            <div class="node">
+              POST /quote<span>validated integer cents</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Pure calculation<span>add fixed delivery charge</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Response model<span>explicit public fields</span>
+            </div>
+          </div>
+          <p class="figure-caption">
+            Trace the input, decision, and result. This diagram simplifies the
+            mechanism; your local code tests its stated contract.
+          </p>
+          <p>
+            FastAPI connects HTTP routes, typed request parsing, and response
+            models. The test client calls your ASGI application locally; it
+            verifies routing, validation, and response behaviour without proving
+            production TLS, authentication, or deployment.
+          </p>
+          <p>
+            The small capstone reuses known pieces rather than starting an
+            unrestricted project. Build a quote endpoint, add one changed test,
+            and write your own explanation of its contract, failure behaviour,
+            and limits. The provided authentication lessons cover access
+            control; this public synthetic quote has no account data.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / CODE</span>
+        <h2>Write it. Run it. Change it.</h2>
+        <p>
+          First-time setup happens before the timer:
+          <a href="../index.html#python">download and prepare the workspace</a>.
+          Use your selected virtual-environment interpreter for the short
+          commands below.
+        </p>
+        <div class="exercise-contract">
+          <h3>Core task · 15 minutes</h3>
+          <p>
+            Implement build_app() returning FastAPI: POST /quote accepts
+            QuoteRequest with strict extra-forbid subtotal_cents &gt;= 0 and
+            returns QuoteResponse(total_cents=subtotal_cents + 500). Use
+            response_model. No database or network is needed.
+          </p>
+          <p>
+            Edit <code>exercises/day30.py</code>; add your test to
+            <code>tests/test_30.py</code>.
+          </p>
+          <pre><code>python tools/check.py 30</code></pre>
+          <p class="small muted">
+            An unfinished starter is expected to fail. Read the traceback, make
+            one change, and rerun. If you run out of time, save the attempt and
+            resume next study day.
+          </p>
+          <h3>Changed case</h3>
+          <p>
+            Add a JSON boolean subtotal and an empty body. Write a portfolio
+            note with exact command, observed result, assistance, and one
+            untested production boundary.
+          </p>
+        </div>
+        <details>
+          <summary>Hint after your first attempt</summary>
+          <p>
+            Define the two models at module scope, then register the route
+            inside build_app.
+          </p>
+        </details>
+
+        <details>
+          <summary>Reference implementation · compare after attempting</summary>
+          <p>
+            Run <code>python tools/check.py 30 --reference</code> against the
+            same tests, including your changed case. Compare
+            <code>solutions/day30.py</code> in the download. It is
+            tutor-authored code; record any use in your explanation.
+          </p>
+          <a href="../assets/python-exercises/solutions/day30.py" download
+            >Download reference source</a
+          >
+        </details>
+        <details>
+          <summary>Harder extension · use additional study sessions</summary>
+          <p>
+            Build a bounded bulk-quote endpoint for at most 20 items with stable
+            item IDs. Decide how identical and conflicting repeats behave, add
+            an all-or-nothing validation rule, and prove that invalid or
+            duplicate input cannot inflate the total. Reuse your ingestion and
+            Pydantic skills. Write a regression before each change, then explain
+            the remaining authentication, resource-limit, and deployment
+            boundaries.
+          </p>
+        </details>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p>
+            Run the exercise locally, then enable JavaScript to record your
+            command and result. The Python code does not execute in this page.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Coding evidence not recorded yet
+        </p>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep your reasoning and evidence.</h2>
+        <p id="reflection-prompt">
+          Explain the mechanism, your changed case, observed results, and help
+          used.
+        </p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="Command, result, changed case, explanation, help used, and one limit…"
+        ></textarea>
+        <fieldset class="confidence-field">
+          <legend>How confident do you feel? (self-report)</legend>
+          <div id="confidence" class="confidence"></div>
+        </fieldset>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <div class="button-row">
+          <button class="button" id="save-practice">
+            Save practice session
+          </button>
+        </div>
+        <p id="practice-status" class="small muted" role="status"></p>
+        <div id="next-lesson"></div>
+      </section>
+      <section class="lesson-section sources">
+        <h2>Read, revisit, ask.</h2>
+        <p>
+          <a href="https://fastapi.tiangolo.com/tutorial/testing/"
+            >FastAPI testing · primary source</a
+          >
+        </p>
+        <p>
+          <a href="../reference/0006-python-field-guide.html"
+            >Python field guide &amp; library map</a
+          >
+        </p>
+        <p>
+          Ask your teaching agent about anything unclear. Share your attempt,
+          traceback, and prediction before asking for a solution. Ask for a
+          changed question later to test retention.
+        </p>
+      </section>
+    </main>
+    <noscript
+      >Explanations and local commands remain readable. JavaScript is needed
+      only for saved progress and checks.</noscript
+    >
+  </body>
+</html>
