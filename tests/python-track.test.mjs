@@ -20,7 +20,7 @@ test("Python is a separate route without extending or redating engineering", () 
   assert.equal(lessons[0].date, "2026-11-03");
   assert.equal(lessons.at(-1).date, "2026-12-23");
   assert.equal(pythonLessons.length, 30);
-  assert.equal(new Set(allLessons.map((l) => l.id)).size, 67);
+  assert.equal(new Set(allLessons.map((l) => l.id)).size, allLessons.length);
   for (const l of pythonLessons) {
     assert.equal(l.date, undefined);
     assert.equal(trackLessons(lessonById(l.id)), pythonLessons);

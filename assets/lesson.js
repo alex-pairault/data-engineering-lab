@@ -1,5 +1,5 @@
 import { lessonUrl, escapeHtml as e } from "./curriculum.js";
-import { lessonById, trackLessons } from "./catalog.js";
+import { lessonById, trackLessons, practiceTracks } from "./catalog.js";
 import { store, practiceReady, entryStatus } from "./store.js";
 import { lessonData } from "./lesson-data.js";
 import { mountShell, toast, refreshSaveIndicator, base } from "./shell.js";
@@ -20,7 +20,7 @@ function update(change) {
 }
 if (!store.entry(id)) update({});
 const entry = () => store.entry(id);
-const coding = lesson.track === "python";
+const coding = Boolean(practiceTracks[lesson.track]);
 const recall = document.querySelector("#recall-answer");
 recall.value = entry()?.recall || "";
 recall.placeholder = data.recall;
@@ -187,4 +187,4 @@ const sequence = trackLessons(lesson);
 const next = sequence[sequence.findIndex((l) => l.id === id) + 1];
 document.querySelector("#next-lesson").innerHTML = next
   ? `<a class="button-secondary" href="${lessonUrl(next, base)}">Next: ${e(next.title)} →</a>`
-  : `<a class="button-secondary" href="${base}index.html#${lesson.track === "python" ? "python" : "evidence"}">View your practice evidence →</a>`;
+  : `<a class="button-secondary" href="${base}index.html#${coding ? lesson.track : "evidence"}">View your practice evidence →</a>`;

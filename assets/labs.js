@@ -1,5 +1,6 @@
 import { courseLabs } from "./course-labs.js";
 import { pythonLabs } from "./python-labs.js";
+import { complexityLabs } from "./complexity-labs.js";
 import { foundationLabs } from "./foundation-labs.js";
 import { nextLabs } from "./labs-next.js";
 import { controls, button, frame, log, status } from "./lab-ui.js";
@@ -314,6 +315,7 @@ function verificationLab(root, complete) {
 export function mountLab(root, id, complete) {
   ({
     ...pythonLabs,
+    ...complexityLabs,
     ...nextLabs,
     ...foundationLabs,
     ...courseLabs,

@@ -9,6 +9,7 @@ import {
 } from "./curriculum.js";
 import { lessonById } from "./catalog.js";
 import { renderPython } from "./python-track.js";
+import { renderComplexity } from "./complexity-track.js";
 import { store, entryStatus, validateState } from "./store.js";
 import { lessonData } from "./lesson-data.js";
 import {
@@ -251,10 +252,13 @@ function render() {
       evidence,
       backups,
       python: () => renderPython(main, openReview),
+      complexity: () => renderComplexity(main, openReview),
     })[section] || today
   )();
   mountShell(
-    ["today", "course", "evidence", "backups", "python"].includes(section)
+    ["today", "course", "evidence", "backups", "python", "complexity"].includes(
+      section,
+    )
       ? section
       : "today",
   );

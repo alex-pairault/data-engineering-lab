@@ -1,8 +1,10 @@
 import { courseLessonData } from "./lesson-data-course.js";
 import { pythonLessonData } from "./python-lesson-data.js";
+import { complexityLessonData } from "./complexity-lesson-data.js";
 import { foundationLessonData } from "./lesson-data-foundations.js";
 import { nextLessonData } from "./lesson-data-next.js";
 export const lessonData = {
+  ...complexityLessonData,
   ...pythonLessonData,
   ...courseLessonData,
   ...foundationLessonData,
