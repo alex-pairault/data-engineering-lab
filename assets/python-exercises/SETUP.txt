@@ -72,3 +72,27 @@ PORTFOLIO NOTE TEMPLATE
 
 Keep learner work in your own Git branch/folder, e.g. portfolio/python/day01.
 Do not overwrite the tutor solution catalog or commit environments/runtime data.
+
+COMPLEXITY FROM ZERO · 8 ADDITIONAL 30-MINUTE SESSIONS
+Recommended after Python09 and before Python10. These eight sessions are additional
+practice, with no imposed end date. Use one daily slot per session.
+If you already downloaded the older workspace, extract this new ZIP into a new
+folder and copy your learner code/tests deliberately; do not overwrite your work.
+The existing dependency environment can run it; no new packages are required.
+
+  python tools/check.py --complexity 01
+  python tools/complexity_probe.py 01
+
+Edit complexity_exercises/c01.py and add a test in complexity_tests/test_01.py.
+Replace01 with02..08. The probe counts selected operations in your real Python;
+it does not time a production workload or upload progress. Sizes are bounded to
+2..128. Explain n, the work unit, case/assumptions, and retained state.
+
+After trying, compare the separate tutor reference:
+  python tools/check.py --complexity 01 --reference
+  python tools/complexity_probe.py 01 --reference
+
+Sessions01..07 contain unfinished stubs. Session08 returns correct booleans but
+intentionally fails the growing-work test. Correctness and cost are separate.
+Counter tests illustrate the selected paths; they do not certify all possible
+asymptotic claims. Real Python keys/comparisons and hashing assumptions matter.
