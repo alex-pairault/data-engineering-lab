@@ -1,0 +1,20 @@
+[project]
+name = "fieldnotes-python-practice"
+version = "0.1.0"
+description = "Original synthetic exercises, not learner-completed portfolio work"
+requires-python = ">=3.12,<3.16"
+dependencies = [
+  "pytest>=8,<10", "pydantic>=2,<3", "httpx>=0.28,<1",
+  "sqlalchemy>=2,<3", "pandas>=2,<4", "fastapi>=0.115,<1", "ruff>=0.8,<1"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

@@ -1,0 +1,74 @@
+FIELDNOTES PYTHON PRACTICE · 30 SESSIONS
+
+All data is synthetic. This workspace executes real local Python, never browser
+JavaScript pretending to be Python. Setup is separate from the 30-minute sessions.
+The core language examples target Python 3.12+. The tested library environment
+uses Python 3.12; exact resolved packages are in requirements.lock.txt.
+
+Linux / macOS (replace python3.12 with your Python 3.12 executable):
+  python3.12 -m venv .venv
+  .venv/bin/python -m pip install -r requirements.lock.txt
+  .venv/bin/python tools/check.py 01
+
+Windows PowerShell (with Python 3.12 installed):
+  py -3.12 -m venv .venv
+  .venv\Scripts\python.exe -m pip install -r requirements.lock.txt
+  .venv\Scripts\python.exe tools/check.py 01
+
+You may activate the venv, then use the lesson's short `python` commands:
+  Linux/macOS: source .venv/bin/activate
+  PowerShell: .venv\Scripts\Activate.ps1
+Or always use the explicit interpreter path above if activation is unavailable.
+
+OPTIONAL uv alternative (if already installed):
+  uv venv --python 3.12 .venv
+  uv pip sync --python .venv/bin/python requirements.lock.txt
+  .venv/bin/python tools/check.py 01
+
+Write your attempt in exercises/day01.py; leave solutions/day01.py closed.
+Most unfinished starters fail. Session 11 has a bug that passes the simple
+baseline; add its missing regression to expose it before repairing. Read the traceback, implement the stated contract,
+then run the same tests. Add one changed test in tests/test_01.py and rerun.
+Change 01 for later sessions. Run a single module; all unfinished stubs will
+fail if you run the entire learner suite on day one.
+
+After your attempt, compare the reference using:
+  python tools/check.py 01 --reference
+These are tutor-authored implementations, not your portfolio achievements.
+Running reference tests uses the SAME tests, including changed cases you add.
+Record help honestly; do not copy a solution and label it independent work.
+
+Useful tools:
+  python tools/memory_probe.py
+  python tools/version_probe.py
+  python -m ruff check exercises/day01.py
+  python -m ruff format exercises/day01.py
+
+The memory probe measures prepared eager/stream implementations, not your
+exercise function automatically. It bounds its two sizes to <=1,000,000 each and uses fresh local
+processes. Traced Python allocation bytes are not process RSS. The process-pool
+exercise uses spawn and small finite inputs; run tests from this folder, and do
+not trigger a pool at module import. HTTPX tests inject in-process responses;
+FastAPI TestClient tests local ASGI behaviour. No exercise sends remote HTTP
+requests. Database tests use disposable in-memory SQLite. Package installation
+is the only step that requires internet access.
+
+Course dates: self-paced, one session per study day; no hidden start date and
+no change to the 37-session engineering calendar. Alternate the tracks if your
+total daily budget is 30 minutes. Extra stretch work is outside the core timer.
+
+Progress and explanations stay in the Fieldnotes browser, separate from this
+folder. Record the command, observed test result, changed case and assistance
+there. It is self-recorded evidence, not a verified execution certificate.
+Export your Fieldnotes backup before moving devices. No source code is uploaded.
+
+PORTFOLIO NOTE TEMPLATE
+- Problem and explicit contract:
+- My changed case and why it matters:
+- Command + exact Python/dependency versions + observed result:
+- My explanation of the mechanism:
+- Agent/documentation/reference help used:
+- One limit and next check:
+
+Keep learner work in your own Git branch/folder, e.g. portfolio/python/day01.
+Do not overwrite the tutor solution catalog or commit environments/runtime data.
