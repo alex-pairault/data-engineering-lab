@@ -133,3 +133,10 @@ Checked October 28, 2026. Each lesson links focused sections; setup is separate 
 The Python field guide distinguishes the hands-on core libraries from optional
 extensions. Dynamic documentation may change; the downloadable environment records
 exact resolved package versions and the lessons label their Python 3.12 baseline.
+
+## Complexity from zero
+
+- [NIST: Big-O](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): eventual upper bounds and cost models; use the tightest usual growth class in beginner questions.
+- [MIT6.006 asymptotic analysis](https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/c6d8f06c6f11e3342633dec85498f551_MIT6_006S20_r01.pdf), [Cornell complexity](https://www.cs.cornell.edu/courses/cs2112/2022fa/lectures/complexity/index.html), [Dartmouth notes](https://cs.dartmouth.edu/cs10/notes5.html): input sizes, loop counts, classes, and named cases.
+- [CPython3.12 list](https://github.com/python/cpython/blob/3.12/Objects/listobject.c), [dict](https://github.com/python/cpython/blob/3.12/Objects/dictobject.c), [set](https://github.com/python/cpython/blob/3.12/Objects/setobject.c), [sorting design](https://github.com/python/cpython/blob/3.12/Objects/listsort.txt): concrete implementation assumptions behind the Python cost table.
+- [Python bisect](https://docs.python.org/3.12/library/bisect.html), [deque](https://docs.python.org/3.12/library/collections.html#collections.deque), [OpenDSA space analysis](https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AnalSpace.html): distinguish search/insertion, queue operations, and input/auxiliary/output space.

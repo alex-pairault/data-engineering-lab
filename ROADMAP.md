@@ -189,3 +189,23 @@ additional case for the learner to add, a reference implementation for compariso
 after attempting, and an own-words evidence record. Extra library explorations
 (NumPy, Polars, Hypothesis, static type checkers, settings) live in the field guide.
 No new learner understanding is inferred from authored materials or reference QA.
+
+## Complexity from first principles
+
+Eight additional, self-paced 30-minute sessions deepen the Python complexity
+lesson. They are not extra tasks inside an already timed session and impose no
+new completion date. Recommended order: Python01–09, complexity01–08, Python10
+onwards, or revisits according to actual attempts.
+
+1. Define n; count constant versus linear item reads.
+2. Add sequential work and count nested bounds, including n×m and triangular loops.
+3. Trace halving and implement index-based binary search on sorted data.
+4. Inspect hidden membership/slicing costs and average versus amortized behaviour.
+5. Separate time, auxiliary state, retained input, and output storage.
+6. Trade a totals index for repeated scans while preserving report behaviour.
+7. Merge sorted inputs; understand nlogn levels and recognize explosive candidate counts.
+8. Review unfamiliar duplicate detection, test costs, and explain assumptions and storage.
+
+The sequence assumes no prior Big-O vocabulary. No mastery or progress is
+inferred from authored materials, model feedback, or agent verification; collect
+own-words explanations and changed-case evidence during actual practice.

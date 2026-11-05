@@ -27,3 +27,4 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r assets/python-exercises/requirements.lock.txt
       - run: python -m pytest assets/python-exercises/tests --target solutions -q
+      - run: python -m pytest assets/python-exercises/complexity_tests --target complexity_solutions -q

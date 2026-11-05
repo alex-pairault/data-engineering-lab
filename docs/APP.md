@@ -147,3 +147,36 @@ documents, 105 pages); page montages and detailed memory/reference pages were
 visually inspected. These cover static HTML/CSS only. Browser access was
 unavailable after a retry, so this release has no new interactive or mobile
 browser QA. No learner progress was entered or inferred.
+
+## Complexity section
+
+`#complexity` adds eight beginner sessions, linked from Python practice and the
+main navigation. `catalog.js` now owns the two coding-track descriptors and their
+lesson sequences; the 37 dated engineering sessions and 30 Python sessions retain
+IDs, order, and records. A shared `coding-evidence.js` component serves both coding
+tracks without duplicating the local-run statement and storage handling.
+
+Complexity models name their units and assumptions: reads, body visits, midpoint
+probes, copies, retained conceptual slots, simplified index operations, sort growth
+curves, or candidate counts. They are explicit browser formulas/traces, not Python
+execution, CPU timing, RAM measurement, or proof of asymptotics. Predictions are
+unsaved practice; the own-words lesson explanation is the durable record. Bars use
+a linear relative scale without a false minimum width, and tables retain exact
+values. Factorial models cap n at16 to keep their integer counts exact.
+
+The existing Python source bundle now includes eight more exercise/test/reference
+modules and a bounded real operation probe. The checker routes `--complexity`
+to its own test folder. CI runs both reference suites separately; no new library
+or site runtime dependency is introduced. The duplicate starter intentionally
+passes functional checks and fails a growing-work check. Counter tests inspect
+selected paths, not all inputs or an authenticated claim of learner competence.
+
+Complexity release verification: 52 Node tests, 17 standard-library Python tests,
+32 existing Python reference checks, and nine complexity reference checks passed
+(110 total). The extracted ZIP passed its nine checks, all eight operation
+probes, expected starter failures, CLI bounds, and the original Python checker
+route. The 290-file build passed links and public/archive boundary checks.
+Nine WeasyPrint previews (38 pages) covered the new lessons and field guide; first
+and second-page montages and a full growth table were visually inspected. This
+is static HTML/CSS QA. Browser access was unavailable, so interactive and mobile
+browser behaviour remains unverified. No learner progress was entered.

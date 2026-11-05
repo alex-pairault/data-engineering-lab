@@ -169,3 +169,28 @@ CI also executes the reference implementations against the shared exercise tests
 python -m pip install -r assets/python-exercises/requirements.lock.txt
 python -m pytest assets/python-exercises/tests --target solutions -q
 ```
+
+## Complexity from zero
+
+[Open the dedicated complexity section](https://engineering-fieldnotes-alex.alex-pairault110395.chatgpt.site/#complexity).
+Eight additional 30-minute lessons start with defining input size and counting
+work, then cover O(1), O(n), sequential/nested loops, O(log n), Python operation
+costs, time versus auxiliary/output space, indexing, O(n log n), and mixed review.
+Exponential/factorial candidate counts are a small recognition extension.
+Recommended after Python09 and before Python10, using one daily slot per lesson.
+
+Each lesson has a prediction-led count model, real local code and counter probes,
+behaviour/cost checks, an additional case, and reference code after an attempt.
+Counts are chosen operations rather than seconds, and bounded observations are
+kept separate from a justified asymptotic bound. The updated Python ZIP contains
+all eight exercises; no additional dependency installation is needed.
+
+```sh
+python tools/check.py --complexity 01
+python tools/complexity_probe.py 01
+# After attempting:
+python tools/check.py --complexity 01 --reference
+```
+
+See the [complexity field guide](reference/0007-complexity-field-guide.html).
+Progress and backups include the new track without replacing either earlier route.
