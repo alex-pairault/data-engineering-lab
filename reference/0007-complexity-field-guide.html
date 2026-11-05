@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Complexity from zero — Fieldnotes</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <p class="eyebrow">Fieldnotes / Complexity field guide</p>
+      <h1>Count first. Name the growth second.</h1>
+      <p>
+        <a href="../index.html#complexity"
+          >← Eight complexity lessons &amp; practice</a
+        >
+        · <a href="../index.html#python">Python track</a>
+      </p>
+      <section class="lesson-section">
+        <h2>Start with n, not a formula.</h2>
+        <p>
+          n is an input size: for example, the number of items in a list. If two
+          independent lists are involved, name both sizes n and m. A work unit
+          might be one comparison, one item read, or one emitted value. State
+          the unit and case before comparing counts.
+        </p>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="Input size determines repeated work; count the work, then summarize how it grows"
+        >
+          <div class="node">Input size<span>What grows?</span></div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Counted work<span>How often, at what cost?</span>
+          </div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Growth class<span>How does the count scale?</span>
+          </div>
+        </div>
+        <p>
+          O(1) means bounded work independently of the input size under the
+          chosen model. O(n) is a linear bound. Big-O formally gives an eventual
+          upper bound; it does not mean “exactly” and does not automatically
+          mean “worst case”. Beginner questions here ask for the tightest usual
+          growth family in the stated case. A linear algorithm is technically
+          also bounded by O(n²), but that looser label hides useful information.
+        </p>
+        <p>
+          <a href="https://xlinux.nist.gov/dads/HTML/bigOnotation.html"
+            >NIST definition</a
+          >
+          ·
+          <a
+            href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/c6d8f06c6f11e3342633dec85498f551_MIT6_006S20_r01.pdf"
+            >MIT asymptotic analysis</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>A growth table, not a stopwatch</h2>
+        <div class="table-scroll">
+          <table class="result-table">
+            <caption>
+              Illustrative mathematical counts. Each row uses its own stated
+              expression, not equal-cost CPU instructions.
+            </caption>
+            <thead>
+              <tr>
+                <th>Expression / family</th>
+                <th>n=4</th>
+                <th>n=8</th>
+                <th>n=16</th>
+                <th>Useful recognition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 / O(1)</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>One known list index; fixed-size bookkeeping</td>
+              </tr>
+              <tr>
+                <td>log₂ n / O(log n)</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>
+                  Repeated halving; binary-search growth (exact probes may add
+                  one)
+                </td>
+              </tr>
+              <tr>
+                <td>n / O(n)</td>
+                <td>4</td>
+                <td>8</td>
+                <td>16</td>
+                <td>One full scan with constant-cost work per item</td>
+              </tr>
+              <tr>
+                <td>n log₂ n / O(n log n)</td>
+                <td>8</td>
+                <td>24</td>
+                <td>64</td>
+                <td>Linear merge work across logarithmically many levels</td>
+              </tr>
+              <tr>
+                <td>n² / O(n²)</td>
+                <td>16</td>
+                <td>64</td>
+                <td>256</td>
+                <td>All ordered pairs of n items</td>
+              </tr>
+              <tr>
+                <td>2ⁿ candidates</td>
+                <td>16</td>
+                <td>256</td>
+                <td>65,536</td>
+                <td>All subsets of n distinct choices</td>
+              </tr>
+              <tr>
+                <td>n! candidates</td>
+                <td>24</td>
+                <td>40,320</td>
+                <td>20,922,789,888,000</td>
+                <td>All orderings of n distinct items</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          2ⁿ means multiplying 2 by itself n times. n! is factorial: 4! = 4 × 3
+          × 2 × 1 = 24. They count candidates here. Materializing each length-n
+          candidate adds per-output work and retained output storage; candidate
+          count is not automatically complete runtime. Constants also matter in
+          practice: an O(n) approach with large fixed overhead can lose on small
+          data. Benchmark representative inputs after reasoning about growth.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Six questions for unfamiliar code</h2>
+        <ol>
+          <li>
+            <strong>What is n?</strong> Name every independent input size.
+          </li>
+          <li>
+            <strong>Which case?</strong> Early exit, worst case, expected
+            behaviour, or an amortized sequence?
+          </li>
+          <li>
+            <strong>What costs one unit?</strong> Identify reads, comparisons,
+            copies, calls, or other chosen work. State small-key/number
+            assumptions.
+          </li>
+          <li>
+            <strong>How often does it repeat?</strong> Add sequential phases;
+            multiply genuinely nested input-sized work; track shrinking or
+            growing bounds.
+          </li>
+          <li>
+            <strong>What is hidden?</strong> Include membership scans, sorting,
+            slicing, hashing/equality costs, and preprocessing. Then keep the
+            dominant term.
+          </li>
+          <li>
+            <strong>What stays live?</strong> Separate retained input, auxiliary
+            state (including recursion), and returned or consumer-retained
+            output.
+          </li>
+        </ol>
+        <p>
+          For example, two separate n-item scans do 2n work → O(n). An n loop
+          with a fixed three-step inner loop does 3n → O(n). n independent
+          customers each scanning m orders do nm → O(nm). A triangular n(n−1)/2
+          pair loop still grows as O(n²).
+        </p>
+        <p>
+          <a
+            href="https://www.cs.cornell.edu/courses/cs2112/2022fa/lectures/complexity/index.html"
+            >Cornell complexity notes</a
+          >
+          ·
+          <a href="https://cs.dartmouth.edu/cs10/notes5.html"
+            >Dartmouth algorithm analysis</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Python operations you need to inspect</h2>
+        <div class="table-scroll">
+          <table class="result-table">
+            <caption>
+              Ordinary CPython list/hash-table model with small fixed-size keys
+              and constant-cost equality. Bounds concern growing container size;
+              custom operations can change them.
+            </caption>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Typical bound</th>
+                <th>Condition or hidden cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>len(a_list)</td>
+                <td>O(1)</td>
+                <td>List length is stored; not a full scan.</td>
+              </tr>
+              <tr>
+                <td>a_list[i]</td>
+                <td>O(1)</td>
+                <td>
+                  Known valid integer index in a list, not generic sequence
+                  access.
+                </td>
+              </tr>
+              <tr>
+                <td>x in a_list</td>
+                <td>O(n) worst case</td>
+                <td>Missing or late match; equality cost assumed bounded.</td>
+              </tr>
+              <tr>
+                <td>a_list[:k]</td>
+                <td>O(k) time + result space</td>
+                <td>Copies references; does not deep-copy nested values.</td>
+              </tr>
+              <tr>
+                <td>a_list.append(x)</td>
+                <td>Amortized O(1)</td>
+                <td>
+                  A resizing call can take O(n); the sequence-average cost is
+                  bounded.
+                </td>
+              </tr>
+              <tr>
+                <td>a_list.pop()</td>
+                <td>Amortized O(1)</td>
+                <td>
+                  Remove from the end; storage management can have occasional
+                  larger costs.
+                </td>
+              </tr>
+              <tr>
+                <td>a_list.pop(0)</td>
+                <td>O(n)</td>
+                <td>Shifts remaining references.</td>
+              </tr>
+              <tr>
+                <td>deque.popleft()</td>
+                <td>O(1)</td>
+                <td>
+                  A queue-oriented operation; arbitrary middle access has
+                  different costs.
+                </td>
+              </tr>
+              <tr>
+                <td>x in a_set / key in a_dict</td>
+                <td>Expected O(1)</td>
+                <td>
+                  Ordinary hashing; collision-heavy lookup can degrade toward
+                  O(n).
+                </td>
+              </tr>
+              <tr>
+                <td>x in a_dict.values()</td>
+                <td>O(n) worst case</td>
+                <td>Searching values is a scan, not a hash lookup by key.</td>
+              </tr>
+              <tr>
+                <td>set(a_list)</td>
+                <td>Expected O(n)</td>
+                <td>
+                  Build cost and up to O(n) entries; not free preprocessing.
+                </td>
+              </tr>
+              <tr>
+                <td>sorted(items)</td>
+                <td>O(n log n) worst-case comparisons</td>
+                <td>
+                  Creates a result list; existing order can help. Key/comparison
+                  costs still matter.
+                </td>
+              </tr>
+              <tr>
+                <td>bisect search</td>
+                <td>O(log n)</td>
+                <td>
+                  Already sorted random-access list; insertion into the list
+                  remains O(n).
+                </td>
+              </tr>
+              <tr>
+                <td>sum(values)</td>
+                <td>O(n) in this numeric model</td>
+                <td>
+                  One call hides a full iteration. Arbitrary-size integer
+                  arithmetic can add cost.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <a
+            href="https://github.com/python/cpython/blob/3.12/Objects/listobject.c"
+            >CPython list source</a
+          >
+          ·
+          <a
+            href="https://github.com/python/cpython/blob/3.12/Objects/dictobject.c"
+            >dict source</a
+          >
+          ·
+          <a
+            href="https://github.com/python/cpython/blob/3.12/Objects/setobject.c"
+            >set source</a
+          >
+          ·
+          <a
+            href="https://github.com/python/cpython/blob/3.12/Objects/listsort.txt"
+            >sorting design</a
+          >
+          ·
+          <a href="https://docs.python.org/3.12/library/bisect.html"
+            >bisect docs</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Three different meanings of “average”</h2>
+        <p>
+          <strong>Worst-case:</strong> an upper bound for the most costly input
+          of that size in the stated model. A missing target in a list requires
+          a full scan.
+        </p>
+        <p>
+          <strong>Expected/average:</strong> cost under distribution or hashing
+          assumptions. Ordinary dict/set lookup is expected constant time under
+          suitable assumptions; a pathological collision pattern can be worse.
+        </p>
+        <p>
+          <strong>Amortized:</strong> total cost spread across a sequence of
+          operations, without assuming random input. Occasional list resizes can
+          be expensive while a sequence of appends has amortized O(1) per
+          append.
+        </p>
+        <p>
+          These are not interchangeable labels. Big-O can describe any of these
+          cost functions when the case is specified.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Memory: count what remains at once</h2>
+        <p>
+          An eager list retains its output; a running accumulator keeps only
+          working state. A lazy producer may have constant auxiliary state while
+          the consumer retains every value. A seen set grows with distinct
+          values even inside a generator. Recursion retains active stack frames.
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>Example</th>
+              <th>Auxiliary state</th>
+              <th>New retained output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Running total with small numbers</td>
+              <td>O(1)</td>
+              <td>One scalar</td>
+            </tr>
+            <tr>
+              <td>Return n transformed values in a list</td>
+              <td>O(1) beyond output for a direct loop</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Lazy transform without accumulation</td>
+              <td>O(1), excluding upstream state</td>
+              <td>Depends on the consumer</td>
+            </tr>
+            <tr>
+              <td>Exact set-based duplicate detection</td>
+              <td>O(n) in the all-distinct case</td>
+              <td>One boolean</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Conceptual slots are not traced allocation bytes or process RSS. Use
+          the Python memory lesson for actual measurement.
+          <a href="../lessons/0044-python-memory.html">CPU/RAM measurement</a> ·
+          <a
+            href="https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/AnalSpace.html"
+            >Space analysis</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Turn a label into evidence</h2>
+        <pre><code>python tools/check.py --complexity 01
+python tools/complexity_probe.py 01
+# After your own attempt:
+python tools/check.py --complexity 01 --reference</code></pre>
+        <p>
+          Use sizes 8 and 32, predict the operation counts, run, and explain why
+          they changed. Add one case not in the prepared tests. Counter
+          experiments examine concrete paths and chosen operations; a handful of
+          inputs cannot prove an asymptotic bound by themselves. Passing
+          functional tests also does not guarantee an efficient algorithm.
+        </p>
+        <p>
+          Bring your code and reasoning to your teaching agent. An honest
+          explanation can say: “n is the number of orders. I scan them once,
+          doing expected constant-cost dict updates for small keys, so expected
+          time is O(n). The dictionary keeps u distinct customer totals, using
+          O(u) auxiliary entries.”
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
