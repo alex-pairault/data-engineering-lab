@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Distinguish sequential, fixed-inner, and input-sized nested loops."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Count loops before naming them — Fieldnotes Complexity</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="cx-loops">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">
+          Fieldnotes / Complexity 02 / From first principles
+        </p>
+        <h1>Count loops before naming them</h1>
+        <p>
+          Distinguish sequential, fixed-inner, and input-sized nested loops.
+        </p>
+        <div class="lesson-meta">
+          <span class="pill teal">30-minute coding practice</span
+          ><span>English · self-paced</span
+          ><a href="../index.html#complexity"
+            >Complexity track &amp; progress</a
+          >
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Code · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Predict before running.</h2>
+        <p id="recall-prompt">
+          Two loops appear in a function. Must its work be quadratic? What
+          determines how many times the inner body executes?
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty helps choose the next check.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>One mechanism to use today.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Loop bounds: which quantities grow? → Body executions: add sequential, multiply nested → Simplify growth: keep the dominant term"
+          >
+            <div class="node">
+              Loop bounds<span>which quantities grow?</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Body executions<span>add sequential, multiply nested</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Simplify growth<span>keep the dominant term</span>
+            </div>
+          </div>
+          <p>
+            Two separate scans of the same n items do n + n = 2n visits, so
+            their total remains O(n). An outer n loop with an inner loop of
+            exactly three steps performs 3n body visits, also O(n). Count the
+            actual bounds rather than the number of for keywords.
+          </p>
+          <p>
+            If every one of n items is paired with every one of another m items,
+            the pair body runs n × m times: O(nm). If both inputs have length n,
+            this becomes O(n²). For n=10, all ordered pairs give 100 bodies; for
+            n=20, 400. Doubling both dimensions gives four times the work.
+          </p>
+          <p>
+            Pairing only distinct positions with j &gt; i gives n(n−1)/2 visits.
+            It avoids duplicates but still grows quadratically. Sequential n²
+            work followed by n work has total n² + n, whose dominant growth is
+            O(n²). These claims assume a constant-cost body; inspect calls
+            inside it too.
+          </p>
+          <pre><code>for item in items:       # n visits
+    visit(item)
+for item in items:       # another n visits
+    visit(item)
+
+for left in items:
+    for right in items: # n visits for each outer item
+        compare(left, right)</code></pre>
+          <p class="figure-caption">
+            Trace this code using a small input. The browser model uses stated
+            formulas; the downloadable probe runs your actual Python
+            implementation.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / CODE</span>
+        <h2>Write it. Run it. Change it.</h2>
+        <p>
+          First-time setup happens before the timer:
+          <a href="../index.html#complexity"
+            >download and prepare the workspace</a
+          >. Use your selected virtual-environment interpreter for the short
+          commands below.
+        </p>
+        <div class="exercise-contract">
+          <h3>Core task · 15 minutes</h3>
+          <p>
+            Implement pair_visits(n, m): use two nested range loops and
+            increment a counter once per pair; return the count. Implement
+            separate_visits(n): use two separate range(n) loops, each
+            incrementing a counter. n and m are nonnegative integers
+            representing the two collection sizes. Use loops to observe this
+            algorithm; returning the formula n*m counts potential pairs without
+            visiting them and is a different task.
+          </p>
+          <p>
+            Edit <code>complexity_exercises/c02.py</code> and add your case to
+            <code>complexity_tests/test_02.py</code>.
+          </p>
+          <pre><code>python tools/check.py --complexity 02
+python tools/complexity_probe.py 02</code></pre>
+          <p class="small muted">
+            The unfinished starter should fail. Read the traceback, implement
+            one piece, and rerun. If unfinished after 30 minutes, save the
+            attempt and resume.
+          </p>
+          <h3>Your additional case</h3>
+          <p>
+            Add a fixed-inner example with inner range(3), and a triangular
+            example with range(i + 1, n). Count both at n=4 and n=8; explain why
+            their growth differs.
+          </p>
+        </div>
+        <details>
+          <summary>Hint after an attempt</summary>
+          <p>
+            Start with n=3 on paper. Label every loop bound and count each
+            visit. Use the tests as behaviour contracts; do not guess complexity
+            from line count.
+          </p>
+        </details>
+        <details>
+          <summary>Compare a reference after trying</summary>
+          <p>
+            Run
+            <code>python tools/check.py --complexity 02 --reference</code> and
+            <code>python tools/complexity_probe.py 02 --reference</code>. The
+            same tests include any changed case you add. Reference source is
+            tutor-authored, not your independent work.
+          </p>
+          <a
+            href="../assets/python-exercises/complexity_solutions/c02.py"
+            download
+            >Download reference implementation</a
+          >
+        </details>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p>
+            Run the exercise locally, then enable JavaScript to record your
+            command and result. The Python code does not execute in this page.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Coding evidence not recorded yet
+        </p>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep your reasoning and evidence.</h2>
+        <p id="reflection-prompt">
+          Explain the mechanism, your changed case, observed results, and help
+          used.
+        </p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="Command, result, changed case, explanation, help used, and one limit…"
+        ></textarea>
+        <fieldset class="confidence-field">
+          <legend>How confident do you feel? (self-report)</legend>
+          <div id="confidence" class="confidence"></div>
+        </fieldset>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <div class="button-row">
+          <button class="button" id="save-practice">
+            Save practice session
+          </button>
+        </div>
+        <p id="practice-status" class="small muted" role="status"></p>
+        <div id="next-lesson"></div>
+      </section>
+      <section class="lesson-section sources">
+        <h2>Read, revisit, ask.</h2>
+        <p>
+          <a
+            href="https://www.cs.cornell.edu/courses/cs2112/2022fa/lectures/complexity/index.html"
+            >Cornell: complexity analysis · primary source</a
+          >
+        </p>
+        <p>
+          <a href="../reference/0007-complexity-field-guide.html"
+            >Complexity field guide &amp; operation-cost table</a
+          >
+        </p>
+        <p>
+          Ask your teaching agent for a hint or a changed example. Share your
+          attempt and explain what n means before requesting a solution.
+        </p>
+      </section>
+    </main>
+    <noscript
+      >Explanations and local commands remain readable. JavaScript is needed
+      only for saved progress and checks.</noscript
+    >
+  </body>
+</html>

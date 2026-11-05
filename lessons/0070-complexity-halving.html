@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Trace and implement binary search without copying sublists."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Why halving becomes log n — Fieldnotes Complexity</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="cx-halving">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">
+          Fieldnotes / Complexity 03 / From first principles
+        </p>
+        <h1>Why halving becomes log n</h1>
+        <p>Trace and implement binary search without copying sublists.</p>
+        <div class="lesson-meta">
+          <span class="pill teal">30-minute coding practice</span
+          ><span>English · self-paced</span
+          ><a href="../index.html#complexity"
+            >Complexity track &amp; progress</a
+          >
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Code · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Predict before running.</h2>
+        <p id="recall-prompt">
+          How many times can you halve 16 candidates until only one remains?
+          What property must the candidates have to discard half safely?
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty helps choose the next check.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>One mechanism to use today.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Sorted candidates: comparison gives direction → Midpoint probe: keep only one half → Small interval: roughly one extra probe per doubling"
+          >
+            <div class="node">
+              Sorted candidates<span>comparison gives direction</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Midpoint probe<span>keep only one half</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Small interval<span>roughly one extra probe per doubling</span>
+            </div>
+          </div>
+          <p>
+            log₂ n answers “how many doublings reach n?” Equivalently, it counts
+            repeated halvings toward one. log₂ 8 = 3 because 2 × 2 × 2 = 8. If
+            the input doubles, this logarithm increases by one; it does not
+            double.
+          </p>
+          <p>
+            Binary search uses sorted random-access data. Probe the midpoint,
+            then keep the only half that can contain the target. For a nonempty
+            length n, the implementation needs at most floor(log₂ n)+1 midpoint
+            probes. A probe may execute two value comparisons; probes are the
+            unit counted here.
+          </p>
+          <p>
+            Keep low and high indices, not sliced sublists. Copying slices adds
+            work and memory. Sorting unsorted input first has its own cost, so a
+            one-off sort-plus-search is not just O(log n). The exact early-exit
+            path can be cheaper than the worst case.
+          </p>
+          <pre><code># Search interval for a missing value larger than every item:
+# n=16 → probe → 8 candidates → probe → 4 → 2 → 1 → 0
+# At most 5 midpoint probes, not 16 item reads.</code></pre>
+          <p class="figure-caption">
+            Trace this code using a small input. The browser model uses stated
+            formulas; the downloadable probe runs your actual Python
+            implementation.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / CODE</span>
+        <h2>Write it. Run it. Change it.</h2>
+        <p>
+          First-time setup happens before the timer:
+          <a href="../index.html#complexity"
+            >download and prepare the workspace</a
+          >. Use your selected virtual-environment interpreter for the short
+          commands below.
+        </p>
+        <div class="exercise-contract">
+          <h3>Core task · 15 minutes</h3>
+          <p>
+            Implement binary_index(values, target): values is already sorted
+            ascending; return any matching index or -1. Use low/high indices in
+            a while loop. Read the midpoint once per iteration and reuse that
+            value. Do not sort or slice.
+          </p>
+          <p>
+            Edit <code>complexity_exercises/c03.py</code> and add your case to
+            <code>complexity_tests/test_03.py</code>.
+          </p>
+          <pre><code>python tools/check.py --complexity 03
+python tools/complexity_probe.py 03</code></pre>
+          <p class="small muted">
+            The unfinished starter should fail. Read the traceback, implement
+            one piece, and rerun. If unfinished after 30 minutes, save the
+            attempt and resume.
+          </p>
+          <h3>Your additional case</h3>
+          <p>
+            Add repeated equal values. Accept any matching index, then explain
+            why finding the first matching index is a different contract.
+          </p>
+        </div>
+        <details>
+          <summary>Hint after an attempt</summary>
+          <p>
+            Start with n=3 on paper. Label every loop bound and count each
+            visit. Use the tests as behaviour contracts; do not guess complexity
+            from line count.
+          </p>
+        </details>
+        <details>
+          <summary>Compare a reference after trying</summary>
+          <p>
+            Run
+            <code>python tools/check.py --complexity 03 --reference</code> and
+            <code>python tools/complexity_probe.py 03 --reference</code>. The
+            same tests include any changed case you add. Reference source is
+            tutor-authored, not your independent work.
+          </p>
+          <a
+            href="../assets/python-exercises/complexity_solutions/c03.py"
+            download
+            >Download reference implementation</a
+          >
+        </details>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p>
+            Run the exercise locally, then enable JavaScript to record your
+            command and result. The Python code does not execute in this page.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Coding evidence not recorded yet
+        </p>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep your reasoning and evidence.</h2>
+        <p id="reflection-prompt">
+          Explain the mechanism, your changed case, observed results, and help
+          used.
+        </p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="Command, result, changed case, explanation, help used, and one limit…"
+        ></textarea>
+        <fieldset class="confidence-field">
+          <legend>How confident do you feel? (self-report)</legend>
+          <div id="confidence" class="confidence"></div>
+        </fieldset>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <div class="button-row">
+          <button class="button" id="save-practice">
+            Save practice session
+          </button>
+        </div>
+        <p id="practice-status" class="small muted" role="status"></p>
+        <div id="next-lesson"></div>
+      </section>
+      <section class="lesson-section sources">
+        <h2>Read, revisit, ask.</h2>
+        <p>
+          <a href="https://docs.python.org/3.12/library/bisect.html"
+            >Python bisect: search versus insertion · primary source</a
+          >
+        </p>
+        <p>
+          <a
+            href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/resources/lecture-3-sets-and-sorting/"
+            >MIT: binary search and sorting · primary source</a
+          >
+        </p>
+        <p>
+          <a href="../reference/0007-complexity-field-guide.html"
+            >Complexity field guide &amp; operation-cost table</a
+          >
+        </p>
+        <p>
+          Ask your teaching agent for a hint or a changed example. Share your
+          attempt and explain what n means before requesting a solution.
+        </p>
+      </section>
+    </main>
+    <noscript
+      >Explanations and local commands remain readable. JavaScript is needed
+      only for saved progress and checks.</noscript
+    >
+  </body>
+</html>
