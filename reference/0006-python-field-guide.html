@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Python field guide — Fieldnotes</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main class="reference-main">
+      <p class="eyebrow">Fieldnotes / Python reference</p>
+      <h1>Python you can explain and verify.</h1>
+      <p>
+        Return here after trying a task. The track builds a working first pass,
+        with changed cases and measured evidence; 15 hours is not a complete
+        Python education.
+      </p>
+      <p>
+        <a href="../index.html#python">← Python practice &amp; workspace</a>
+      </p>
+      <section class="lesson-section">
+        <h2>A 30-minute routine</h2>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="Recall five minutes, explore five, code fifteen, explain five"
+        >
+          <div class="node">Recall<span>predict before feedback</span></div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Code &amp; test<span>one core task + changed case</span>
+          </div>
+          <span class="node-connector" aria-hidden="true">→</span>
+          <div class="node">
+            Explain<span>result, mechanism, help, limit</span>
+          </div>
+        </div>
+        <p>
+          Setup is separate. Open exercises/dayNN.py, run python tools/check.py
+          NN, add a test, then compare the reference only after your attempt. If
+          unfinished, save what you tried and resume. Record commands and actual
+          results; a generated solution is teaching material, not your
+          achievement.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>The everyday core</h2>
+        <table class="result-table">
+          <caption>
+            Questions to ask when reading Python
+          </caption>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Working rule</th>
+              <th>Common trap</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Values</td>
+              <td>Use is None for explicit absence; == for value equality.</td>
+              <td>value or default replaces a valid zero.</td>
+            </tr>
+            <tr>
+              <td>Collections</td>
+              <td>
+                list: sequence; dict: key/value; set: membership; tuple:
+                immutable outer sequence.
+              </td>
+              <td>A tuple may still contain a mutable list.</td>
+            </tr>
+            <tr>
+              <td>Functions</td>
+              <td>
+                Inputs, return value, exceptions, and effects form the contract.
+              </td>
+              <td>A mutable default can be shared across calls.</td>
+            </tr>
+            <tr>
+              <td>References</td>
+              <td>
+                Assignment binds a name; shallow copies reuse nested references.
+              </td>
+              <td>A new outer dict does not isolate its nested list.</td>
+            </tr>
+            <tr>
+              <td>Errors</td>
+              <td>Catch specific failures where recovery is meaningful.</td>
+              <td>Returning zero or [] can disguise a failure as success.</td>
+            </tr>
+            <tr>
+              <td>Iteration</td>
+              <td>yield produces on demand; an iterator can be exhausted.</td>
+              <td>
+                sorted/list or an unbounded seen set can still retain the input.
+              </td>
+            </tr>
+            <tr>
+              <td>Types</td>
+              <td>
+                Hints help readers/checkers; validate external boundaries.
+              </td>
+              <td>
+                A dataclass annotation alone does not reject malformed input.
+              </td>
+            </tr>
+            <tr>
+              <td>Resources</td>
+              <td>
+                Use context managers; explicitly close a partially consumed file
+                generator.
+              </td>
+              <td>Early break alone does not close a retained generator.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <a href="https://docs.python.org/3.12/tutorial/">Python tutorial</a> ·
+          <a href="https://docs.python.org/3.12/reference/datamodel.html"
+            >Data model</a
+          >
+          ·
+          <a
+            href="https://docs.python.org/3.12/library/contextlib.html#contextlib.closing"
+            >Explicit generator cleanup</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Small syntax patterns to recognize</h2>
+        <p>
+          Use these as a lookup after recall. Choose a clear loop when it is
+          easier to debug than a dense comprehension.
+        </p>
+        <pre><code># Iterate with an index; unpack a pair; format a readable string.
+for index, (name, score) in enumerate([("Mina", 7)], start=1):
+    print(f"{index}: {name} scored {score}")
+
+# Transform or filter; sorting returns a new list.
+squares = [n * n for n in range(5) if n % 2 == 0]
+ranked = sorted([("Mina", 7), ("Owen", 9)], key=lambda pair: pair[1])
+
+# zip(strict=True) rejects unequal lengths instead of silently truncating.
+pairs = dict(zip(["a", "b"], [1, 2], strict=True))
+
+# A keyword-only option makes the caller's intent explicit.
+def label(name: str, *, uppercase: bool = False) -&gt; str:
+    return name.upper() if uppercase else name
+
+label("Mina", uppercase=True)</code></pre>
+        <p>
+          Recognize indexing/slicing, unpacking, comprehensions, enumerate, zip,
+          key functions, f-strings, keyword arguments, and *args/**kwargs. Do
+          not add flexible variadic interfaces where an explicit signature is
+          clearer.
+          <a href="https://docs.python.org/3.12/tutorial/controlflow.html"
+            >Control flow and function arguments</a
+          >
+          ·
+          <a href="https://docs.python.org/3.12/library/functions.html#zip"
+            >zip strictness</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Memory and execution</h2>
+        <div
+          class="node-track"
+          role="img"
+          aria-label="Storage and network feed buffers in RAM; CPU processes objects; retaining results grows memory"
+        >
+          <div class="node">
+            Storage / network<span>latency + transfer</span>
+          </div>
+          <span class="node-connector" aria-hidden="true">↔</span>
+          <div class="node">
+            RAM<span>objects, buffers, retained results</span>
+          </div>
+          <span class="node-connector" aria-hidden="true">↔</span>
+          <div class="node">CPU<span>execution and caches</span></div>
+        </div>
+        <p>
+          Compare equal-output implementations at two bounded sizes. Use fresh
+          processes; time without tracing, then measure traced allocations
+          separately. Elapsed time includes waiting; CPU time measures this
+          process's CPU consumption. tracemalloc peak is not process RSS, and
+          getsizeof is shallow.
+        </p>
+        <p>
+          CPython reference counting and cycle collection describe
+          implementation behaviour. del removes a binding; other references,
+          allocator reuse, and native memory can keep RAM resident. Streaming
+          bounds current-row state, but accumulators and downstream
+          materialization can still grow.
+        </p>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Useful for</th>
+              <th>Limit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Threads</td>
+              <td>Overlapping blocking I/O-shaped work</td>
+              <td>
+                Shared-state correctness; normal CPython GIL; worker/buffer
+                budgets
+              </td>
+            </tr>
+            <tr>
+              <td>asyncio</td>
+              <td>Cooperative concurrent awaits</td>
+              <td>
+                Blocking CPU work delays the loop; pending tasks consume RAM
+              </td>
+            </tr>
+            <tr>
+              <td>Processes</td>
+              <td>Separate interpreters for CPU work</td>
+              <td>Startup, serialization, and separate working memory</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <a href="https://docs.python.org/3.12/library/tracemalloc.html"
+            >tracemalloc</a
+          >
+          ·
+          <a
+            href="https://docs.python.org/3.12/library/time.html#time.process_time"
+            >CPU time</a
+          >
+          ·
+          <a href="https://docs.python.org/3/howto/free-threading-python.html"
+            >Optional free-threaded CPython</a
+          >
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Library map: learn the boundary first</h2>
+        <table class="result-table">
+          <caption>
+            Hands-on in the track, then extensions when the problem calls for
+            them
+          </caption>
+          <thead>
+            <tr>
+              <th>Library</th>
+              <th>Why know it</th>
+              <th>Track depth</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://docs.pytest.org/en/stable/">pytest</a></td>
+              <td>Behaviour tests, fixtures, parametrization</td>
+              <td>Every real exercise; focused regression session</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://docs.pydantic.dev/latest/">Pydantic v2</a>
+              </td>
+              <td>Runtime boundary validation and serialization</td>
+              <td>
+                Strict inputs, constraints, extra policy, public responses
+              </td>
+            </tr>
+            <tr>
+              <td><a href="https://www.python-httpx.org/">HTTPX</a></td>
+              <td>Sync/async clients, explicit failures and timeouts</td>
+              <td>Injected transport and narrow GET retry policy</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://docs.sqlalchemy.org/en/20/tutorial/"
+                  >SQLAlchemy</a
+                >
+              </td>
+              <td>Database toolkit and ORM</td>
+              <td>Core bound SQL and atomic rollback; ORM depth deferred</td>
+            </tr>
+            <tr>
+              <td><a href="https://pandas.pydata.org/docs/">pandas</a></td>
+              <td>Tabular grouping and joins</td>
+              <td>Grain, preserved customers, exact nullable integer cents</td>
+            </tr>
+            <tr>
+              <td><a href="https://fastapi.tiangolo.com/">FastAPI</a></td>
+              <td>Typed HTTP request/response boundary</td>
+              <td>Small local tested quote endpoint</td>
+            </tr>
+            <tr>
+              <td><a href="https://docs.astral.sh/ruff/">Ruff</a></td>
+              <td>Linting and formatting</td>
+              <td>Run on edited code; complement behaviour checks</td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://numpy.org/doc/stable/user/absolute_beginners.html"
+                  >NumPy</a
+                >
+              </td>
+              <td>Array shapes, dtypes, broadcasting, copies vs views</td>
+              <td>
+                Extension: compare one numeric loop with an array and measure
+                allocations
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://docs.pola.rs/user-guide/lazy/">Polars</a>
+              </td>
+              <td>Expressions and lazy query planning</td>
+              <td>
+                Extension: inspect scan_csv/filter/group plan; check streaming
+                limits
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://hypothesis.readthedocs.io/en/latest/quickstart.html"
+                  >Hypothesis</a
+                >
+              </td>
+              <td>Generated cases testing invariants</td>
+              <td>
+                Extension: deduplication is idempotent and preserves first-seen
+                order
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://mypy.readthedocs.io/en/stable/getting_started.html"
+                  >mypy</a
+                >
+                / <a href="https://microsoft.github.io/pyright/">Pyright</a>
+              </td>
+              <td>Static type checking</td>
+              <td>
+                Extension: check a typed pure function; runtime schema
+                validation remains separate
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a
+                  href="https://docs.pydantic.dev/latest/concepts/pydantic_settings/"
+                  >pydantic-settings</a
+                >
+              </td>
+              <td>Typed configuration sources</td>
+              <td>
+                Extension: validate a bounded batch limit; never commit real
+                credentials
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Useful standard library modules: pathlib, json, csv, collections,
+          itertools, dataclasses, typing, decimal, datetime, zoneinfo, logging,
+          argparse, contextlib, sqlite3, concurrent.futures, asyncio, time,
+          tracemalloc, and tomllib. Learn how to locate their docs and choose a
+          contract; memorizing every API is unnecessary.
+        </p>
+        <p>
+          Not every project needs every library. NumPy is installed transitively
+          by the recorded pandas environment; the other extension libraries are
+          optional and are not required by the timed exercises. Local mocks and
+          test clients do not verify remote services, network timeouts, or
+          production infrastructure.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>Version awareness</h2>
+        <p>
+          Snapshot checked November 5, 2026: Python 3.15 is stable; 3.10 is
+          end-of-life. Use the
+          <a href="https://devguide.python.org/versions/"
+            >official status table</a
+          >
+          on the day you choose an interpreter. The exercises use
+          3.12-compatible syntax and a recorded 3.12 package environment.
+        </p>
+        <ul>
+          <li>
+            <a href="https://docs.python.org/3.10/whatsnew/3.10.html">3.10</a>:
+            pattern matching; X | Y unions.
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.11/whatsnew/3.11.html">3.11</a>:
+            ExceptionGroup, TaskGroup, tomllib.
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.12/whatsnew/3.12.html">3.12</a>:
+            type-parameter syntax and type statements.
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.13/whatsnew/3.13.html">3.13</a>:
+            experimental optional free-threaded CPython.
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.14/whatsnew/3.14.html">3.14</a>:
+            deferred annotation evaluation; supported optional free-threaded
+            builds.
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.15/whatsnew/3.15.html">3.15</a>:
+            UTF-8 mode default; explicit lazy imports.
+          </li>
+        </ul>
+        <p>
+          Read Porting, Removed, and dependency-wheel compatibility, then run
+          the actual checks under each supported interpreter. New syntax must
+          parse before a runtime if can execute. A feature probe compiling a
+          string is safer than importing a newer-syntax module on an older
+          interpreter.
+        </p>
+        <p>
+          <a href="https://docs.pydantic.dev/latest/migration/"
+            >Pydantic v1 → v2</a
+          >: use model_validate / model_dump, and check changed validators,
+          configuration, and coercion. A method rename alone is not a complete
+          migration.
+        </p>
+      </section>
+      <section class="lesson-section">
+        <h2>What to show in your portfolio</h2>
+        <p>
+          Keep your implementation and changed test on your own branch. Describe
+          the contract, your reasoning, exact commands and observed result, help
+          used, and one untested boundary. Agent-authored starters, solutions,
+          and QA runs do not establish your learning. Revisit a changed case
+          after a delay and explain it without copying.
+        </p>
+        <p>
+          Ask your teaching agent to review a small diff and ask one transfer
+          question. Share the traceback and what you expected before asking for
+          a complete fix.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
