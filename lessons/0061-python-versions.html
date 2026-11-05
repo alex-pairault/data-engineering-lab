@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Gate a newer syntax feature without making older supported code unparsable."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>Read Python changes with a migration lens — Fieldnotes Python</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="py-versions">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">
+          Fieldnotes / Python 24 / Boundaries &amp; libraries
+        </p>
+        <h1>Read Python changes with a migration lens</h1>
+        <p>
+          Gate a newer syntax feature without making older supported code
+          unparsable.
+        </p>
+        <div class="lesson-meta">
+          <span class="pill teal">30-minute coding practice</span
+          ><span>English · self-paced</span
+          ><a href="../index.html#python">Python track &amp; progress</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Code · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Predict before running.</h2>
+        <p id="recall-prompt">
+          What is the difference between parsing a module and executing an if
+          sys.version_info branch?
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty helps choose the next check.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>One mechanism to use today.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Interpreter version: syntax and stdlib availability → Compatibility boundary: separate feature probe → Test matrix: supported versions and dependencies"
+          >
+            <div class="node">
+              Interpreter version<span>syntax and stdlib availability</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Compatibility boundary<span>separate feature probe</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Test matrix<span>supported versions and dependencies</span>
+            </div>
+          </div>
+          <p class="figure-caption">
+            Trace the input, decision, and result. This diagram simplifies the
+            mechanism; your local code tests its stated contract.
+          </p>
+          <p>
+            As checked on November 5, 2026, Python 3.15 is stable; 3.10 is
+            end-of-life. The exercises deliberately use a Python 3.12 baseline
+            and record the exact tested environment. Check the developer status
+            table when you revisit this lesson rather than treating this
+            snapshot as permanent.
+          </p>
+          <p>
+            Recognize useful milestones: 3.10 match/case and X | Y unions; 3.11
+            ExceptionGroup, TaskGroup, tomllib; 3.12 type-parameter syntax and
+            type aliases; 3.13 experimental free-threaded CPython; 3.14 deferred
+            annotations and supported optional free-threaded builds; 3.15 UTF-8
+            mode by default and explicit lazy imports. Each upgrade also changes
+            removals, APIs, wheels, and tooling.
+          </p>
+          <p>
+            A runtime if cannot protect newer syntax elsewhere in the same
+            module from an older parser. Keep new syntax in a separate file or
+            compile a small string in a feature probe. Do not assume a version
+            number enables an optional GIL-free build or JIT.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / CODE</span>
+        <h2>Write it. Run it. Change it.</h2>
+        <p>
+          First-time setup happens before the timer:
+          <a href="../index.html#python">download and prepare the workspace</a>.
+          Use your selected virtual-environment interpreter for the short
+          commands below.
+        </p>
+        <div class="exercise-contract">
+          <h3>Core task · 15 minutes</h3>
+          <p>
+            Implement has_type_alias_syntax(version): true for major 3, minor
+            &gt;= 12. Then run python tools/version_probe.py under your actual
+            interpreter; it compiles separate feature strings and reports facts
+            without importing newer-syntax files.
+          </p>
+          <p>
+            Edit <code>exercises/day24.py</code>; add your test to
+            <code>tests/test_24.py</code>.
+          </p>
+          <pre><code>python tools/check.py 24
+python tools/version_probe.py</code></pre>
+          <p class="small muted">
+            An unfinished starter is expected to fail. Read the traceback, make
+            one change, and rerun. If you run out of time, save the attempt and
+            resume next study day.
+          </p>
+          <h3>Changed case</h3>
+          <p>
+            Probe compile(&quot;type Id = int&quot;, ..., &quot;exec&quot;)
+            separately and record your interpreter. Explain why an if-version
+            branch cannot shelter unsupported syntax.
+          </p>
+        </div>
+        <details>
+          <summary>Hint after your first attempt</summary>
+          <p>
+            The compatibility policy is an explicit supported family, not a
+            guess about all future Python.
+          </p>
+        </details>
+        <details>
+          <summary>Optional stretch · outside the core timer</summary>
+          <p>
+            Run the core tests with a second installed supported interpreter and
+            record both versions.
+          </p>
+        </details>
+        <details>
+          <summary>Reference implementation · compare after attempting</summary>
+          <p>
+            Run <code>python tools/check.py 24 --reference</code> against the
+            same tests, including your changed case. Compare
+            <code>solutions/day24.py</code> in the download. It is
+            tutor-authored code; record any use in your explanation.
+          </p>
+          <a href="../assets/python-exercises/solutions/day24.py" download
+            >Download reference source</a
+          >
+        </details>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p>
+            Run the exercise locally, then enable JavaScript to record your
+            command and result. The Python code does not execute in this page.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Coding evidence not recorded yet
+        </p>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep your reasoning and evidence.</h2>
+        <p id="reflection-prompt">
+          Explain the mechanism, your changed case, observed results, and help
+          used.
+        </p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="Command, result, changed case, explanation, help used, and one limit…"
+        ></textarea>
+        <fieldset class="confidence-field">
+          <legend>How confident do you feel? (self-report)</legend>
+          <div id="confidence" class="confidence"></div>
+        </fieldset>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <div class="button-row">
+          <button class="button" id="save-practice">
+            Save practice session
+          </button>
+        </div>
+        <p id="practice-status" class="small muted" role="status"></p>
+        <div id="next-lesson"></div>
+      </section>
+      <section class="lesson-section sources">
+        <h2>Read, revisit, ask.</h2>
+        <p>
+          <a href="https://devguide.python.org/versions/"
+            >Python release status · primary source</a
+          >
+        </p>
+        <ul>
+          <li>
+            <a href="https://docs.python.org/3.10/whatsnew/3.10.html"
+              >Python 3.10 release and porting notes</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.11/whatsnew/3.11.html"
+              >Python 3.11 release and porting notes</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.12/whatsnew/3.12.html"
+              >Python 3.12 release and porting notes</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.13/whatsnew/3.13.html"
+              >Python 3.13 release and porting notes</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.14/whatsnew/3.14.html"
+              >Python 3.14 release and porting notes</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.python.org/3.15/whatsnew/3.15.html"
+              >Python 3.15 release and porting notes</a
+            >
+          </li>
+        </ul>
+        <p>
+          <a href="../reference/0006-python-field-guide.html"
+            >Python field guide &amp; library map</a
+          >
+        </p>
+        <p>
+          Ask your teaching agent about anything unclear. Share your attempt,
+          traceback, and prediction before asking for a solution. Ask for a
+          changed question later to test retention.
+        </p>
+      </section>
+    </main>
+    <noscript
+      >Explanations and local commands remain readable. JavaScript is needed
+      only for saved progress and checks.</noscript
+    >
+  </body>
+</html>

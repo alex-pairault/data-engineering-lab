@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Aggregate paid rows with pandas and preserve customers with no paid orders."
+    />
+    <meta name="theme-color" content="#172b4d" />
+    <title>DataFrames without losing the grain — Fieldnotes Python</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <script type="module" src="../assets/lesson.js"></script>
+  </head>
+  <body data-page="lesson" data-lesson="py-dataframes">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <header class="lesson-header">
+        <p class="eyebrow">
+          Fieldnotes / Python 21 / Boundaries &amp; libraries
+        </p>
+        <h1>DataFrames without losing the grain</h1>
+        <p>
+          Aggregate paid rows with pandas and preserve customers with no paid
+          orders.
+        </p>
+        <div class="lesson-meta">
+          <span class="pill teal">30-minute coding practice</span
+          ><span>English · self-paced</span
+          ><a href="../index.html#python">Python track &amp; progress</a>
+        </div>
+      </header>
+      <nav class="lesson-jump" aria-label="Lesson sections">
+        <a href="#recall">01 Recall · 5m</a
+        ><a href="#explore">02 Explore · 5m</a><a href="#try">03 Code · 15m</a
+        ><a href="#explain">04 Explain · 5m</a>
+      </nav>
+      <section id="recall" class="lesson-section">
+        <span class="section-number">01 / RECALL</span>
+        <h2>Predict before running.</h2>
+        <p id="recall-prompt">
+          What is one row in your input and output? What happens if you filter
+          after a left join?
+        </p>
+        <label class="field-label" for="recall-answer"
+          >Your first explanation</label
+        ><textarea id="recall-answer" maxlength="6000" rows="4"></textarea>
+        <div class="button-row">
+          <button id="save-recall" class="button-secondary">
+            Save recall attempt</button
+          ><span class="small muted"
+            >Uncertainty helps choose the next check.</span
+          >
+        </div>
+      </section>
+      <section id="explore" class="lesson-section">
+        <span class="section-number">02 / EXPLORE</span>
+        <h2>One mechanism to use today.</h2>
+        <div class="reading">
+          <div
+            class="node-track"
+            role="img"
+            aria-label="Order rows: many per customer → Filter + group: one total per customer → Left merge: preserve every customer"
+          >
+            <div class="node">Order rows<span>many per customer</span></div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Filter + group<span>one total per customer</span>
+            </div>
+            <span class="node-connector" aria-hidden="true">→</span>
+            <div class="node">
+              Left merge<span>preserve every customer</span>
+            </div>
+          </div>
+          <p class="figure-caption">
+            Trace the input, decision, and result. This diagram simplifies the
+            mechanism; your local code tests its stated contract.
+          </p>
+          <p>
+            pandas offers labelled columns, grouping, and joins. Filter paid
+            orders before aggregation, then merge one row per customer back onto
+            the complete customer list. validate=&quot;one_to_one&quot; checks
+            the expected merge relationship.
+          </p>
+          <p>
+            A DataFrame is normally materialized in memory; vectorized
+            operations can also allocate intermediates. NumPy supplies array
+            operations underneath much of this ecosystem. Polars offers a lazy
+            query API, but neither lazy execution nor a streaming engine
+            guarantees every query has bounded memory. Choose from data shape
+            and measurements.
+          </p>
+          <p>
+            Keep input amounts and each grouped total within the signed 64-bit
+            integer range for this fixture. Use pandas nullable Int64 before a
+            merge that introduces missing totals, so the intermediate does not
+            round large integers through float64.
+          </p>
+        </div>
+      </section>
+      <section id="try" class="lesson-section">
+        <span class="section-number">03 / CODE</span>
+        <h2>Write it. Run it. Change it.</h2>
+        <p>
+          First-time setup happens before the timer:
+          <a href="../index.html#python">download and prepare the workspace</a>.
+          Use your selected virtual-environment interpreter for the short
+          commands below.
+        </p>
+        <div class="exercise-contract">
+          <h3>Core task · 15 minutes</h3>
+          <p>
+            Implement paid_summary(customers, orders): filter paid orders; group
+            amount_cents by customer_id; left merge onto customers with
+            one_to_one validation; fill missing totals with 0 and cast to int64.
+            Return customer_id and paid_total only, in original customer order.
+            Cast grouped paid_total to nullable Int64 before the merge to
+            preserve exact cents when missing values appear.
+          </p>
+          <p>
+            Edit <code>exercises/day21.py</code>; add your test to
+            <code>tests/test_21.py</code>.
+          </p>
+          <pre><code>python tools/check.py 21</code></pre>
+          <p class="small muted">
+            An unfinished starter is expected to fail. Read the traceback, make
+            one change, and rerun. If you run out of time, save the attempt and
+            resume next study day.
+          </p>
+          <h3>Changed case</h3>
+          <p>
+            Add an empty orders DataFrame with the declared columns. Retain
+            every customer with total zero; keep totals within signed 64-bit
+            range.
+          </p>
+        </div>
+        <details>
+          <summary>Hint after your first attempt</summary>
+          <p>
+            Aggregate before merging; preserve the complete customer table on
+            the left.
+          </p>
+        </details>
+
+        <details>
+          <summary>Reference implementation · compare after attempting</summary>
+          <p>
+            Run <code>python tools/check.py 21 --reference</code> against the
+            same tests, including your changed case. Compare
+            <code>solutions/day21.py</code> in the download. It is
+            tutor-authored code; record any use in your explanation.
+          </p>
+          <a href="../assets/python-exercises/solutions/day21.py" download
+            >Download reference source</a
+          >
+        </details>
+        <p id="lab-task"></p>
+        <div id="interactive-lab" class="lab">
+          <p>
+            Run the exercise locally, then enable JavaScript to record your
+            command and result. The Python code does not execute in this page.
+          </p>
+        </div>
+        <p id="lab-evidence" class="lab-evidence" role="status">
+          ○ Coding evidence not recorded yet
+        </p>
+        <div id="concept-checks"></div>
+      </section>
+      <section id="explain" class="lesson-section">
+        <span class="section-number">04 / EXPLAIN</span>
+        <h2>Keep your reasoning and evidence.</h2>
+        <p id="reflection-prompt">
+          Explain the mechanism, your changed case, observed results, and help
+          used.
+        </p>
+        <label class="field-label" for="reflection-answer"
+          >Your explanation and evidence</label
+        ><textarea
+          id="reflection-answer"
+          maxlength="6000"
+          rows="6"
+          placeholder="Command, result, changed case, explanation, help used, and one limit…"
+        ></textarea>
+        <fieldset class="confidence-field">
+          <legend>How confident do you feel? (self-report)</legend>
+          <div id="confidence" class="confidence"></div>
+        </fieldset>
+        <div
+          id="completion-list"
+          class="completion-list"
+          aria-live="polite"
+        ></div>
+        <div class="button-row">
+          <button class="button" id="save-practice">
+            Save practice session
+          </button>
+        </div>
+        <p id="practice-status" class="small muted" role="status"></p>
+        <div id="next-lesson"></div>
+      </section>
+      <section class="lesson-section sources">
+        <h2>Read, revisit, ask.</h2>
+        <p>
+          <a href="https://pandas.pydata.org/docs/user_guide/integer_na.html"
+            >Nullable integers and missing values</a
+          >
+          ·
+          <a href="https://docs.pola.rs/user-guide/concepts/streaming/"
+            >Polars streaming boundaries</a
+          >
+        </p>
+        <p>
+          <a href="https://pandas.pydata.org/docs/user_guide/merging.html"
+            >pandas merging · primary source</a
+          >
+        </p>
+        <p>
+          <a href="../reference/0006-python-field-guide.html"
+            >Python field guide &amp; library map</a
+          >
+        </p>
+        <p>
+          Ask your teaching agent about anything unclear. Share your attempt,
+          traceback, and prediction before asking for a solution. Ask for a
+          changed question later to test retention.
+        </p>
+      </section>
+    </main>
+    <noscript
+      >Explanations and local commands remain readable. JavaScript is needed
+      only for saved progress and checks.</noscript
+    >
+  </body>
+</html>
