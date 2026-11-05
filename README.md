@@ -46,7 +46,7 @@ The initial diagnostic is complete. **Fieldnotes**, the learning product, now in
 36. Explain a system out loud.
 37. Show what you can verify.
 
-[Open Fieldnotes](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
+[Open Fieldnotes](https://engineering-fieldnotes-alex.alex-pairault110395.chatgpt.site) · [Start lesson one](https://engineering-fieldnotes-alex.alex-pairault110395.chatgpt.site/lessons/0001-request-response.html) · [App design and verification](docs/APP.md)
 
 The hosted workspace is private to its owner; this source repository is public. The course map contains **37 weekday sessions**, with all 37 authored and available for November 3–December 23, 2026. Practice and later review will guide adjustments to difficulty. The [roadmap](ROADMAP.md) and [skill map](SKILL-MAP.md) preserve the broader software, data, and product scope.
 
@@ -126,7 +126,7 @@ The browser experiments are explicitly labelled models. Downloadable standard-li
 
 ## Python practice: 30 minutes per study day
 
-[Open the Python track](https://engineering-fieldnotes-alex.oakenwolf3.chatgpt.site/#python).
+[Open the Python track](https://engineering-fieldnotes-alex.alex-pairault110395.chatgpt.site/#python).
 Thirty additional self-paced sessions progress from values, collections, functions,
 references, and exceptions to resource measurement, typing, tests, Pydantic v2,
 HTTP clients, database transactions, DataFrames, concurrency, and a small API.
